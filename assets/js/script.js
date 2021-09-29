@@ -21,5 +21,3 @@ var circle = L.circle([51.508, -0.11], {
   fillOpacity: 0.5,
   radius: 500
 }).addTo(mymap);
-
-console.log('pk.eyJ1IjoiZGV2cmF5aGUiLCJhIjoiY2t1NWNsNHRoM2ExMDJucW1zMDlrMDB2ZyJ9.Yo-UqtdijyJ8P_7VfmMmng');
