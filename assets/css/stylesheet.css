@@ -1,0 +1,117 @@
+:root {
+  --accent-color: #f50057;
+
+  --text-color: #263238;
+  --body-color: #80deea;
+  /* --main-font: "roboto"; */
+  --font-bold: 700;
+  --font-regular: 400;
+}
+* {
+  box-sizing: border-box;
+}
+
+body {
+  height: 100%;
+  background: url(../images/AdobeStock_281457367.jpeg) no-repeat fixed center;
+  background-size: cover;
+}
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+h1 {
+  font-weight: var(--font-bold);
+}
+input,
+button {
+  border: none;
+  background: none;
+  outline: 0;
+}
+button {
+  cursor: pointer;
+}
+.SearchBox-input::placeholder {
+  color: white;
+  opacity: 0.6;
+}
+/* Chrome, Opera ySafari */
+.SearchBox-input::-webkit-input-placeholder {
+  color: white;
+}
+/* Firefox 19+ */
+.SearchBox-input::-moz-placeholder {
+  color: white;
+}
+/* IE 10+ y Edge */
+.SearchBox-input:-ms-input-placeholder {
+  color: white;
+}
+/* Firefox 18- */
+#formGroupExampleInput:-moz-placeholder {
+  color: white;
+}
+
+.SearchBox {
+  --height: 4em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--height);
+  background-color: rgba(166, 166, 166, 0.6);
+  height: var(--height);
+  font-size: large;
+  font-weight: 100;
+}
+.SearchBox:hover .SearchBox-input {
+  padding-left: 2em;
+  padding-right: 1em;
+  width: 240px;
+}
+.SearchBox-input {
+  width: 0;
+  font-size: 1.2em;
+  color: #fff;
+  transition: 0.45s;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+}
+.SearchBox-button {
+  border-radius: 50%;
+  width: var(--height);
+  height: var(--height);
+  background-color: var(--accent-color);
+  transition: 0.8s;
+  color: #fff;
+  position: relative;
+}
+.SearchBox-button:active {
+  transform: scale(0.85);
+}
+
+@media screen and (min-width: 400px) {
+  .SearchBox:hover .SearchBox-input {
+    width: 500px;
+  }
+}
+
+.main-header {
+  display: grid;
+  margin: 10px;
+  padding: 5px;
+  color: black;
+  font-family: "Montserrat", sans-serif;
+  font-size: 24px;
+}
+
+.html {
+  height: 100%;
+  background: url(../images/100164-56.jpg) no-repeat fixed center;
+  background-size: cover;
+  /* background-repeat: no-repeat; */
+}
