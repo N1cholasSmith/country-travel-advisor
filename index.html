@@ -3,24 +3,81 @@
   <head>
     <!-- Meta tags -->
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
     <meta name="author" content="You" />
-    <meta name="description" content="Write a description of your website for search engines here" />
+    <meta
+      name="description"
+      content="Write a description of your website for search engines here"
+      
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+  
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- Page title -->
-    <title>My Webpage</title>
+    <title>Travel Planner</title>
 
     <!-- Page icon -->
+
     <!-- <link rel="icon" href="assets/images/favicon.ico" />
     <link rel="icon" href="assets/images/favicon-32.png" sizes="32x32" type="image/png" /> -->
 
     <!-- CSS files -->
     <link rel="stylesheet" href="assets/css/reset.css" />
-    <!-- <link rel="stylesheet" href="assets/css/styles.css" /> -->
+    <link rel="stylesheet" href="assets/css/styles.css" />
+
+    <link rel="icon" href="./assets/images/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="icon" href="assets/images/favicon.ico" />
+    <link
+      rel="icon"
+      href="assets/images/favicon-32.png"
+      sizes="32x32"
+      type="image/png"
+    />
+
+    <!-- CSS files -->
+    <link rel="stylesheet" href="./assets/css/reset.css" />
+    <link rel="stylesheet" href="./assets/css/stylesheet.css" />
+
 
     <!-- JS files -->
-    <script src="assets/js/script.js" defer></script>
+    <script src="./assets/js/script.js" defer></script>
   </head>
 
-  <body></body>
+  <main>
+    <div class="main-header"><h1>Where do you want to go?</h1></div>
+
+    <div class="SearchBox">
+      <div class="borderOpacity">
+        <input
+          type="text"
+          class="SearchBox-input"
+          placeholder="Feeling Adventerous?"
+        />
+      </div>
+
+      <button class="SearchBox-button">
+        <i class="material-icons">search</i>
+      </button>
+    </div>
+  </main>
 </html>

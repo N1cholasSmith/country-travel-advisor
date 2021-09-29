@@ -6,13 +6,16 @@
   
   html {
     height: 100%;
+    background: url(../images/100164-56.jpg) no-repeat fixed center;
+    background-size: cover;
+    /* background-repeat: no-repeat; */
   }
   
   body {
-    min-height: 100%;
+    /* min-height: 100%; */
     line-height: 1;
     font-family: sans-serif;
-  }
+  } 
   
   h1,
   h2,
