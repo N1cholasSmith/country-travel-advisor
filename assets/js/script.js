@@ -1,13 +1,18 @@
 
 // TO DO LIST (feel free to tackle any of these)
-// 1. make evenlistener("click") function
-// 2. on enter or click the second page should load (atm its a manual load)
-// 3. autocomplete to be added to search bar (this is a possible source)
+// 1. make evenlistener("click") function  === Done ===
+// 2. on enter or click the second page should load (atm its a manual load) === Done ===
+// 3. autocomplete to be added to search bar (this is a possible source) === Done ===
 //          https://tarekraafat.github.io/autoComplete.js/#/usage
-// 4. Country Info background needs to be changed
+// 4. Country Info background needs to be changed === API call to upsplash API dynamic return image based on searched country === in progress ===
 // 5. countryInfo card needs a transparent background and font-size to be increased
 
+var serachFormEl = document.querySelector("#searchForm");
+var SearchBoxInputEl = document.querySelector("#serachBoxInput");
+// var SearchBoxBtnEl = document.querySelector("#searchBoxButton");
+// var countryInfo = document.querySelector("#countryInformation");
 
+<<<<<<< HEAD
 var SearchBoxEl = document.querySelector("#SearchBox-input")
 var countryInfo = document.querySelector("#countryInformation")
 
@@ -42,36 +47,22 @@ function countryData(){
   dec: {tMin:null, tMax:null, tAvg:null},
   }
 }
+=======
+document.getElementById("searchForm").addEventListener("submit", handleSearchFormSubmit);
+>>>>>>> efa8a68bd8b2d911585012af66f89c9970d4fa40
 
-// Fetch data from API
-function countryData(country){
-  fetch(`https://travelbriefing.org/' + ${country} + '?format=json`)
-  .then(response => {
-    return response.json();
-    console.log(response);
-  })
-  .then(data => {
-    console.log(data);
+function handleSearchFormSubmit(event) {
+  event.preventDefault();
 
-    localStorage.setItem("countries", JSON.stringify(data)); 
-  })
-  .catch(err => {
-  console.error(err);
-  });
-}
+  let searchInput = SearchBoxInputEl.value;
+  var queryString = "./countryinfo.html?q=" + searchInput;
 
-
-SearchBoxEl.addEventListener("keydown", function(event){
-  if (event.keyCode === 13){
-    countryData();
+  // Reset the search input value
+  this.reset();
+  if (searchInput) {
+    location.assign(queryString);
   }
-}); 
-
-
-// this doesn't work yet
-// SearchBoxEl.addEventListener("click", countryData)
-
-
+}
 
 
 // ================ NICE TO HAVES================================================
@@ -109,7 +100,7 @@ SearchBoxEl.addEventListener("keydown", function(event){
 //     console.log(data)
 //   })
 // }
-  
+
 // countryData();
 
 
@@ -129,4 +120,3 @@ SearchBoxEl.addEventListener("keydown", function(event){
 //   });
 // }
 // initMap();
-
