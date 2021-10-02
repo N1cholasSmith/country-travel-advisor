@@ -5,7 +5,7 @@
 var bodyEl = document.querySelector("body");
 var countryInfo = document.querySelector("#countryInformation")
 var countryData = [];
-var upsplashAccessKey = "sUG4r-3ndwxJ_35XLlzNo7x-v70k-44ugUAux9bNqLQ";
+var upsplashAccessKey = " SUGAR RAYS KEY....... ";
 var upsplashUrl = "";
 
 function getParams() {
