@@ -3,7 +3,7 @@
 var countryInfo = document.querySelector("#countryInformation")
 var countryData = [];
 
-function getParams () {
+function getParams() {
     // Get the serach params out of the URL
     let searchParamsArr = document.location.search.split("?");
     console.log(searchParamsArr);
@@ -15,22 +15,22 @@ function getParams () {
 
 // Moved the fetch data function from script.js to here
 // Avoided using localStorage to reduce chance of error
-function fetchCountryData(country){
+function fetchCountryData(country) {
     // Change the first and last character on fetch URL from ` to '
     // Was causing the country variable not recognised issue
     fetch('https://travelbriefing.org/' + country + '?format=json')
-    .then(response => {
-        return response.json();
-    })
-    .then(data => {
-        countryData = data;
-        console.log(countryData);
-        countryInfoCard();
-    })
-    .catch(err => {
-        console.error(err);
-    });
-  }
+        .then(response => {
+            return response.json();
+        })
+        .then(data => {
+            countryData = data;
+            console.log(countryData);
+            countryInfoCard();
+        })
+        .catch(err => {
+            console.error(err);
+        });
+}
 
 function countryInfoCard() {
 
@@ -48,9 +48,9 @@ function countryInfoCard() {
     var waterQuality = document.createElement("li");
 
 
-    countryName.textContent = countryData.names.name
-    currency.textContent = countryData.currency.code
-    rate.textContent  = countryData.currency.rate
+    countryName.textContent = "Country Name: " + countryData.names.name
+    currency.textContent = " Currency: " + countryData.currency.code
+    rate.textContent = countryData.currency.rate
     languageSpoken.textContent = countryData.language[0].language
     // electricity.textContent = searchHistory.electricity
     volt.textContent = countryData.electricity.voltage
@@ -68,6 +68,6 @@ function countryInfoCard() {
     unorderedList.appendChild(volt)
     unorderedList.appendChild(frequency)
     unorderedList.appendChild(waterQuality)
-};  
+};
 
 getParams();

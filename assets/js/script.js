@@ -8,7 +8,7 @@
 // 5. countryInfo card needs a transparent background and font-size to be increased
 
 var serachFormEl = document.querySelector("#searchForm");
-var SearchBoxInputEl = document.querySelector("#serachBoxInput");
+var SearchBoxInputEl = document.querySelector("#searchBoxInput");
 var SearchBoxBtnEl = document.querySelector("#searchBoxButton");
 var countryInfo = document.querySelector("#countryInformation");
 
@@ -20,13 +20,6 @@ function handleSearchFormSubmit(event) {
   let searchInput = SearchBoxInputEl.value;
   var queryString = "./countryinfo.html?q=" + searchInput;
 
-<<<<<<< HEAD
-SearchBoxEl.addEventListener("keydown", function (event) {
-  if (event.keyCode === 13) {
-    countryData();
-  }
-});
-=======
   this.reset();
   if (searchInput) {
     location.assign(queryString);
@@ -69,7 +62,7 @@ SearchBoxEl.addEventListener("keydown", function (event) {
 //     console.log(data)
 //   })
 // }
-  
+
 // countryData();
 
 
@@ -89,4 +82,3 @@ SearchBoxEl.addEventListener("keydown", function (event) {
 //   });
 // }
 // initMap();
->>>>>>> f6ef71b32609ea7bf3da5a2a2aff72ecaa1b6ec2
