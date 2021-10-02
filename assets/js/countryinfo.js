@@ -5,32 +5,37 @@
 var bodyEl = document.querySelector("body");
 var countryInfo = document.querySelector("#countryInformation")
 var countryData = [];
+
 var weatherData = [];
 var openWeatherMapAPiKey = '1f9d3014d1a028a24c084adbdcec9008';
 var upsplashAccessKey = "sUG4r-3ndwxJ_35XLlzNo7x-v70k-44ugUAux9bNqLQ";
 var upsplashUrl = ""; 
 
-function getParams () {
+
+var upsplashAccessKey = " SUGAR RAYS KEY....... ";
+var upsplashUrl = "";
+
+function getParams() {
     // Get the country name out of the URL
     let searchParamsArr = document.location.search.split("?");
     console.log(searchParamsArr);
     var country = searchParamsArr[1].split("=").pop();
     console.log("country: " + country);
 
-    upsplashGetDataUrl = "https://api.unsplash.com/search/photos/?client_id=" 
-    + upsplashAccessKey 
-    + "&query=" 
-    + country 
-    + "&order_by=relevant"
-    + "&page=1"
-    + "&per_page=10"
-    + "&auto=format"
-    // + "&color=colorOfChoice" - this parameter can be added later if certain color theme best match the website and fonts display
-    ;
+    upsplashGetDataUrl = "https://api.unsplash.com/search/photos/?client_id="
+        + upsplashAccessKey
+        + "&query="
+        + country
+        + "&order_by=relevant"
+        + "&page=1"
+        + "&per_page=10"
+        + "&auto=format"
+        // + "&color=colorOfChoice" - this parameter can be added later if certain color theme best match the website and fonts display
+        ;
 
-    upsplashGetPhotoUrl = "https://api.unsplash.com/photos/?client_id=" 
-    + upsplashAccessKey 
-    + "&id=";
+    upsplashGetPhotoUrl = "https://api.unsplash.com/photos/?client_id="
+        + upsplashAccessKey
+        + "&id=";
 
     fetchCountryPhoto(upsplashGetDataUrl);
 
@@ -41,21 +46,23 @@ function getParams () {
 
 // Moved the fetch data function from script.js to here
 // Avoided using localStorage to reduce chance of error
-function fetchCountryData(country){
+function fetchCountryData(country) {
     // Change the first and last character on fetch URL from ` to '
     // Was causing the country variable not recognised issue
     fetch('https://travelbriefing.org/' + country + '?format=json')
-    .then(response => {
-        return response.json();
-    })
-    .then(data => {
-        countryData = data;
-        console.log(countryData);
-        countryInfoCard();
-    })
-    .catch(err => {
-        console.error(err);
-    });
+        .then(response => {
+            return response.json();
+        })
+        .then(data => {
+            countryData = data;
+            console.log(countryData);
+            console.log(emergency)
+            countryInfoCard();
+            emergency();
+        })
+        .catch(err => {
+            console.error(err);
+        });
 }
 
 // Fetch photo data from upsplash
@@ -144,10 +151,23 @@ function countryInfoCard() {
     weatherIconEl.setAttribute('src', 'http://openweathermap.org/img/wn/' 
         + weatherIcon
         + '@2x.png');
+  
+    //shows go back button
+    document.getElementById("goBack").style.display = "block";
+
+    countryName.textContent = "Country Name: " + countryData.names.name
+    currency.textContent = " Currency: " + countryData.currency.code
+    rate.textContent = " Currency rate: " + countryData.currency.rate
+    languageSpoken.textContent = " Language spoken: " + countryData.language[0].language
+    // electricity.textContent = searchHistory.electricity
+    volt.textContent = " Voltage: " + countryData.electricity.voltage
+    frequency.textContent = " Electricity frequency: " + countryData.electricity.frequency
+    waterQuality.textContent = " Water Status: " + countryData.water.short
 
 
     countryInfo.append(infoList);
     infoList.append(unorderedList);
+
     // unorderedList.appendChild(countryName);
     // unorderedList.appendChild(currency);
     // unorderedList.appendChild(rate);
@@ -175,5 +195,30 @@ function countryInfoCard() {
         humidityEl,
         weatherIconLiEL)
 };  
+
+function emergency(){
+    
+    var infoList = document.createElement("div");
+    var unorderedList = document.createElement("ul");
+    var emergencyNumbers = document.createElement("li");
+    var callingCode = document.createElement("li");
+    var police = document.createElement("li");
+    var ambulance = document.createElement("li");
+    var fire = document.createElement("li");
+
+    emergencyNumbers.textContent = "Emergency Telephone Numbers "
+    callingCode.textContent = " Calling Code: " + countryData.telephone.calling_code
+    police.textContent = " Police: " + countryData.telephone.police
+    ambulance.textContent = " Ambulance: " + countryData.telephone.ambulance
+    fire.textContent = " Fire: " + countryData.telephone.fire
+    
+    countryInfo.append(infoList);
+    infoList.append(unorderedList);
+    unorderedList.appendChild(emergencyNumbers);
+    unorderedList.appendChild(callingCode);
+    unorderedList.appendChild(police);
+    unorderedList.appendChild(ambulance);
+    unorderedList.appendChild(fire);
+}
 
 getParams();
