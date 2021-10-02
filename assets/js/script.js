@@ -7,37 +7,24 @@
 // 4. Country Info background needs to be changed
 // 5. countryInfo card needs a transparent background and font-size to be increased
 
+var serachFormEl = document.querySelector("#searchForm");
+var SearchBoxInputEl = document.querySelector("#serachBoxInput");
+var SearchBoxBtnEl = document.querySelector("#searchBoxButton");
+var countryInfo = document.querySelector("#countryInformation");
 
-var SearchBoxInputEl = document.querySelector("#serachBoxInput")
-var SearchBoxBtnEl = document.querySelector("#searchBoxButton")
-var countryInfo = document.querySelector("#countryInformation")
+document.getElementById("searchForm").addEventListener("submit", handleSearchFormSubmit);
 
-SearchBoxInputEl.addEventListener("keydown", function(event){
-  if (event.keyCode === 13){
-    console.log("event!");
-    // console.log(SearchBoxInputEl.value);
-    let searchInput = SearchBoxInputEl.value;
-    // fetchCountryData(searchInput);
-    console.log(searchInput);
+function handleSearchFormSubmit(event) {
+  event.preventDefault();
 
-    var queryString = "./countryinfo.html?q=" + searchInput;
+  let searchInput = SearchBoxInputEl.value;
+  var queryString = "./countryinfo.html?q=" + searchInput;
+
+  this.reset();
+  if (searchInput) {
     location.assign(queryString);
   }
-}); 
-
-// this doesn't work yet
-SearchBoxBtnEl.addEventListener("click", function() {
-  // Only fires the this click event when value has been input
-  if (SearchBoxInputEl.value) {
-    let searchInput = SearchBoxInputEl.value;
-    // fetchCountryData(searchInput);
-    console.log(searchInput);
-
-    var queryString = "./countryinfo.html?q=" + searchInput;
-    location.assign(queryString);
-  }
-})
-
+}
 
 
 // ================ NICE TO HAVES================================================
