@@ -5,7 +5,8 @@
 var bodyEl = document.querySelector("body");
 var countryInfo = document.querySelector("#countryInformation")
 var countryData = [];
-var upsplashAccessKey = "Rays-key";
+
+var upsplashAccessKey = " SUGAR RAYS KEY....... ";
 var upsplashUrl = "";
 
 function getParams() {
@@ -47,7 +48,9 @@ function fetchCountryData(country) {
         .then(data => {
             countryData = data;
             console.log(countryData);
+            console.log(emergency)
             countryInfoCard();
+            emergency();
         })
         .catch(err => {
             console.error(err);
@@ -119,19 +122,42 @@ function countryInfoCard() {
 
 
 
-
-    countryInfo.append(infoList)
-    infoList.append(unorderedList)
-    unorderedList.appendChild(countryName)
-    unorderedList.appendChild(currency)
-    unorderedList.appendChild(rate)
-    unorderedList.appendChild(languageSpoken)
-    unorderedList.appendChild(electricity)
-    unorderedList.appendChild(volt)
-    unorderedList.appendChild(frequency)
-    unorderedList.appendChild(waterQuality)
+    countryInfo.append(infoList);
+    infoList.append(unorderedList);
+    unorderedList.appendChild(countryName);
+    unorderedList.appendChild(currency);
+    unorderedList.appendChild(rate);
+    unorderedList.appendChild(languageSpoken);
+    unorderedList.appendChild(electricity);
+    unorderedList.appendChild(volt);
+    unorderedList.appendChild(frequency);
+    unorderedList.appendChild(waterQuality);
 };
 
+function emergency(){
+    
+    var infoList = document.createElement("div");
+    var unorderedList = document.createElement("ul");
+    var emergencyNumbers = document.createElement("li");
+    var callingCode = document.createElement("li");
+    var police = document.createElement("li");
+    var ambulance = document.createElement("li");
+    var fire = document.createElement("li");
 
+    emergencyNumbers.textContent = "Emergency Telephone Numbers "
+    callingCode.textContent = " Calling Code: " + countryData.telephone.calling_code
+    police.textContent = " Police: " + countryData.telephone.police
+    ambulance.textContent = " Ambulance: " + countryData.telephone.ambulance
+    fire.textContent = " Fire: " + countryData.telephone.fire
+    
+    countryInfo.append(infoList);
+    infoList.append(unorderedList);
+    unorderedList.appendChild(emergencyNumbers);
+    unorderedList.appendChild(callingCode);
+    unorderedList.appendChild(police);
+    unorderedList.appendChild(ambulance);
+    unorderedList.appendChild(fire);
+  
+}
 
 getParams();
