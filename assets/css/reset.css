@@ -3,13 +3,7 @@
     padding: 0;
     box-sizing: border-box;
   }
-  
-  html {
-    height: 100%;
-    background: url(../images/100164-56.jpg) no-repeat fixed center;
-    background-size: cover;
-    /* background-repeat: no-repeat; */
-  }
+
   
   body {
     /* min-height: 100%; */
