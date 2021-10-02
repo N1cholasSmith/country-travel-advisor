@@ -5,7 +5,7 @@
 var bodyEl = document.querySelector("body");
 var countryInfo = document.querySelector("#countryInformation")
 var countryData = [];
-var upsplashAccessKey = "Ray's Key...";
+var upsplashAccessKey = "Rays-key";
 var upsplashUrl = "";
 
 function getParams() {
@@ -104,6 +104,9 @@ function countryInfoCard() {
     var frequency = document.createElement("li");
     var waterQuality = document.createElement("li");
 
+    //shows go back button
+    document.getElementById("goBack").style.display = "block";
+
 
     countryName.textContent = "Country Name: " + countryData.names.name
     currency.textContent = " Currency: " + countryData.currency.code
@@ -113,6 +116,8 @@ function countryInfoCard() {
     volt.textContent = " Voltage: " + countryData.electricity.voltage
     frequency.textContent = " Electricity frequency: " + countryData.electricity.frequency
     waterQuality.textContent = " Water Status: " + countryData.water.short
+
+
 
 
     countryInfo.append(infoList)
@@ -126,5 +131,7 @@ function countryInfoCard() {
     unorderedList.appendChild(frequency)
     unorderedList.appendChild(waterQuality)
 };
+
+
 
 getParams();
