@@ -1,12 +1,40 @@
-var SearchBoxEl = document.querySelector("#SearchBox-input")
+// no longer needed
+// var SearchBoxEl = document.querySelector("#SearchBox-input")
 var countryInfo = document.querySelector("#countryInformation")
- 
+var countryData = [];
+
+function getParams () {
+    // Get the serach params out of the URL
+    let searchParamsArr = document.location.search.split("?");
+    console.log(searchParamsArr);
+    var country = searchParamsArr[1].split("=").pop();
+    console.log("country: " + country);
+
+    fetchCountryData(country);
+}
+
+// Moved the fetch data function from script.js to here
+// Avoided using localStorage to reduce chance of error
+function fetchCountryData(country){
+    // Change the first and last character on fetch URL from ` to '
+    // Was causing the country variable not recognised issue
+    fetch('https://travelbriefing.org/' + country + '?format=json')
+    .then(response => {
+        return response.json();
+    })
+    .then(data => {
+        countryData = data;
+        console.log(countryData);
+        countryInfoCard();
+    })
+    .catch(err => {
+        console.error(err);
+    });
+  }
 
 function countryInfoCard() {
 
     countryInfo.innerHTML = "";
-    var searchHistory = JSON.parse(localStorage.getItem("countries"))||[]
-    console.log(searchHistory)
 
     var infoList = document.createElement("div");
     var unorderedList = document.createElement("ul");
@@ -19,14 +47,16 @@ function countryInfoCard() {
     var frequency = document.createElement("li");
     var waterQuality = document.createElement("li");
 
-    countryName.textContent = searchHistory.names.name
-    currency.textContent = searchHistory.currency.code
-    rate.textContent  = searchHistory.currency.rate
-    languageSpoken.textContent = searchHistory.language[0].language
+
+    countryName.textContent = countryData.names.name
+    currency.textContent = countryData.currency.code
+    rate.textContent  = countryData.currency.rate
+    languageSpoken.textContent = countryData.language[0].language
     // electricity.textContent = searchHistory.electricity
-    volt.textContent = searchHistory.electricity.voltage
-    frequency.textContent = searchHistory.electricity.frequency
-    waterQuality.textContent = searchHistory.water.short
+    volt.textContent = countryData.electricity.voltage
+    frequency.textContent = countryData.electricity.frequency
+    waterQuality.textContent = countryData.water.short
+
 
     countryInfo.append(infoList)
     infoList.append(unorderedList)
@@ -40,4 +70,4 @@ function countryInfoCard() {
     unorderedList.appendChild(waterQuality)
 };  
 
-countryInfoCard();
+getParams();
