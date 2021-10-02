@@ -12,7 +12,6 @@ var SearchBoxInputEl = document.querySelector("#serachBoxInput");
 // var SearchBoxBtnEl = document.querySelector("#searchBoxButton");
 // var countryInfo = document.querySelector("#countryInformation");
 
-<<<<<<< HEAD
 var SearchBoxEl = document.querySelector("#SearchBox-input")
 var countryInfo = document.querySelector("#countryInformation")
 
@@ -47,9 +46,7 @@ function countryData(){
   dec: {tMin:null, tMax:null, tAvg:null},
   }
 }
-=======
 document.getElementById("searchForm").addEventListener("submit", handleSearchFormSubmit);
->>>>>>> efa8a68bd8b2d911585012af66f89c9970d4fa40
 
 function handleSearchFormSubmit(event) {
   event.preventDefault();
