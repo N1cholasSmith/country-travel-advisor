@@ -1,16 +1,16 @@
 
 // TO DO LIST (feel free to tackle any of these)
-// 1. make evenlistener("click") function
-// 2. on enter or click the second page should load (atm its a manual load)
-// 3. autocomplete to be added to search bar (this is a possible source)
+// 1. make evenlistener("click") function  === Done ===
+// 2. on enter or click the second page should load (atm its a manual load) === Done ===
+// 3. autocomplete to be added to search bar (this is a possible source) === Done ===
 //          https://tarekraafat.github.io/autoComplete.js/#/usage
-// 4. Country Info background needs to be changed
+// 4. Country Info background needs to be changed === API call to upsplash API dynamic return image based on searched country === in progress ===
 // 5. countryInfo card needs a transparent background and font-size to be increased
 
 var serachFormEl = document.querySelector("#searchForm");
-var SearchBoxInputEl = document.querySelector("#searchBoxInput");
-var SearchBoxBtnEl = document.querySelector("#searchBoxButton");
-var countryInfo = document.querySelector("#countryInformation");
+var SearchBoxInputEl = document.querySelector("#serachBoxInput");
+// var SearchBoxBtnEl = document.querySelector("#searchBoxButton");
+// var countryInfo = document.querySelector("#countryInformation");
 
 document.getElementById("searchForm").addEventListener("submit", handleSearchFormSubmit);
 
@@ -20,6 +20,7 @@ function handleSearchFormSubmit(event) {
   let searchInput = SearchBoxInputEl.value;
   var queryString = "./countryinfo.html?q=" + searchInput;
 
+  // Reset the search input value
   this.reset();
   if (searchInput) {
     location.assign(queryString);
