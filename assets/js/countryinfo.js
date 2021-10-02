@@ -6,29 +6,29 @@ var bodyEl = document.querySelector("body");
 var countryInfo = document.querySelector("#countryInformation")
 var countryData = [];
 var upsplashAccessKey = "Ray's Key...";
-var upsplashUrl = ""; 
+var upsplashUrl = "";
 
-function getParams () {
+function getParams() {
     // Get the country name out of the URL
     let searchParamsArr = document.location.search.split("?");
     console.log(searchParamsArr);
     var country = searchParamsArr[1].split("=").pop();
     console.log("country: " + country);
 
-    upsplashGetDataUrl = "https://api.unsplash.com/search/photos/?client_id=" 
-    + upsplashAccessKey 
-    + "&query=" 
-    + country 
-    + "&order_by=relevant"
-    + "&page=1"
-    + "&per_page=10"
-    + "&auto=format"
-    // + "&color=colorOfChoice" - this parameter can be added later if certain color theme best match the website and fonts display
-    ;
+    upsplashGetDataUrl = "https://api.unsplash.com/search/photos/?client_id="
+        + upsplashAccessKey
+        + "&query="
+        + country
+        + "&order_by=relevant"
+        + "&page=1"
+        + "&per_page=10"
+        + "&auto=format"
+        // + "&color=colorOfChoice" - this parameter can be added later if certain color theme best match the website and fonts display
+        ;
 
-    upsplashGetPhotoUrl = "https://api.unsplash.com/photos/?client_id=" 
-    + upsplashAccessKey 
-    + "&id=";
+    upsplashGetPhotoUrl = "https://api.unsplash.com/photos/?client_id="
+        + upsplashAccessKey
+        + "&id=";
 
     fetchCountryPhoto(upsplashGetDataUrl);
 
@@ -41,52 +41,52 @@ function fetchCountryData(country) {
     // Change the first and last character on fetch URL from ` to '
     // Was causing the country variable not recognised issue
     fetch('https://travelbriefing.org/' + country + '?format=json')
-    .then(response => {
-        return response.json();
-    })
-    .then(data => {
-        countryData = data;
-        console.log(countryData);
-        countryInfoCard();
-    })
-    .catch(err => {
-        console.error(err);
-    });
+        .then(response => {
+            return response.json();
+        })
+        .then(data => {
+            countryData = data;
+            console.log(countryData);
+            countryInfoCard();
+        })
+        .catch(err => {
+            console.error(err);
+        });
 }
 
 // Fetch photo data from upsplash
 function fetchCountryPhoto(dataUrl, photoUrl) {
     console.log("UpsplashUrl: " + dataUrl);
     fetch(dataUrl)
-    .then(response => {
-        console.log(response)
-        return response.json();
-    })
-    .then(data => {
-        console.log(data);
-        console.log(data.results[0].id);
-        let firstRelevantPhotoID = data.results[0].id;
-        let firstRelevantPhotoUrl = data.results[0].urls.full;
-        console.log(firstRelevantPhotoUrl);
-        // upsplashGetPhotoUrl += firstRelevantPhotoID;
-        // console.log(upsplashGetPhotoUrl);
+        .then(response => {
+            console.log(response)
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+            console.log(data.results[0].id);
+            let firstRelevantPhotoID = data.results[0].id;
+            let firstRelevantPhotoUrl = data.results[0].urls.full;
+            console.log(firstRelevantPhotoUrl);
+            // upsplashGetPhotoUrl += firstRelevantPhotoID;
+            // console.log(upsplashGetPhotoUrl);
 
-        bodyEl.style = "background-image: url(" + firstRelevantPhotoUrl + ")";
-        // fetch(upsplashGetPhotoUrl)
-        // .then(response => {
-        //     console.log(response)
-        //     return response.json();
-        // })
-        // .then(data => {
-        //     console.log("firstRelevantPhotoData:" + data);
-        // })
-        // .catch(err => {
-        //     console.error(err);
-        // });
-    })
-    .catch(err => {
-        console.error(err);
-    });
+            bodyEl.style = "background-image: url(" + firstRelevantPhotoUrl + ")";
+            // fetch(upsplashGetPhotoUrl)
+            // .then(response => {
+            //     console.log(response)
+            //     return response.json();
+            // })
+            // .then(data => {
+            //     console.log("firstRelevantPhotoData:" + data);
+            // })
+            // .catch(err => {
+            //     console.error(err);
+            // });
+        })
+        .catch(err => {
+            console.error(err);
+        });
 }
 
 function countryInfoCard() {
@@ -107,12 +107,12 @@ function countryInfoCard() {
 
     countryName.textContent = "Country Name: " + countryData.names.name
     currency.textContent = " Currency: " + countryData.currency.code
-    rate.textContent = countryData.currency.rate
-    languageSpoken.textContent = countryData.language[0].language
+    rate.textContent = " Currency rate: " + countryData.currency.rate
+    languageSpoken.textContent = " Language spoken: " + countryData.language[0].language
     // electricity.textContent = searchHistory.electricity
-    volt.textContent = countryData.electricity.voltage
-    frequency.textContent = countryData.electricity.frequency
-    waterQuality.textContent = countryData.water.short
+    volt.textContent = " Voltage: " + countryData.electricity.voltage
+    frequency.textContent = " Electricity frequency: " + countryData.electricity.frequency
+    waterQuality.textContent = " Water Status: " + countryData.water.short
 
 
     countryInfo.append(infoList)
