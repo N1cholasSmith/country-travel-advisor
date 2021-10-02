@@ -15,9 +15,9 @@ function countryData(){
   console.log(countryData)
   fetch(`https://travelbriefing.org/${SearchBoxEl.value}?format=json`)
 
-// Initialize and add the map
-var country = 'Netherlands';
-var countryData = {
+  // Initialize and add the map
+  var country = 'Netherlands';
+  var countryData = {
   caUrl: null,
   uaUrl: null,
   currency: null,
@@ -40,6 +40,7 @@ var countryData = {
   oct: {tMin:null, tMax:null, tAvg:null},
   nov: {tMin:null, tMax:null, tAvg:null},
   dec: {tMin:null, tMax:null, tAvg:null},
+  }
 }
 
 // Fetch data from API
