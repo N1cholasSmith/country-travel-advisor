@@ -12,6 +12,40 @@ var SearchBoxInputEl = document.querySelector("#serachBoxInput");
 // var SearchBoxBtnEl = document.querySelector("#searchBoxButton");
 // var countryInfo = document.querySelector("#countryInformation");
 
+var SearchBoxEl = document.querySelector("#SearchBox-input")
+var countryInfo = document.querySelector("#countryInformation")
+
+function countryData(){
+  console.log(countryData)
+  fetch(`https://travelbriefing.org/${SearchBoxEl.value}?format=json`)
+
+  // Initialize and add the map
+  var country = 'Netherlands';
+  var countryData = {
+  caUrl: null,
+  uaUrl: null,
+  currency: null,
+  compareAus: null,
+  electricity: {vol:null, freq:null, plugs:null,},
+  language: null,
+  maps: {lat:null, lon:null},
+  names: {name:null, fullName:null, continent:null},
+  neighbors: [{id:null, name:null},{id:null, name:null},{id:null, name:null},{id:null, name:null},{id:null, name:null}],
+  telephone: {callingCode:null, police:null, ambulance:null, fire:null},
+  jan: {tMin:null, tMax:null, tAvg:null},
+  feb: {tMin:null, tMax:null, tAvg:null},
+  mar: {tMin:null, tMax:null, tAvg:null},
+  apr: {tMin:null, tMax:null, tAvg:null},
+  may: {tMin:null, tMax:null, tAvg:null},
+  jun: {tMin:null, tMax:null, tAvg:null},
+  jul: {tMin:null, tMax:null, tAvg:null},
+  aug: {tMin:null, tMax:null, tAvg:null},
+  sep: {tMin:null, tMax:null, tAvg:null},
+  oct: {tMin:null, tMax:null, tAvg:null},
+  nov: {tMin:null, tMax:null, tAvg:null},
+  dec: {tMin:null, tMax:null, tAvg:null},
+  }
+}
 document.getElementById("searchForm").addEventListener("submit", handleSearchFormSubmit);
 
 function handleSearchFormSubmit(event) {
@@ -26,6 +60,9 @@ function handleSearchFormSubmit(event) {
     location.assign(queryString);
   }
 }
+
+//hides the go back button on this file
+document.getElementById("goBack").style.display = "none";
 
 
 // ================ NICE TO HAVES================================================
@@ -63,7 +100,7 @@ function handleSearchFormSubmit(event) {
 //     console.log(data)
 //   })
 // }
-  
+
 // countryData();
 
 

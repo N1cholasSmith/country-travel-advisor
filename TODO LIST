@@ -1,0 +1,19 @@
+TODO LIST
+1.	Display country name as a title(countryinfo.html)
+2.	Use MATERIALIZE to display data in containers with a good UI
+3.	Weather dashboard info
+4.	Display Data in cards so it can be styled to Page
+
+Ben Questions.
+fetch concurrently?
+
+Polished List
+4.  Optimized for mobile screens (materialize coloums?)
+5.	Optimize accessibility
+6.	SEO semantic structure 
+
+
+NICE TO HAVES
+1.	Search history on (countryinfo.html)
+2.	Style “BACK” button
+3.	add Map below which automatically searches
