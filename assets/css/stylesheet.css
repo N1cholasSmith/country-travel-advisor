@@ -90,6 +90,15 @@ button {
 .SearchBox-button:active {
   transform: scale(0.85);
 }
+
+/* Set the size of the div element that contains the map */
+#map {
+  height: 400px;
+  /* The height is 400 pixels */
+  width: 100%;
+  /* The width is the width of the web page */
+}
+
 @media screen and (min-width: 400px) {
   .SearchBox:hover .SearchBox-input {
     width: 500px;
@@ -103,3 +112,11 @@ button {
   font-family: "Montserrat", sans-serif;
   font-size: 24px;
 }
+
+.html {
+  height: 100%;
+  background: url(../images/100164-56.jpg) no-repeat fixed center;
+  background-size: cover;
+  /* background-repeat: no-repeat; */
+}
+
