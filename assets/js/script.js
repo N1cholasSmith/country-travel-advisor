@@ -8,68 +8,35 @@
 // 5. countryInfo card needs a transparent background and font-size to be increased
 
 
-var SearchBoxEl = document.querySelector("#SearchBox-input")
+var SearchBoxInputEl = document.querySelector("#serachBoxInput")
+var SearchBoxBtnEl = document.querySelector("#searchBoxButton")
 var countryInfo = document.querySelector("#countryInformation")
 
-function countryData(){
-  console.log(countryData)
-  fetch(`https://travelbriefing.org/${SearchBoxEl.value}?format=json`)
-
-// Initialize and add the map
-var country = 'Netherlands';
-var countryData = {
-  caUrl: null,
-  uaUrl: null,
-  currency: null,
-  compareAus: null,
-  electricity: {vol:null, freq:null, plugs:null,},
-  language: null,
-  maps: {lat:null, lon:null},
-  names: {name:null, fullName:null, continent:null},
-  neighbors: [{id:null, name:null},{id:null, name:null},{id:null, name:null},{id:null, name:null},{id:null, name:null}],
-  telephone: {callingCode:null, police:null, ambulance:null, fire:null},
-  jan: {tMin:null, tMax:null, tAvg:null},
-  feb: {tMin:null, tMax:null, tAvg:null},
-  mar: {tMin:null, tMax:null, tAvg:null},
-  apr: {tMin:null, tMax:null, tAvg:null},
-  may: {tMin:null, tMax:null, tAvg:null},
-  jun: {tMin:null, tMax:null, tAvg:null},
-  jul: {tMin:null, tMax:null, tAvg:null},
-  aug: {tMin:null, tMax:null, tAvg:null},
-  sep: {tMin:null, tMax:null, tAvg:null},
-  oct: {tMin:null, tMax:null, tAvg:null},
-  nov: {tMin:null, tMax:null, tAvg:null},
-  dec: {tMin:null, tMax:null, tAvg:null},
-}
-
-// Fetch data from API
-function countryData(country){
-  fetch(`https://travelbriefing.org/' + ${country} + '?format=json`)
-  .then(response => {
-    return response.json();
-    console.log(response);
-  })
-  .then(data => {
-    console.log(data);
-
-    localStorage.setItem("countries", JSON.stringify(data)); 
-  })
-  .catch(err => {
-  console.error(err);
-  });
-}
-
-
-SearchBoxEl.addEventListener("keydown", function(event){
+SearchBoxInputEl.addEventListener("keydown", function(event){
   if (event.keyCode === 13){
-    countryData();
+    console.log("event!");
+    // console.log(SearchBoxInputEl.value);
+    let searchInput = SearchBoxInputEl.value;
+    // fetchCountryData(searchInput);
+    console.log(searchInput);
+
+    var queryString = "./countryinfo.html?q=" + searchInput;
+    location.assign(queryString);
   }
 }); 
 
-
 // this doesn't work yet
-// SearchBoxEl.addEventListener("click", countryData)
+SearchBoxBtnEl.addEventListener("click", function() {
+  // Only fires the this click event when value has been input
+  if (SearchBoxInputEl.value) {
+    let searchInput = SearchBoxInputEl.value;
+    // fetchCountryData(searchInput);
+    console.log(searchInput);
 
+    var queryString = "./countryinfo.html?q=" + searchInput;
+    location.assign(queryString);
+  }
+})
 
 
 
@@ -128,4 +95,3 @@ SearchBoxEl.addEventListener("keydown", function(event){
 //   });
 // }
 // initMap();
-
