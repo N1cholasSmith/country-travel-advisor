@@ -7,9 +7,8 @@ var countryInfo = document.querySelector("#countryInformation")
 var countryData = [];
 var weatherData = [];
 var openWeatherMapAPiKey = '1f9d3014d1a028a24c084adbdcec9008';
-var upsplashAccessKey = "sUG4r-Ray's-Key ";
+var upsplashAccessKey = "sUG4r-3ndwxJ_35XLlzNo7x-v70k-44ugUAux9bNqLQ";
 var upsplashUrl = ""; 
-var upsplashAccessKey = " SUGAR RAYS KEY....... ";
 var displayCountryel = document.querySelector(".CountryName");
 
 function getParams() {
