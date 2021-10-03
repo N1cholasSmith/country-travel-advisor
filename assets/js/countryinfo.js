@@ -5,15 +5,12 @@
 var bodyEl = document.querySelector("body");
 var countryInfo = document.querySelector("#countryInformation")
 var countryData = [];
-
 var weatherData = [];
 var openWeatherMapAPiKey = '1f9d3014d1a028a24c084adbdcec9008';
 var upsplashAccessKey = "sUG4r-Ray's-Key ";
 var upsplashUrl = ""; 
-
-
 var upsplashAccessKey = " SUGAR RAYS KEY....... ";
-var upsplashUrl = "";
+var displayCountryel = document.querySelector(".CountryName");
 
 function getParams() {
     // Get the country name out of the URL
@@ -127,6 +124,10 @@ function countryInfoCard() {
     var frequency = document.createElement("li");
     var waterQuality = document.createElement("li");
 
+    //shows go back button
+    document.getElementById("goBack").style.display = "block";
+    displayCountryel.textContent = countryData.names.name
+
     var tempEl = document.createElement("li");
     var feelsLikeEl = document.createElement("li");
     var humidityEl = document.createElement("li");
@@ -155,7 +156,6 @@ function countryInfoCard() {
     //shows go back button
     document.getElementById("goBack").style.display = "block";
 
-    countryName.textContent = "Country Name: " + countryData.names.name
     currency.textContent = " Currency: " + countryData.currency.code
     rate.textContent = " Currency rate: " + countryData.currency.rate
     languageSpoken.textContent = " Language spoken: " + countryData.language[0].language
