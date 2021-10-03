@@ -5,8 +5,9 @@
 var bodyEl = document.querySelector("body");
 var countryInfo = document.querySelector("#countryInformation")
 var countryData = [];
-var upsplashAccessKey = "Rays-key";
+var upsplashAccessKey = "Rays.key";
 var upsplashUrl = "";
+var displayCountryel = document.querySelector(".CountryName");
 
 function getParams() {
     // Get the country name out of the URL
@@ -103,12 +104,9 @@ function countryInfoCard() {
     var volt = document.createElement("li");
     var frequency = document.createElement("li");
     var waterQuality = document.createElement("li");
-
     //shows go back button
     document.getElementById("goBack").style.display = "block";
-
-
-    countryName.textContent = "Country Name: " + countryData.names.name
+    displayCountryel.textContent = countryData.names.name
     currency.textContent = " Currency: " + countryData.currency.code
     rate.textContent = " Currency rate: " + countryData.currency.rate
     languageSpoken.textContent = " Language spoken: " + countryData.language[0].language
