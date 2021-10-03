@@ -5,8 +5,11 @@
 var bodyEl = document.querySelector("body");
 var countryInfo = document.querySelector("#countryInformation")
 var countryData = [];
-var upsplashAccessKey = "Rays.key";
-var upsplashUrl = "";
+var weatherData = [];
+var openWeatherMapAPiKey = '1f9d3014d1a028a24c084adbdcec9008';
+var upsplashAccessKey = "sUG4r-Ray's-Key ";
+var upsplashUrl = ""; 
+var upsplashAccessKey = " SUGAR RAYS KEY....... ";
 var displayCountryel = document.querySelector(".CountryName");
 
 function getParams() {
@@ -34,6 +37,8 @@ function getParams() {
     fetchCountryPhoto(upsplashGetDataUrl);
 
     fetchCountryData(country);
+
+    fetchWeatherData(country);
 }
 
 // Moved the fetch data function from script.js to here
@@ -48,7 +53,9 @@ function fetchCountryData(country) {
         .then(data => {
             countryData = data;
             console.log(countryData);
+            console.log(emergency)
             countryInfoCard();
+            emergency();
         })
         .catch(err => {
             console.error(err);
@@ -59,35 +66,47 @@ function fetchCountryData(country) {
 function fetchCountryPhoto(dataUrl, photoUrl) {
     console.log("UpsplashUrl: " + dataUrl);
     fetch(dataUrl)
-        .then(response => {
-            console.log(response)
+    .then(response => {
+        console.log(response)
+        return response.json();
+    })
+    .then(data => {
+        console.log(data);
+        console.log(data.results[0].id);
+        let firstRelevantPhotoID = data.results[0].id;
+        let firstRelevantPhotoUrl = data.results[0].urls.full;
+        console.log(firstRelevantPhotoUrl);
+        // upsplashGetPhotoUrl += firstRelevantPhotoID;
+        // console.log(upsplashGetPhotoUrl);
+
+        bodyEl.style = "background-image: url(" + firstRelevantPhotoUrl + ")";
+    })
+    .catch(err => {
+        console.error(err);
+    });
+}
+
+// Fetch weather data
+function fetchWeatherData(country) {
+    let openWeatherMapUrl = "https://api.openweathermap.org/data/2.5/weather?q=" 
+    + country
+    + "&units=metric&appid=" 
+    + openWeatherMapAPiKey;
+
+    fetch(openWeatherMapUrl)
+        .then(function (response) {
+            if(!response.ok) {
+            throw response.json();
+            }
             return response.json();
         })
-        .then(data => {
+        .then(function (data) {
             console.log(data);
-            console.log(data.results[0].id);
-            let firstRelevantPhotoID = data.results[0].id;
-            let firstRelevantPhotoUrl = data.results[0].urls.full;
-            console.log(firstRelevantPhotoUrl);
-            // upsplashGetPhotoUrl += firstRelevantPhotoID;
-            // console.log(upsplashGetPhotoUrl);
-
-            bodyEl.style = "background-image: url(" + firstRelevantPhotoUrl + ")";
-            // fetch(upsplashGetPhotoUrl)
-            // .then(response => {
-            //     console.log(response)
-            //     return response.json();
-            // })
-            // .then(data => {
-            //     console.log("firstRelevantPhotoData:" + data);
-            // })
-            // .catch(err => {
-            //     console.error(err);
-            // });
-        })
-        .catch(err => {
-            console.error(err);
-        });
+            weatherData = data;
+          })
+        .catch(function (error) {
+            console.log(error);
+          });
 }
 
 function countryInfoCard() {
@@ -104,9 +123,39 @@ function countryInfoCard() {
     var volt = document.createElement("li");
     var frequency = document.createElement("li");
     var waterQuality = document.createElement("li");
+
     //shows go back button
     document.getElementById("goBack").style.display = "block";
     displayCountryel.textContent = countryData.names.name
+
+    var tempEl = document.createElement("li");
+    var feelsLikeEl = document.createElement("li");
+    var humidityEl = document.createElement("li");
+    var weatherIconLiEL = document.createElement("li");
+    var weatherIconEl = document.createElement("img");
+    weatherIconLiEL.appendChild(weatherIconEl);
+
+
+    countryName.textContent = countryData.names.name
+    currency.textContent = "Currency: " + countryData.currency.code
+    rate.textContent  = "Rate: " + countryData.currency.rate
+    languageSpoken.textContent = "Language: " + countryData.language[0].language
+    // electricity.textContent = searchHistory.electricity
+    volt.textContent = "Voltage: " + countryData.electricity.voltage
+    frequency.textContent = "Frequency: " + countryData.electricity.frequency
+    waterQuality.textContent = "Water Quality: " + countryData.water.short
+
+    tempEl.textContent = "Temperature: " + weatherData.main.temp;
+    feelsLikeEl.textContent = "Feels like: " + weatherData.main.feels_like;
+    humidityEl.textContent = "Humidity: " + weatherData.main.humidity;
+    let weatherIcon = weatherData.weather[0].icon;
+    weatherIconEl.setAttribute('src', 'http://openweathermap.org/img/wn/' 
+        + weatherIcon
+        + '@2x.png');
+  
+    //shows go back button
+    document.getElementById("goBack").style.display = "block";
+
     currency.textContent = " Currency: " + countryData.currency.code
     rate.textContent = " Currency rate: " + countryData.currency.rate
     languageSpoken.textContent = " Language spoken: " + countryData.language[0].language
@@ -116,20 +165,60 @@ function countryInfoCard() {
     waterQuality.textContent = " Water Status: " + countryData.water.short
 
 
+    countryInfo.append(infoList);
+    infoList.append(unorderedList);
 
+    // unorderedList.appendChild(countryName);
+    // unorderedList.appendChild(currency);
+    // unorderedList.appendChild(rate);
+    // unorderedList.appendChild(languageSpoken);
+    // unorderedList.appendChild(electricity);
+    // unorderedList.appendChild(volt);
+    // unorderedList.appendChild(frequency);
+    // unorderedList.appendChild(waterQuality);
+    // unorderedList.appendChild(tempEl);
+    // unorderedList.appendChild(feelsLikeEl);
+    // unorderedList.appendChild(humidityEl);
+    // unorderedList.appendChild(weatherIconLiEL);
 
-    countryInfo.append(infoList)
-    infoList.append(unorderedList)
-    unorderedList.appendChild(countryName)
-    unorderedList.appendChild(currency)
-    unorderedList.appendChild(rate)
-    unorderedList.appendChild(languageSpoken)
-    unorderedList.appendChild(electricity)
-    unorderedList.appendChild(volt)
-    unorderedList.appendChild(frequency)
-    unorderedList.appendChild(waterQuality)
-};
+    // Option 2 to keep it more neat
+    unorderedList.append(countryName, 
+        currency,
+        rate,
+        languageSpoken,
+        electricity,
+        volt,
+        frequency,
+        waterQuality,
+        tempEl,
+        feelsLikeEl,
+        humidityEl,
+        weatherIconLiEL)
+};  
 
+function emergency(){
+    
+    var infoList = document.createElement("div");
+    var unorderedList = document.createElement("ul");
+    var emergencyNumbers = document.createElement("li");
+    var callingCode = document.createElement("li");
+    var police = document.createElement("li");
+    var ambulance = document.createElement("li");
+    var fire = document.createElement("li");
 
+    emergencyNumbers.textContent = "Emergency Telephone Numbers "
+    callingCode.textContent = " Calling Code: " + countryData.telephone.calling_code
+    police.textContent = " Police: " + countryData.telephone.police
+    ambulance.textContent = " Ambulance: " + countryData.telephone.ambulance
+    fire.textContent = " Fire: " + countryData.telephone.fire
+    
+    countryInfo.append(infoList);
+    infoList.append(unorderedList);
+    unorderedList.appendChild(emergencyNumbers);
+    unorderedList.appendChild(callingCode);
+    unorderedList.appendChild(police);
+    unorderedList.appendChild(ambulance);
+    unorderedList.appendChild(fire);
+}
 
 getParams();
