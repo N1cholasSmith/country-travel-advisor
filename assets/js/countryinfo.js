@@ -17,7 +17,7 @@ var progressBarEl = document.querySelector("#progressBar")
 
 function getParams() {
     // Display progress bar
-    progreeBarEl.style.display = "block";
+    progressBarEl.style.display = "block";
 
     // Get the country name out of the URL
     let searchParamsArr = document.location.search.split("?");
