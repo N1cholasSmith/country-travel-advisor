@@ -124,5 +124,17 @@ button {
   /* background-repeat: no-repeat; */
 }
 
+.cards{
+  display:flex;
+}
+.cards div{
+  background-color:grey;
+  border-radius:15px;
+  display:inline;
+  margin:10px;
+  justify-content:space-evenly;
+}
+
+
 
 
