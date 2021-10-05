@@ -7,8 +7,10 @@ var countryInfo = document.querySelector("#countryInformation")
 var countryData = [];
 var weatherData = [];
 var openWeatherMapAPiKey = '1f9d3014d1a028a24c084adbdcec9008';
+var upsplashUrl = "";
+var alertEl = document.querySelector(".Alert");
+var InfoListEl = document.querySelector("#InfoList");
 var upsplashAccessKey = "sUG4r-3ndwxJ_35XLlzNo7x-v70k-44ugUAux9bNqLQ";
-var upsplashUrl = ""; 
 var displayCountryel = document.querySelector(".CountryName");
 var progressBarEl = document.querySelector("#progressBar")
 
@@ -62,6 +64,7 @@ function fetchCountryData(country) {
             console.log(emergency)
             countryInfoCard();
             emergency();
+            neighboringCountries();
         })
         .catch(err => {
             console.error(err);
@@ -72,47 +75,47 @@ function fetchCountryData(country) {
 function fetchCountryPhoto(dataUrl, photoUrl) {
     console.log("UpsplashUrl: " + dataUrl);
     fetch(dataUrl)
-    .then(response => {
-        console.log(response)
-        return response.json();
-    })
-    .then(data => {
-        console.log(data);
-        console.log(data.results[0].id);
-        let firstRelevantPhotoID = data.results[0].id;
-        let firstRelevantPhotoUrl = data.results[0].urls.full;
-        console.log(firstRelevantPhotoUrl);
-        // upsplashGetPhotoUrl += firstRelevantPhotoID;
-        // console.log(upsplashGetPhotoUrl);
+        .then(response => {
+            console.log(response)
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+            console.log(data.results[0].id);
+            let firstRelevantPhotoID = data.results[0].id;
+            let firstRelevantPhotoUrl = data.results[0].urls.full;
+            console.log(firstRelevantPhotoUrl);
+            // upsplashGetPhotoUrl += firstRelevantPhotoID;
+            // console.log(upsplashGetPhotoUrl);
 
-        bodyEl.style = "background-image: url(" + firstRelevantPhotoUrl + ")";
-    })
-    .catch(err => {
-        console.error(err);
-    });
+            bodyEl.style = "background-image: url(" + firstRelevantPhotoUrl + ")";
+        })
+        .catch(err => {
+            console.error(err);
+        });
 }
 
 // Fetch weather data
 function fetchWeatherData(country) {
-    let openWeatherMapUrl = "https://api.openweathermap.org/data/2.5/weather?q=" 
-    + country
-    + "&units=metric&appid=" 
-    + openWeatherMapAPiKey;
+    let openWeatherMapUrl = "https://api.openweathermap.org/data/2.5/weather?q="
+        + country
+        + "&units=metric&appid="
+        + openWeatherMapAPiKey;
 
     fetch(openWeatherMapUrl)
         .then(function (response) {
-            if(!response.ok) {
-            throw response.json();
+            if (!response.ok) {
+                throw response.json();
             }
             return response.json();
         })
         .then(function (data) {
             console.log(data);
             weatherData = data;
-          })
+        })
         .catch(function (error) {
             console.log(error);
-          });
+        });
 }
 
 function countryInfoCard() {
@@ -144,7 +147,7 @@ function countryInfoCard() {
 
     countryName.textContent = countryData.names.name
     currency.textContent = "Currency: " + countryData.currency.code
-    rate.textContent  = "Rate: " + countryData.currency.rate
+    rate.textContent = "Rate: " + countryData.currency.rate
     languageSpoken.textContent = "Language: " + countryData.language[0].language
     // electricity.textContent = searchHistory.electricity
     volt.textContent = "Voltage: " + countryData.electricity.voltage
@@ -155,7 +158,7 @@ function countryInfoCard() {
     feelsLikeEl.textContent = "Feels like: " + weatherData.main.feels_like;
     humidityEl.textContent = "Humidity: " + weatherData.main.humidity;
     let weatherIcon = weatherData.weather[0].icon;
-    weatherIconEl.setAttribute('src', 'http://openweathermap.org/img/wn/' 
+    weatherIconEl.setAttribute('src', 'http://openweathermap.org/img/wn/'
         + weatherIcon
         + '@2x.png');
 
@@ -185,7 +188,7 @@ function countryInfoCard() {
     // unorderedList.appendChild(weatherIconLiEL);
 
     // Option 2 to keep it more neat
-    unorderedList.append(countryName, 
+    unorderedList.append(countryName,
         currency,
         rate,
         languageSpoken,
@@ -198,6 +201,8 @@ function countryInfoCard() {
         humidityEl,
         weatherIconLiEL)
 
+};
+
     // shows go back button
     document.getElementById("goBack").style.display = "block";
 
@@ -205,8 +210,9 @@ function countryInfoCard() {
     progressBarEl.style.display = "none";
 };  
 
-function emergency(){
-    
+function emergency() {
+    InfoListEl.innerHTML = "";
+    var heading = document.createElement("h1")
     var infoList = document.createElement("div");
     var unorderedList = document.createElement("ul");
     var emergencyNumbers = document.createElement("li");
@@ -215,19 +221,45 @@ function emergency(){
     var ambulance = document.createElement("li");
     var fire = document.createElement("li");
 
-    emergencyNumbers.textContent = "Emergency Telephone Numbers "
+    heading.textContent = "Emergency Telephone Numbers "
     callingCode.textContent = " Calling Code: " + countryData.telephone.calling_code
     police.textContent = " Police: " + countryData.telephone.police
     ambulance.textContent = " Ambulance: " + countryData.telephone.ambulance
     fire.textContent = " Fire: " + countryData.telephone.fire
-    
-    countryInfo.append(infoList);
+
+    InfoListEl.append(heading, infoList);
     infoList.append(unorderedList);
     unorderedList.appendChild(emergencyNumbers);
     unorderedList.appendChild(callingCode);
     unorderedList.appendChild(police);
     unorderedList.appendChild(ambulance);
     unorderedList.appendChild(fire);
+}
+
+function neighboringCountries(){
+    console.log(neighboringCountries)
+
+    var infoList = document.createElement("div");
+    var unorderedList = document.createElement("ul");
+    var neighborsTitle = document.createElement("li");
+    var neighbor1 = document.createElement("li");
+    var neighbor2 = document.createElement("li");
+    var neighbor3 = document.createElement("li");
+    var neighbor4 = document.createElement("li");
+
+    neighborsTitle.textContent = "Neighboring Countries"
+    neighbor1.textContent = countryData.neighbors[0].name
+    neighbor2.textContent = countryData.neighbors[1].name
+    neighbor3.textContent = countryData.neighbors[2].name
+    neighbor4.textContent = countryData.neighbors[3].name
+    
+    countryInfo.append(infoList);
+    infoList.append(unorderedList);
+    unorderedList.appendChild(neighborsTitle);
+    unorderedList.appendChild(neighbor1);
+    unorderedList.appendChild(neighbor2);
+    unorderedList.appendChild(neighbor3);
+    unorderedList.appendChild(neighbor4);
 }
 
 getParams();
