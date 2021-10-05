@@ -4,7 +4,8 @@
 // var SearchBoxEl = document.querySelector("#SearchBox-input")
 var bodyEl = document.querySelector("body");
 var countryInfo = document.querySelector("#countryInformation")
-var countryData = [];
+var countryData = JSON.parse(localStorage.getItem("countryData"));
+var country = countryData.names.name;
 var weatherData = [];
 var openWeatherMapAPiKey = '1f9d3014d1a028a24c084adbdcec9008';
 var upsplashUrl = "";
@@ -19,11 +20,12 @@ function getParams() {
     progressBarEl.style.display = "block";
 
     // Get the country name out of the URL
-    let searchParamsArr = document.location.search.split("?");
-    console.log(searchParamsArr);
-    var country = searchParamsArr[1].split("=").pop();
-    country = country.toLowerCase();
-    console.log("country: " + country);
+    // Commenting the below codes out - due to fetch country data relocated back to script.js
+    // let searchParamsArr = document.location.search.split("?");
+    // console.log(searchParamsArr);
+    // var country = searchParamsArr[1].split("=").pop();
+    // country = country.toLowerCase();
+    // console.log("country: " + country);
 
     upsplashGetDataUrl = "https://api.unsplash.com/search/photos/?client_id="
         + upsplashAccessKey
@@ -42,40 +44,40 @@ function getParams() {
 
     fetchCountryPhoto(upsplashGetDataUrl);
 
-    fetchCountryData(country);
+    // fetchCountryData(country);
 
     fetchWeatherData(country);
 };
 
-// Moved the fetch data function from script.js to here
-function fetchCountryData(country) {
-    // Change the first and last character on fetch URL from ` to '
-    // Was causing the country variable not recognised issue
-    fetch('https://travelbriefing.org/' + country + '?format=json')
-        .then(response => {
-            console.log(response);
-            console.log(response.status); // 200
-            console.log(response.statusText); // OK
-            if (response.status != 200) {
-                console.log("Response status is not 200!!")
-            }
-            return response.json();
-        })
-        .then(data => {
-            if ( (country !== "netherlands") && (countryData.names.name === "Netherlands")) {
-                console.log("Response status is not 200!!")
-            }
-            countryData = data;
-            console.log(countryData);
-            console.log(emergency)
-            countryInfoCard();
-            emergency();
-            neighboringCountries();
-        })
-        .catch(err => {
-            console.error(err);
-        });
-};
+// Moved the fetch data function from back to script.js...
+// function fetchCountryData(country) {
+//     // Change the first and last character on fetch URL from ` to '
+//     // Was causing the country variable not recognised issue
+//     fetch('https://travelbriefing.org/' + country + '?format=json')
+//         .then(response => {
+//             console.log(response);
+//             console.log(response.status); // 200
+//             console.log(response.statusText); // OK
+//             if (response.status != 200) {
+//                 console.log("Response status is not 200!!")
+//             }
+//             return response.json();
+//         })
+//         .then(data => {
+//             if ( (country !== "netherlands") && (countryData.names.name === "Netherlands")) {
+//                 console.log("Response status is not 200!!")
+//             }
+//             localStorage.setItem("countryData", data)
+//             this.reset();
+//             location.assign("./countryinfo.html");
+//             countryData = data;
+//             console.log(countryData);
+//             console.log(emergency)
+//         })
+//         .catch(err => {
+//             console.error(err);
+//         });
+//   };
 
 // Fetch photo data from upsplash
 function fetchCountryPhoto(dataUrl) {
@@ -117,6 +119,7 @@ function fetchWeatherData(country) {
         .then(function (data) {
             console.log(data);
             weatherData = data;
+            countryInfoCard();
         })
         .catch(function (error) {
             console.log(error);
@@ -140,7 +143,7 @@ function countryInfoCard() {
 
     //shows go back button
     document.getElementById("goBack").style.display = "block";
-    displayCountryel.textContent = countryData.names.name
+    displayCountryel.textContent = country;
 
     var tempEl = document.createElement("li");
     var feelsLikeEl = document.createElement("li");
