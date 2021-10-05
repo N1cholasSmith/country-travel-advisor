@@ -8,7 +8,7 @@
 // 5. countryInfo card needs a transparent background and font-size to be increased
 
 var serachFormEl = document.querySelector("#searchForm");
-var SearchBoxInputEl = document.querySelector("#serachBoxInput");
+var SearchBoxInputEl = document.querySelector("#searchBoxInput");
 // var SearchBoxBtnEl = document.querySelector("#searchBoxButton");
 // var countryInfo = document.querySelector("#countryInformation");
 
