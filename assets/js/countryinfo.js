@@ -62,6 +62,7 @@ function fetchCountryData(country) {
             console.log(emergency)
             countryInfoCard();
             emergency();
+            neighboringCountries();
         })
         .catch(err => {
             console.error(err);
@@ -231,6 +232,32 @@ function emergency() {
     unorderedList.appendChild(police);
     unorderedList.appendChild(ambulance);
     unorderedList.appendChild(fire);
+}
+
+function neighboringCountries(){
+    console.log(neighboringCountries)
+
+    var infoList = document.createElement("div");
+    var unorderedList = document.createElement("ul");
+    var neighborsTitle = document.createElement("li");
+    var neighbor1 = document.createElement("li");
+    var neighbor2 = document.createElement("li");
+    var neighbor3 = document.createElement("li");
+    var neighbor4 = document.createElement("li");
+
+    neighborsTitle.textContent = "Neighboring Countries"
+    neighbor1.textContent = countryData.neighbors[0].name
+    neighbor2.textContent = countryData.neighbors[1].name
+    neighbor3.textContent = countryData.neighbors[2].name
+    neighbor4.textContent = countryData.neighbors[3].name
+    
+    countryInfo.append(infoList);
+    infoList.append(unorderedList);
+    unorderedList.appendChild(neighborsTitle);
+    unorderedList.appendChild(neighbor1);
+    unorderedList.appendChild(neighbor2);
+    unorderedList.appendChild(neighbor3);
+    unorderedList.appendChild(neighbor4);
 }
 
 getParams();
