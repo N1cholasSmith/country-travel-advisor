@@ -200,12 +200,11 @@ function countryInfoCard() {
 
 };
 
-    // shows go back button
-    document.getElementById("goBack").style.display = "block";
+// shows go back button
+document.getElementById("goBack").style.display = "block";
 
-    // Hides progress bar
-    progressBarEl.style.display = "none";
-};  
+// Hides progress bar
+progressBarEl.style.display = "none";
 
 function emergency() {
     InfoListEl.innerHTML = "";
