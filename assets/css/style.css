@@ -1,7 +1,7 @@
 :root {
-  --accent-color: #F50057;
+  --accent-color: #f50057;
   --text-color: #263238;
-  --body-color: #80DEEA;
+  --body-color: #80deea;
   /* --main-font: "roboto"; */
   --font-bold: 700;
   --font-regular: 400;
@@ -69,7 +69,12 @@ button {
 .SearchBox:hover .SearchBox-input {
   padding-left: 2em;
   padding-right: 1em;
-  width: 240px;
+  width: 250px;
+}
+.focused {
+  padding-left: 2em;
+  padding-right: 1em;
+  width: 250px !important;
 }
 .SearchBox-input {
   width: 0;
@@ -77,6 +82,7 @@ button {
   color: #fff;
   transition: 0.45s;
   font-family: "Montserrat", sans-serif;
+  line-height: 1.5;
   font-weight: 600;
 }
 .SearchBox-button {
@@ -91,10 +97,9 @@ button {
 .SearchBox-button:active {
   transform: scale(0.85);
 }
-.input-field input[type=text]:focus {
+.input-field input[type="text"]:focus {
   border-bottom: 0px;
 }
-
 
 /* Set the size of the div element that contains the map */
 #map {
@@ -107,6 +112,12 @@ button {
 @media screen and (min-width: 400px) {
   .SearchBox:hover .SearchBox-input {
     width: 500px;
+  }
+
+  .focused {
+    padding-left: 2em;
+    padding-right: 1em;
+    width: 500px !important;
   }
 }
 .main-header {
@@ -124,6 +135,3 @@ button {
   background-size: cover;
   /* background-repeat: no-repeat; */
 }
-
-
-
