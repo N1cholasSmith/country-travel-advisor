@@ -7,15 +7,18 @@ var countryInfo = document.querySelector("#countryInformation")
 var countryData = [];
 var weatherData = [];
 var openWeatherMapAPiKey = '1f9d3014d1a028a24c084adbdcec9008';
-var upsplashAccessKey = "sUG4r-Ray's-Key ";
 var upsplashUrl = "";
-var upsplashAccessKey = " SUGAR RAYS KEY....... ";
-var displayCountryel = document.querySelector(".CountryName");
 var alertEl = document.querySelector(".Alert");
 var InfoListEl = document.querySelector("#InfoList");
+var upsplashAccessKey = "sUG4r-3ndwxJ_35XLlzNo7x-v70k-44ugUAux9bNqLQ";
+var displayCountryel = document.querySelector(".CountryName");
+var progressBarEl = document.querySelector("#progressBar")
 
 
 function getParams() {
+    // Display progress bar
+    progreeBarEl.style.display = "block";
+
     // Get the country name out of the URL
     let searchParamsArr = document.location.search.split("?");
     console.log(searchParamsArr);
@@ -156,9 +159,6 @@ function countryInfoCard() {
         + weatherIcon
         + '@2x.png');
 
-    //shows go back button
-    document.getElementById("goBack").style.display = "block";
-
     currency.textContent = " Currency: " + countryData.currency.code
     rate.textContent = " Currency rate: " + countryData.currency.rate
     languageSpoken.textContent = " Language spoken: " + countryData.language[0].language
@@ -197,7 +197,15 @@ function countryInfoCard() {
         feelsLikeEl,
         humidityEl,
         weatherIconLiEL)
+
 };
+
+    // shows go back button
+    document.getElementById("goBack").style.display = "block";
+
+    // Hides progress bar
+    progressBarEl.style.display = "none";
+};  
 
 function emergency() {
     InfoListEl.innerHTML = "";
