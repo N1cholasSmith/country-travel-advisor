@@ -12,7 +12,8 @@ var alertEl = document.querySelector(".Alert");
 var InfoListEl = document.querySelector("#InfoList");
 var upsplashAccessKey = "sUG4r-3ndwxJ_35XLlzNo7x-v70k-44ugUAux9bNqLQ";
 var displayCountryel = document.querySelector(".CountryName");
-var progressBarEl = document.querySelector("#progressBar")
+var progressBarEl = document.querySelector("#progressBar");
+var NextDoor = document.querySelector("#NextDoor");
 
 function getParams() {
     // Display progress bar
@@ -121,7 +122,7 @@ function fetchWeatherData(country) {
 function countryInfoCard() {
 
     countryInfo.innerHTML = "";
-
+    var heading = document.createElement("h1");
     var infoList = document.createElement("div");
     var unorderedList = document.createElement("ul");
     var countryName = document.createElement("li");
@@ -135,7 +136,7 @@ function countryInfoCard() {
 
     //shows go back button
     document.getElementById("goBack").style.display = "block";
-    displayCountryel.textContent = countryData.names.name
+    heading.textContent = countryData.names.name
 
     var tempEl = document.createElement("li");
     var feelsLikeEl = document.createElement("li");
@@ -145,7 +146,7 @@ function countryInfoCard() {
     weatherIconLiEL.appendChild(weatherIconEl);
 
 
-    countryName.textContent = countryData.names.name
+    // countryName.textContent = countryData.names.name
     currency.textContent = "Currency: " + countryData.currency.code
     rate.textContent = "Rate: " + countryData.currency.rate
     languageSpoken.textContent = "Language: " + countryData.language[0].language
@@ -157,10 +158,10 @@ function countryInfoCard() {
     tempEl.textContent = "Temperature: " + weatherData.main.temp;
     feelsLikeEl.textContent = "Feels like: " + weatherData.main.feels_like;
     humidityEl.textContent = "Humidity: " + weatherData.main.humidity;
-    let weatherIcon = weatherData.weather[0].icon;
-    weatherIconEl.setAttribute('src', 'http://openweathermap.org/img/wn/'
-        + weatherIcon
-        + '@2x.png');
+    // let weatherIcon = weatherData.weather[0].icon;
+    // weatherIconEl.setAttribute('src', 'http://openweathermap.org/img/wn/'
+    //     + weatherIcon
+    //     + '@2x.png');
 
     currency.textContent = " Currency: " + countryData.currency.code
     rate.textContent = " Currency rate: " + countryData.currency.rate
@@ -171,7 +172,7 @@ function countryInfoCard() {
     waterQuality.textContent = " Water Status: " + countryData.water.short
 
 
-    countryInfo.append(infoList);
+    countryInfo.append(heading, infoList);
     infoList.append(unorderedList);
 
     // unorderedList.appendChild(countryName);
@@ -203,16 +204,15 @@ function countryInfoCard() {
 
 };
 
-    // shows go back button
-    document.getElementById("goBack").style.display = "block";
+// shows go back button
+document.getElementById("goBack").style.display = "block";
 
-    // Hides progress bar
-    progressBarEl.style.display = "none";
-};  
+// Hides progress bar
+progressBarEl.style.display = "none";
 
 function emergency() {
     InfoListEl.innerHTML = "";
-    var heading = document.createElement("h1")
+    var heading = document.createElement("h1");
     var infoList = document.createElement("div");
     var unorderedList = document.createElement("ul");
     var emergencyNumbers = document.createElement("li");
@@ -236,9 +236,10 @@ function emergency() {
     unorderedList.appendChild(fire);
 }
 
-function neighboringCountries(){
+function neighboringCountries() {
+    NextDoor.innerHTML = "";
     console.log(neighboringCountries)
-
+    var heading = document.createElement("h1");
     var infoList = document.createElement("div");
     var unorderedList = document.createElement("ul");
     var neighborsTitle = document.createElement("li");
@@ -246,14 +247,13 @@ function neighboringCountries(){
     var neighbor2 = document.createElement("li");
     var neighbor3 = document.createElement("li");
     var neighbor4 = document.createElement("li");
-
-    neighborsTitle.textContent = "Neighboring Countries"
+    heading.textContent = "Neighboring Countries"
     neighbor1.textContent = countryData.neighbors[0].name
     neighbor2.textContent = countryData.neighbors[1].name
     neighbor3.textContent = countryData.neighbors[2].name
     neighbor4.textContent = countryData.neighbors[3].name
-    
-    countryInfo.append(infoList);
+
+    NextDoor.append(heading, infoList);
     infoList.append(unorderedList);
     unorderedList.appendChild(neighborsTitle);
     unorderedList.appendChild(neighbor1);
