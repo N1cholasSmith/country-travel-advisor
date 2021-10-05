@@ -10,11 +10,11 @@ var openWeatherMapAPiKey = '1f9d3014d1a028a24c084adbdcec9008';
 var upsplashAccessKey = "sUG4r-3ndwxJ_35XLlzNo7x-v70k-44ugUAux9bNqLQ";
 var upsplashUrl = ""; 
 var displayCountryel = document.querySelector(".CountryName");
-var progreeBarEl = document.querySelector("#progressBar")
+var progressBarEl = document.querySelector("#progressBar")
 
 function getParams() {
     // Display progress bar
-    progreeBarEl.style.display = "block";
+    progressBarEl.style.display = "block";
 
     // Get the country name out of the URL
     let searchParamsArr = document.location.search.split("?");
@@ -51,6 +51,9 @@ function fetchCountryData(country) {
     // Was causing the country variable not recognised issue
     fetch('https://travelbriefing.org/' + country + '?format=json')
         .then(response => {
+            console.log(response);
+            console.log(response.status); // 200
+            console.log(response.statusText); // OK
             return response.json();
         })
         .then(data => {
@@ -199,7 +202,7 @@ function countryInfoCard() {
     document.getElementById("goBack").style.display = "block";
 
     // Hides progress bar
-    progreeBarEl.style.display = "none";
+    progressBarEl.style.display = "none";
 };  
 
 function emergency(){
