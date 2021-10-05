@@ -31,7 +31,7 @@ function handleSearchFormSubmit(event) {
 }
 
 //hides the go back button on this file
-document.getElementById("goBack").style.display = "none";
+// document.getElementById("goBack").style.display = "none";
 
 
 // ================ NICE TO HAVES================================================

@@ -14,10 +14,9 @@ var upsplashAccessKey = "sUG4r-3ndwxJ_35XLlzNo7x-v70k-44ugUAux9bNqLQ";
 var displayCountryel = document.querySelector(".CountryName");
 var progressBarEl = document.querySelector("#progressBar")
 
-
 function getParams() {
     // Display progress bar
-    progreeBarEl.style.display = "block";
+    progressBarEl.style.display = "block";
 
     // Get the country name out of the URL
     let searchParamsArr = document.location.search.split("?");
@@ -54,6 +53,9 @@ function fetchCountryData(country) {
     // Was causing the country variable not recognised issue
     fetch('https://travelbriefing.org/' + country + '?format=json')
         .then(response => {
+            console.log(response);
+            console.log(response.status); // 200
+            console.log(response.statusText); // OK
             return response.json();
         })
         .then(data => {
