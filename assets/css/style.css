@@ -95,6 +95,9 @@ button {
 .input-field input[type=text]:focus {
   border-bottom: 0px;
 }
+.neighbourBtn {
+  margin:0.5rem;
+}
 
 
 /* Set the size of the div element that contains the map */

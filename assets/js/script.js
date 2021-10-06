@@ -56,7 +56,6 @@ function fetchCountryData(country) {
             console.log("Search is valid!")
             console.log(data);
             location.assign("./countryinfo.html");
-            countryData = data;
           }
       })
       .catch(err => {
@@ -123,3 +122,6 @@ function fetchCountryData(country) {
 //   });
 // }
 // initMap();
+
+
+
