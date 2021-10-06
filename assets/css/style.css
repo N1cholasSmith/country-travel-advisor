@@ -13,7 +13,6 @@ body {
   height: 100%;
   background: url(../images/AdobeStock_281457367.jpeg) no-repeat fixed center;
   background-size: cover;
-  background-color: rgba(166, 166, 166, 0.6);
 }
 main {
   display: flex;
