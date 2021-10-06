@@ -136,8 +136,6 @@ function countryInfoCard() {
 
     //shows go back button
     document.getElementById("goBack").style.display = "block";
-    heading.textContent = countryData.names.name
-
     var tempEl = document.createElement("li");
     var feelsLikeEl = document.createElement("li");
     var humidityEl = document.createElement("li");
@@ -146,7 +144,7 @@ function countryInfoCard() {
     weatherIconLiEL.appendChild(weatherIconEl);
 
 
-    // countryName.textContent = countryData.names.name
+    // countryName.textContent = countryData.names.name    
     currency.textContent = "Currency: " + countryData.currency.code
     rate.textContent = "Rate: " + countryData.currency.rate
     languageSpoken.textContent = "Language: " + countryData.language[0].language
@@ -162,7 +160,7 @@ function countryInfoCard() {
     // weatherIconEl.setAttribute('src', 'http://openweathermap.org/img/wn/'
     //     + weatherIcon
     //     + '@2x.png');
-
+    heading.textContent = countryData.names.name
     currency.textContent = " Currency: " + countryData.currency.code
     rate.textContent = " Currency rate: " + countryData.currency.rate
     languageSpoken.textContent = " Language spoken: " + countryData.language[0].language
