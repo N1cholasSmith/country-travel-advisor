@@ -11,9 +11,10 @@ var upsplashUrl = "";
 var alertEl = document.querySelector(".Alert");
 var InfoListEl = document.querySelector("#InfoList");
 var upsplashAccessKey = "sUG4r-3ndwxJ_35XLlzNo7x-v70k-44ugUAux9bNqLQ";
-var displayCountryel = document.querySelector(".CountryName");
+// var displayCountryel = document.querySelector(".CountryName");
 var progressBarEl = document.querySelector("#progressBar");
 var NextDoor = document.querySelector("#NextDoor");
+var YourSearchEl = document.querySelector(".YourSearch");
 
 function getParams() {
     // Display progress bar
@@ -142,9 +143,7 @@ function countryInfoCard() {
     var weatherIconLiEL = document.createElement("li");
     var weatherIconEl = document.createElement("img");
     weatherIconLiEL.appendChild(weatherIconEl);
-
-
-    // countryName.textContent = countryData.names.name    
+    YourSearchEl.textContent = " All About " + countryData.names.name
     currency.textContent = "Currency: " + countryData.currency.code
     rate.textContent = "Rate: " + countryData.currency.rate
     languageSpoken.textContent = "Language: " + countryData.language[0].language
@@ -152,7 +151,6 @@ function countryInfoCard() {
     volt.textContent = "Voltage: " + countryData.electricity.voltage
     frequency.textContent = "Frequency: " + countryData.electricity.frequency
     waterQuality.textContent = "Water Quality: " + countryData.water.short
-
     tempEl.textContent = "Temperature: " + weatherData.main.temp;
     feelsLikeEl.textContent = "Feels like: " + weatherData.main.feels_like;
     humidityEl.textContent = "Humidity: " + weatherData.main.humidity;
@@ -160,7 +158,7 @@ function countryInfoCard() {
     // weatherIconEl.setAttribute('src', 'http://openweathermap.org/img/wn/'
     //     + weatherIcon
     //     + '@2x.png');
-    heading.textContent = countryData.names.name
+    heading.textContent = "Good to knows "
     currency.textContent = " Currency: " + countryData.currency.code
     rate.textContent = " Currency rate: " + countryData.currency.rate
     languageSpoken.textContent = " Language spoken: " + countryData.language[0].language

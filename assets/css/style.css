@@ -125,7 +125,13 @@ button {
   background-size: cover;
   /* background-repeat: no-repeat; */
 }
-
+.YourSearch{
+  text-align: center;
+  font-size:x-large;
+  padding-bottom:30px;
+  border-bottom-style:solid;
+  background-color: rgb(243, 240, 240,0.1);
+}
 
 .cards{
   display:flex;
@@ -133,20 +139,14 @@ button {
   justify-content: space-between;
 }
 
-.cards div{
-  background-color:rgb(166, 166, 166,0.5);
+.card{
+  background-color:rgb(166, 166, 166,0.3);
 /* flex-grow: 1; */
 border-radius: 15px;
+backdrop-filter: blur(10px);
+line-height: 20px;
+text-align: center;
 }
-
-.cards ul{
-  background-color:rgb(166, 166, 166,0.5);
-}
-
-
-
-
-
 
 
 
