@@ -32,29 +32,28 @@ function handleSearchFormSubmit(event) {
   // }
 }
 
-// Moved the fetch data function from back to script.js...
+// Fetch country data from API
 function fetchCountryData(country) {
   // Change the first and last character on fetch URL from ` to '
   // Was causing the country variable not recognised issue
   fetch('https://travelbriefing.org/' + country + '?format=json')
       .then(response => {
-          console.log(response);
-          console.log(response.status); // 200
-          console.log(response.statusText); // OK
+          // Invalid input message for all status other than 200
           if (response.status != 200) {
-              console.log("Response status is not 200!!")
+            SearchBoxInputEl.setAttribute("placeholder","Invalid input! Country name only!");
           }
           return response.json();
       })
       .then(data => {
+          // The API will still return Netherlands as a result string with invalid country name input, thus this condition check
+          // for invalid input, then display error messageon the place holder.
           if ( (country !== "netherlands") && (data.names.name === "Netherlands")) {
-              console.log("Invalid search!")
+            SearchBoxInputEl.setAttribute("placeholder","Invalid input! Country name only!");
           }
           else {
+            // Convert data from object to string and store at local storage
             localStorage.setItem("countryData", JSON.stringify(data));
-            // this.reset();
-            console.log("Search is valid!")
-            console.log(data);
+            // Navigate page to countryinfo.html on successful data fetch
             location.assign("./countryinfo.html");
             countryData = data;
           }
@@ -63,10 +62,6 @@ function fetchCountryData(country) {
           console.error(err);
       });
 };
-
-//hides the go back button on this file
-// document.getElementById("goBack").style.display = "none";
-
 
 // ================ NICE TO HAVES================================================
 
