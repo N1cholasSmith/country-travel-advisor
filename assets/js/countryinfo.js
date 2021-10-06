@@ -4,12 +4,13 @@
 // var SearchBoxEl = document.querySelector("#SearchBox-input")
 var bodyEl = document.querySelector("body");
 var countryInfo = document.querySelector("#countryInformation")
-var countryData = [];
+var countryData = JSON.parse(localStorage.getItem("countryData"));
+var country = countryData.names.name;
 var weatherData = [];
 var openWeatherMapAPiKey = '1f9d3014d1a028a24c084adbdcec9008';
 var upsplashUrl = "";
 var alertEl = document.querySelector(".Alert");
-var InfoListEl = document.querySelector("#InfoList");
+var infoListEl = document.querySelector("#InfoList");
 var upsplashAccessKey = "sUG4r-3ndwxJ_35XLlzNo7x-v70k-44ugUAux9bNqLQ";
 // var displayCountryel = document.querySelector(".CountryName");
 var progressBarEl = document.querySelector("#progressBar");
@@ -21,10 +22,12 @@ function getParams() {
     progressBarEl.style.display = "block";
 
     // Get the country name out of the URL
-    let searchParamsArr = document.location.search.split("?");
-    console.log(searchParamsArr);
-    var country = searchParamsArr[1].split("=").pop();
-    console.log("country: " + country);
+    // Commenting the below codes out - due to fetch country data relocated back to script.js
+    // let searchParamsArr = document.location.search.split("?");
+    // console.log(searchParamsArr);
+    // var country = searchParamsArr[1].split("=").pop();
+    // country = country.toLowerCase();
+    // console.log("country: " + country);
 
     upsplashGetDataUrl = "https://api.unsplash.com/search/photos/?client_id="
         + upsplashAccessKey
@@ -43,38 +46,43 @@ function getParams() {
 
     fetchCountryPhoto(upsplashGetDataUrl);
 
-    fetchCountryData(country);
+    // fetchCountryData(country);
 
     fetchWeatherData(country);
-}
+};
 
-// Moved the fetch data function from script.js to here
-// Avoided using localStorage to reduce chance of error
-function fetchCountryData(country) {
-    // Change the first and last character on fetch URL from ` to '
-    // Was causing the country variable not recognised issue
-    fetch('https://travelbriefing.org/' + country + '?format=json')
-        .then(response => {
-            console.log(response);
-            console.log(response.status); // 200
-            console.log(response.statusText); // OK
-            return response.json();
-        })
-        .then(data => {
-            countryData = data;
-            console.log(countryData);
-            console.log(emergency)
-            countryInfoCard();
-            emergency();
-            neighboringCountries();
-        })
-        .catch(err => {
-            console.error(err);
-        });
-}
+// Moved the fetch data function from back to script.js...
+// function fetchCountryData(country) {
+//     // Change the first and last character on fetch URL from ` to '
+//     // Was causing the country variable not recognised issue
+//     fetch('https://travelbriefing.org/' + country + '?format=json')
+//         .then(response => {
+//             console.log(response);
+//             console.log(response.status); // 200
+//             console.log(response.statusText); // OK
+//             if (response.status != 200) {
+//                 console.log("Response status is not 200!!")
+//             }
+//             return response.json();
+//         })
+//         .then(data => {
+//             if ( (country !== "netherlands") && (countryData.names.name === "Netherlands")) {
+//                 console.log("Response status is not 200!!")
+//             }
+//             localStorage.setItem("countryData", data)
+//             this.reset();
+//             location.assign("./countryinfo.html");
+//             countryData = data;
+//             console.log(countryData);
+//             console.log(emergency)
+//         })
+//         .catch(err => {
+//             console.error(err);
+//         });
+//   };
 
 // Fetch photo data from upsplash
-function fetchCountryPhoto(dataUrl, photoUrl) {
+function fetchCountryPhoto(dataUrl) {
     console.log("UpsplashUrl: " + dataUrl);
     fetch(dataUrl)
         .then(response => {
@@ -84,7 +92,6 @@ function fetchCountryPhoto(dataUrl, photoUrl) {
         .then(data => {
             console.log(data);
             console.log(data.results[0].id);
-            let firstRelevantPhotoID = data.results[0].id;
             let firstRelevantPhotoUrl = data.results[0].urls.full;
             console.log(firstRelevantPhotoUrl);
             // upsplashGetPhotoUrl += firstRelevantPhotoID;
@@ -95,7 +102,7 @@ function fetchCountryPhoto(dataUrl, photoUrl) {
         .catch(err => {
             console.error(err);
         });
-}
+};
 
 // Fetch weather data
 function fetchWeatherData(country) {
@@ -114,11 +121,12 @@ function fetchWeatherData(country) {
         .then(function (data) {
             console.log(data);
             weatherData = data;
+            countryInfoCard();
         })
         .catch(function (error) {
             console.log(error);
         });
-}
+};
 
 function countryInfoCard() {
 
@@ -135,8 +143,10 @@ function countryInfoCard() {
     var frequency = document.createElement("li");
     var waterQuality = document.createElement("li");
 
+
     //shows go back button
     document.getElementById("goBack").style.display = "block";
+
     var tempEl = document.createElement("li");
     var feelsLikeEl = document.createElement("li");
     var humidityEl = document.createElement("li");
@@ -154,6 +164,9 @@ function countryInfoCard() {
     tempEl.textContent = "Temperature: " + weatherData.main.temp;
     feelsLikeEl.textContent = "Feels like: " + weatherData.main.feels_like;
     humidityEl.textContent = "Humidity: " + weatherData.main.humidity;
+
+
+    // Commenting the below lines out, decided to not use weather icon for now.
     // let weatherIcon = weatherData.weather[0].icon;
     // weatherIconEl.setAttribute('src', 'http://openweathermap.org/img/wn/'
     //     + weatherIcon
@@ -198,6 +211,21 @@ function countryInfoCard() {
         humidityEl,
         weatherIconLiEL)
 
+    // shows go back button
+    document.getElementById("goBack").style.display = "block";
+
+    // Hides progress bar
+    progressBarEl.style.display = "none";
+
+};
+
+function emergency() {
+
+    if (infoListEl) {
+        infoListEl.innerHTML = "";
+    }
+
+    var heading = document.createElement("h1")
 };
 
 // shows go back button
@@ -223,18 +251,19 @@ function emergency() {
     ambulance.textContent = " Ambulance: " + countryData.telephone.ambulance
     fire.textContent = " Fire: " + countryData.telephone.fire
 
-    InfoListEl.append(heading, infoList);
+    // infoListEl.append(heading, infoList);
     infoList.append(unorderedList);
     unorderedList.appendChild(emergencyNumbers);
     unorderedList.appendChild(callingCode);
     unorderedList.appendChild(police);
     unorderedList.appendChild(ambulance);
     unorderedList.appendChild(fire);
-}
+};
+
 
 function neighboringCountries() {
     NextDoor.innerHTML = "";
-    console.log(neighboringCountries)
+    // console.log(neighboringCountries)
     var heading = document.createElement("h1");
     var infoList = document.createElement("div");
     var unorderedList = document.createElement("ul");
@@ -256,6 +285,6 @@ function neighboringCountries() {
     unorderedList.appendChild(neighbor2);
     unorderedList.appendChild(neighbor3);
     unorderedList.appendChild(neighbor4);
-}
+};
 
 getParams();

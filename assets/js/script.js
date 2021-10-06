@@ -8,7 +8,7 @@
 // 5. countryInfo card needs a transparent background and font-size to be increased
 
 var serachFormEl = document.querySelector("#searchForm");
-var SearchBoxInputEl = document.querySelector("#serachBoxInput");
+var SearchBoxInputEl = document.querySelector("#searchBoxInput");
 // var SearchBoxBtnEl = document.querySelector("#searchBoxButton");
 // var countryInfo = document.querySelector("#countryInformation");
 
@@ -21,14 +21,48 @@ function handleSearchFormSubmit(event) {
   event.preventDefault();
 
   let searchInput = SearchBoxInputEl.value;
-  var queryString = "./countryinfo.html?q=" + searchInput;
+  searchInput = searchInput.toLowerCase();
+  // var queryString = "./countryinfo.html?q=" + searchInput;
 
+  fetchCountryData(searchInput);
   // Reset the search input value
   this.reset();
-  if (searchInput) {
-    location.assign(queryString);
-  }
+  // if (searchInput) {
+  //   location.assign(queryString);
+  // }
 }
+
+// Moved the fetch data function from back to script.js...
+function fetchCountryData(country) {
+  // Change the first and last character on fetch URL from ` to '
+  // Was causing the country variable not recognised issue
+  fetch('https://travelbriefing.org/' + country + '?format=json')
+      .then(response => {
+          console.log(response);
+          console.log(response.status); // 200
+          console.log(response.statusText); // OK
+          if (response.status != 200) {
+              console.log("Response status is not 200!!")
+          }
+          return response.json();
+      })
+      .then(data => {
+          if ( (country !== "netherlands") && (data.names.name === "Netherlands")) {
+              console.log("Invalid search!")
+          }
+          else {
+            localStorage.setItem("countryData", JSON.stringify(data));
+            // this.reset();
+            console.log("Search is valid!")
+            console.log(data);
+            location.assign("./countryinfo.html");
+            countryData = data;
+          }
+      })
+      .catch(err => {
+          console.error(err);
+      });
+};
 
 //hides the go back button on this file
 // document.getElementById("goBack").style.display = "none";
