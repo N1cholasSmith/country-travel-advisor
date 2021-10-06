@@ -123,6 +123,8 @@ function fetchWeatherData(country) {
             console.log(data);
             weatherData = data;
             countryInfoCard();
+            emergency();
+            neighboringCountries();
         })
         .catch(function (error) {
             console.log(error);
@@ -207,6 +209,17 @@ function countryInfoCard() {
 
 };
 
+
+// function emergency() {
+
+//     if (infoListEl) {
+//         infoListEl.innerHTML = "";
+//     }
+
+//     var heading = document.createElement("h1")
+// };
+
+
 // shows go back button
 document.getElementById("goBack").style.display = "block";
 
@@ -232,11 +245,13 @@ function emergency() {
 
     infoListEl.append(heading, infoList);
     infoList.append(unorderedList);
-    unorderedList.appendChild(emergencyNumbers);
-    unorderedList.appendChild(callingCode);
-    unorderedList.appendChild(police);
-    unorderedList.appendChild(ambulance);
-    unorderedList.appendChild(fire);
+    unorderedList.append(
+        emergencyNumbers,
+        callingCode,
+        police,
+        ambulance,
+        fire
+    )
 };
 
 
@@ -260,11 +275,13 @@ function neighboringCountries() {
 
     NextDoor.append(heading, infoList);
     infoList.append(unorderedList);
-    unorderedList.appendChild(neighborsTitle);
-    unorderedList.appendChild(neighbor1);
-    unorderedList.appendChild(neighbor2);
-    unorderedList.appendChild(neighbor3);
-    unorderedList.appendChild(neighbor4);
+    unorderedList.append(
+        neighborsTitle,
+        neighbor1,
+        neighbor2,
+        neighbor3,
+        neighbor4
+    )
 
     // convert neighbor countries to button with hyper link to display that country's info
     var neighbor1Btn = document.createElement("a");
