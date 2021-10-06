@@ -122,6 +122,8 @@ function fetchWeatherData(country) {
             console.log(data);
             weatherData = data;
             countryInfoCard();
+            emergency();
+            neighboringCountries();
         })
         .catch(function (error) {
             console.log(error);
@@ -184,19 +186,6 @@ function countryInfoCard() {
     countryInfo.append(heading, infoList);
     infoList.append(unorderedList);
 
-    // unorderedList.appendChild(countryName);
-    // unorderedList.appendChild(currency);
-    // unorderedList.appendChild(rate);
-    // unorderedList.appendChild(languageSpoken);
-    // unorderedList.appendChild(electricity);
-    // unorderedList.appendChild(volt);
-    // unorderedList.appendChild(frequency);
-    // unorderedList.appendChild(waterQuality);
-    // unorderedList.appendChild(tempEl);
-    // unorderedList.appendChild(feelsLikeEl);
-    // unorderedList.appendChild(humidityEl);
-    // unorderedList.appendChild(weatherIconLiEL);
-
     // Option 2 to keep it more neat
     unorderedList.append(countryName,
         currency,
@@ -219,14 +208,14 @@ function countryInfoCard() {
 
 };
 
-function emergency() {
+// function emergency() {
 
-    if (infoListEl) {
-        infoListEl.innerHTML = "";
-    }
+//     if (infoListEl) {
+//         infoListEl.innerHTML = "";
+//     }
 
-    var heading = document.createElement("h1")
-};
+//     var heading = document.createElement("h1")
+// };
 
 // shows go back button
 document.getElementById("goBack").style.display = "block";
@@ -235,7 +224,7 @@ document.getElementById("goBack").style.display = "block";
 progressBarEl.style.display = "none";
 
 function emergency() {
-    InfoListEl.innerHTML = "";
+    infoListEl.innerHTML = "";
     var heading = document.createElement("h1");
     var infoList = document.createElement("div");
     var unorderedList = document.createElement("ul");
@@ -252,12 +241,15 @@ function emergency() {
     fire.textContent = " Fire: " + countryData.telephone.fire
 
     // infoListEl.append(heading, infoList);
+    infoListEl.append(heading, infoList);
     infoList.append(unorderedList);
-    unorderedList.appendChild(emergencyNumbers);
-    unorderedList.appendChild(callingCode);
-    unorderedList.appendChild(police);
-    unorderedList.appendChild(ambulance);
-    unorderedList.appendChild(fire);
+    unorderedList.append(
+        emergencyNumbers,
+        callingCode,
+        police,
+        ambulance,
+        fire
+    )
 };
 
 
@@ -280,11 +272,14 @@ function neighboringCountries() {
 
     NextDoor.append(heading, infoList);
     infoList.append(unorderedList);
-    unorderedList.appendChild(neighborsTitle);
-    unorderedList.appendChild(neighbor1);
-    unorderedList.appendChild(neighbor2);
-    unorderedList.appendChild(neighbor3);
-    unorderedList.appendChild(neighbor4);
+    unorderedList.append(
+        neighborsTitle,
+        neighbor1,
+        neighbor2,
+        neighbor3,
+        neighbor4
+    )
+
 };
 
 getParams();
