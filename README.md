@@ -5,11 +5,11 @@
 
 ---
 ## Description
-The Travel Planner is an essential tool for planning a successful holiday, honeymoon or weekend getaway! The Travel Planner utilizes cutting edge features such as weather and travel data. Whilst The Travel Planner was designed with a minimalistic approach to avoid decision paralysis and streamline your holiday experience before you have even left the house.
+The Country Travel Advisor is your digital travel guide and an essential tool for planning a successful holiday, honeymoon or weekend getaway! The Country Travel Advisor utilizes cutting edge features to organize relevant information . Whilst The Travel Planner was designed with a minimalistic approach to avoid decision paralysis and streamline your holiday experience before you have even left the house.
 
 
 
-[travelplanner.com](https://n1cholassmith.github.io/travel-planner/)
+[countrytraveladvisor.com](https://n1cholassmith.github.io/country-travel-advisor/)
 
 ---
 ## Table of Contents

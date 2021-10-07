@@ -17,7 +17,7 @@ var progressBarEl = document.querySelector("#progressBar")
 
 function getParams() {
     // Display progress bar
-    progreeBarEl.style.display = "block";
+    progressBarEl.style.display = "block";
 
     // Get the country name out of the URL
     let searchParamsArr = document.location.search.split("?");
@@ -49,10 +49,10 @@ function getParams() {
 
 
 // Moved the fetch data function from script.js to here
-// Avoided using localStorage to reduce chance of error
+// // Avoided using localStorage to reduce chance of error
 function fetchCountryData(country) {
-    // Change the first and last character on fetch URL from ` to '
-    // Was causing the country variable not recognised issue
+//     // Change the first and last character on fetch URL from ` to '
+//     // Was causing the country variable not recognised issue
     fetch('https://travelbriefing.org/' + country + '?format=json')
         .then(response => {
             return response.json();
@@ -181,10 +181,10 @@ function countryInfoCard() {
 };
 
     // shows go back button
-    document.getElementById("goBack").style.display = "block";
+document.getElementById("goBack").style.display = "block";
 
     // Hides progress bar
-    progressBarEl.style.display = "none";
+progressBarEl.style.display = "none";
   
 
 function emergency() {
