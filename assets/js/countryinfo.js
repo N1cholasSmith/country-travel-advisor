@@ -36,6 +36,7 @@ function getParams() {
     fetchCountryData(country);
 }
 
+
 // Moved the fetch data function from script.js to here
 // Avoided using localStorage to reduce chance of error
 function fetchCountryData(country) {
@@ -52,6 +53,7 @@ function fetchCountryData(country) {
             countryInfoCard();
             emergency();
             neighboringCountries();
+            covid();
         })
         .catch(err => {
             console.error(err);
@@ -92,6 +94,7 @@ function fetchCountryPhoto(dataUrl, photoUrl) {
             console.error(err);
         });
 }
+
 
 function countryInfoCard() {
 
@@ -186,5 +189,34 @@ function neighboringCountries(){
     unorderedList.appendChild(neighbor3);
     unorderedList.appendChild(neighbor4);
 }
+
+function covid(data){
+    var SearchBoxInputEl = document.querySelector("#serachBoxInput");
+    var covidCountryData = rawData[i].array.reduce
+    var covidCountryfilter = rawData[i].Array.filter
+    // var covid = data
+    console.log(data)
+    data = fetch(`https://coronavirus.m.pipedream.net/`)
+    .then(response => {
+        return response.json()
+    })
+    .then((data)=>{
+      console.log(data)
+    })
+
+    var infoList = document.createElement("div");
+    var unorderedList = document.createElement("ul");
+    var covidStatistics = document.createElement("li");
+    var covidConfirmed = document.createElement("li");
+    var covidDeaths = document.createElement("li");
+  
+
+
+    covidStatistics.textContent = " Covid-19 Statistics "
+    covidConfirmed.textContent = " Covid-19 Statistics " + countryData.rawData[i].Country_Region
+    covidConfirmed.textContent = " Covid-19 Statistics " + countryData.telephone.calling_code
+
+}
+
 
 getParams();
