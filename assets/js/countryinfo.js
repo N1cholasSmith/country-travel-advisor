@@ -14,6 +14,7 @@ var infoListEl = document.querySelector("#InfoList");
 var upsplashAccessKey = "sUG4r-3ndwxJ_35XLlzNo7x-v70k-44ugUAux9bNqLQ";
 var displayCountryel = document.querySelector(".CountryName");
 var progressBarEl = document.querySelector("#progressBar");
+// document.querySelector("#emoji").innerHTML = "📞 ";
 
 // var displayCountryel = document.querySelector(".CountryName");
 var progressBarEl = document.querySelector("#progressBar");

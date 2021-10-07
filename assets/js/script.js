@@ -69,37 +69,37 @@ function saveToHistory() {
 
 // Moved the fetch data function from back to script.js...
 function fetchCountryData(country) {
-    // Change the first and last character on fetch URL from ` to '
-    // Was causing the country variable not recognised issue
-    fetch('https://travelbriefing.org/' + country + '?format=json')
-        .then(response => {
-            // console.log(response);
-            // console.log(response.status); // 200
-            // console.log(response.statusText); // OK
-            if (response.status != 200) {
-              console.log("Response status is not 200!!")
-              alertInvalidInput();
-            }
-            return response.json();
-        })
-        .then(data => {
-          countryData = data;
-          if ((country !== "netherlands") && (data.names.name === "Netherlands")) {
-            console.log("Invalid search!")
+  // Change the first and last character on fetch URL from ` to '
+  // Was causing the country variable not recognised issue
+  fetch('https://travelbriefing.org/' + country + '?format=json')
+      .then(response => {
+          // console.log(response);
+          // console.log(response.status); // 200
+          // console.log(response.statusText); // OK
+          if (response.status != 200) {
+            console.log("Response status is not 200!!")
             alertInvalidInput();
           }
-          else {
-            countryData.names.name = country;
-            localStorage.setItem("countryData", JSON.stringify(countryData));
-            console.log("Search is valid!")
-            console.log(data);
-            location.assign("./countryinfo.html");
-          }
-        })
-        .catch(err => {
-            console.error(err);
-            console.log("error detected");
-        });
+          return response.json();
+      })
+      .then(data => {
+        countryData = data;
+        if ((country !== "netherlands") && (data.names.name === "Netherlands")) {
+          console.log("Invalid search!")
+          alertInvalidInput();
+        }
+        else {
+          countryData.names.name = country;
+          localStorage.setItem("countryData", JSON.stringify(countryData));
+          console.log("Search is valid!")
+          console.log(data);
+          location.assign("./countryinfo.html");
+        }
+      })
+      .catch(err => {
+          console.error(err);
+          console.log("error detected");
+      });
 };
 
 function alertInvalidInput() {
@@ -108,6 +108,3 @@ function alertInvalidInput() {
   alert.textContent = "Please enter a valid country";
   alertEl.append(alert);
 }
-
-
-
