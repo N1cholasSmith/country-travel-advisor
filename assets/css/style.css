@@ -144,14 +144,18 @@ button {
   text-align: center;
   font-size:x-large;
   padding-bottom:30px;
-  border-bottom-style:solid;
-  background-color: rgb(243, 240, 240,0.1);
+  /* border-bottom-style:solid; */
+  border-bottom:1px black solid;
+  background-color: rgb(243, 240, 240,0.5);
+  margin-top: 20px;
+  border-radius:10px;
 }
 
 .cards{
   display:flex;
   flex-direction:row;
   justify-content: space-between;
+  padding-top:30px;
 }
 
 .card{
@@ -166,6 +170,12 @@ text-align: center;
 #Alert{
   color:#F50057;
   font-size: xx-large;
+}
+
+#InfoList::after {
+  content: "📞 ";
+  position:relative;
+  top:35px;
 }
 
 

@@ -63,52 +63,52 @@ function saveToHistory() {
 
 // Moved the fetch data function from back to script.js...
 function fetchCountryData(country) {
-    // Change the first and last character on fetch URL from ` to '
-    // Was causing the country variable not recognised issue
-    fetch('https://travelbriefing.org/' + country + '?format=json')
-        .then(response => {
-            console.log(response);
-            console.log(response.status); // 200
-            console.log(response.statusText); // OK
-            if (response.status != 200) {
-                console.log("Response status is not 200!!")
-            }
-            return response.json();
-        })
-        .then(
-            data => {
-                countryData = data;
-                if ((country !== "netherlands") && (data.names.name === "Netherlands")) {
-                    console.log("Invalid search!")
-                    alertEl.textContent = "";
-                    var alert = document.createElement("h1");
-                    alert.textContent = "Please enter a valid country";
-                    alertEl.append(alert);
-                }
-                else {
-                    countryData.names.name = country;
-                    
-                    localStorage.setItem("countryData", JSON.stringify(countryData));
-              
-                    // countryData.push();
-                    // this.reset();
-                    console.log("Search is valid!")
-                    console.log(data);
-                    location.assign("./countryinfo.html");
-                }
-            })
-        .catch(err => {
-            console.error(err);
-            console.log("error detected");
-        });
+  // Change the first and last character on fetch URL from ` to '
+  // Was causing the country variable not recognised issue
+  fetch('https://travelbriefing.org/' + country + '?format=json')
+    .then(response => {
+      console.log(response);
+      console.log(response.status); // 200
+      console.log(response.statusText); // OK
+      if (response.status != 200) {
+        console.log("Response status is not 200!!")
+      }
+      return response.json();
+    })
+    .then(
+      data => {
+        countryData = data;
+        if ((country !== "netherlands") && (data.names.name === "Netherlands")) {
+          console.log("Invalid search!")
+          alertEl.textContent = "";
+          var alert = document.createElement("h1");
+          alert.textContent = "Please enter a valid country";
+          alertEl.append(alert);
+        }
+        else {
+          countryData.names.name = country;
+
+          localStorage.setItem("countryData", JSON.stringify(countryData));
+
+          // countryData.push();
+          // this.reset();
+          console.log("Search is valid!")
+          console.log(data);
+          location.assign("./countryinfo.html");
+        }
+      })
+    .catch(err => {
+      console.error(err);
+      console.log("error detected");
+    });
 };
 
 
 document.addEventListener('DOMContentLoaded', function () {
-    var elems = document.querySelectorAll('.autocomplete');
-    var instances = M.Autocomplete.init(elems, { limit: 10 });
-    // instances.destroy();
-    // instances.open();
+  var elems = document.querySelectorAll('.autocomplete');
+  var instances = M.Autocomplete.init(elems, { limit: 10 });
+  // instances.destroy();
+  // instances.open();
 });
 
 
