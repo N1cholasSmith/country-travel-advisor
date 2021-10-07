@@ -6,7 +6,7 @@
 //          https://tarekraafat.github.io/autoComplete.js/#/usage
 // 4. Country Info background needs to be changed === API call to upsplash API dynamic return image based on searched country === in progress ===
 // 5. countryInfo card needs a transparent background and font-size to be increased
-
+var alertEl = document.getElementById("Alert");
 var serachFormEl = document.querySelector("#searchForm");
 var SearchBoxInputEl = document.querySelector("#searchBoxInput");
 // var SearchBoxBtnEl = document.querySelector("#searchBoxButton");
@@ -18,49 +18,54 @@ var countryInfo = document.querySelector("#countryInformation")
 document.getElementById("searchForm").addEventListener("submit", handleSearchFormSubmit);
 
 function handleSearchFormSubmit(event) {
-  event.preventDefault();
+    event.preventDefault();
 
-  let searchInput = SearchBoxInputEl.value;
-  searchInput = searchInput.toLowerCase();
-  // var queryString = "./countryinfo.html?q=" + searchInput;
+    let searchInput = SearchBoxInputEl.value;
+    searchInput = searchInput.toLowerCase();
+    // var queryString = "./countryinfo.html?q=" + searchInput;
 
-  fetchCountryData(searchInput);
-  // Reset the search input value
-  this.reset();
-  // if (searchInput) {
-  //   location.assign(queryString);
-  // }
+    fetchCountryData(searchInput);
+    // Reset the search input value
+    this.reset();
+    // if (searchInput) {
+    //   location.assign(queryString);
+    // }
 }
 
 // Moved the fetch data function from back to script.js...
 function fetchCountryData(country) {
-  // Change the first and last character on fetch URL from ` to '
-  // Was causing the country variable not recognised issue
-  fetch('https://travelbriefing.org/' + country + '?format=json')
-      .then(response => {
-          console.log(response);
-          console.log(response.status); // 200
-          console.log(response.statusText); // OK
-          if (response.status != 200) {
-              console.log("Response status is not 200!!")
-          }
-          return response.json();
-      })
-      .then(data => {
-          if ( (country !== "netherlands") && (data.names.name === "Netherlands")) {
-              console.log("Invalid search!")
-          }
-          else {
-            localStorage.setItem("countryData", JSON.stringify(data));
-            // this.reset();
-            console.log("Search is valid!")
-            console.log(data);
-            location.assign("./countryinfo.html");
-          }
-      })
-      .catch(err => {
-          console.error(err);
-      });
+    // Change the first and last character on fetch URL from ` to '
+    // Was causing the country variable not recognised issue
+    fetch('https://travelbriefing.org/' + country + '?format=json')
+        .then(response => {
+            console.log(response);
+            console.log(response.status); // 200
+            console.log(response.statusText); // OK
+            if (response.status != 200) {
+                console.log("Response status is not 200!!")
+            }
+            return response.json();
+        })
+        .then(data => {
+            if ((country !== "netherlands") && (data.names.name === "Netherlands")) {
+                console.log("Invalid search!")
+                alertEl.textContent = "";
+                var alert = document.createElement("h1");
+                alert.textContent = "Please enter a valid country";
+                alertEl.append(alert);
+            }
+            else {
+                localStorage.setItem("countryData", JSON.stringify(data));
+                // this.reset();
+                console.log("Search is valid!")
+                console.log(data);
+                location.assign("./countryinfo.html");
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            console.log("error detected");
+        });
 };
 
 //hides the go back button on this file

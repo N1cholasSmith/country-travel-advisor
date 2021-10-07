@@ -151,6 +151,11 @@ line-height: 20px;
 text-align: center;
 }
 
+#Alert{
+  color:#F50057;
+  font-size: xx-large;
+}
+
 
 
 /* .cards{
