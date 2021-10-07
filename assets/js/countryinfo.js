@@ -7,7 +7,7 @@ var country = countryData.names.name;
 var weatherData = [];
 var openWeatherMapAPiKey = '1f9d3014d1a028a24c084adbdcec9008';
 var upsplashUrl = "";
-var alertEl = document.querySelector(".Alert");
+var alertEl = document.getElementById("#Alert");
 var infoListEl = document.querySelector("#InfoList");
 var upsplashAccessKey = "sUG4r-3ndwxJ_35XLlzNo7x-v70k-44ugUAux9bNqLQ";
 // var displayCountryel = document.querySelector(".CountryName");
@@ -47,6 +47,7 @@ function init() {
     // fetchCountryData(country);
 
     fetchWeatherData(country);
+
 };
 
 // Need this similar fetch API data function here, for neighbour country button and history button to work properly
@@ -56,31 +57,31 @@ function btnFetchCountryData(event) {
     let btnCountry = event.target.textContent;
     console.log(btnCountry);
     fetch('https://travelbriefing.org/' + btnCountry + '?format=json')
-      .then(response => {
-          console.log(response);
-          console.log(response.status); // 200
-          console.log(response.statusText); // OK
-          if (response.status != 200) {
-              console.log("Response status is not 200!!")
-          }
-          return response.json();
-      })
-      .then(data => {
-          if ( (btnCountry !== "netherlands") && (data.names.name === "Netherlands")) {
-              console.log("Invalid search!")
-          }
-          else {
-            localStorage.setItem("countryData", JSON.stringify(data));
-            // this.reset();
-            console.log("Search is valid!")
-            console.log(data);
-            location.assign("./countryinfo.html");
-          }
-      })
-      .catch(err => {
-          console.error(err);
-      });
-  };
+        .then(response => {
+            console.log(response);
+            console.log(response.status); // 200
+            console.log(response.statusText); // OK
+            if (response.status != 200) {
+                console.log("Response status is not 200!!")
+            }
+            return response.json();
+        })
+        .then(data => {
+            if ((btnCountry !== "netherlands") && (data.names.name === "Netherlands")) {
+                console.log("Invalid search!")
+            }
+            else {
+                localStorage.setItem("countryData", JSON.stringify(data));
+                // this.reset();
+                console.log("Search is valid!")
+                console.log(data);
+                location.assign("./countryinfo.html");
+            }
+        })
+        .catch(err => {
+            console.error(err);
+        });
+};
 
 // Fetch photo data from upsplash
 function fetchCountryPhoto(dataUrl) {
@@ -151,12 +152,12 @@ function countryInfoCard() {
     //shows go back button
     document.getElementById("goBack").style.display = "block";
 
-    
+
     var tempEl = document.createElement("li");
     var feelsLikeEl = document.createElement("li");
     var humidityEl = document.createElement("li");
     var weatherIconLiEL = document.createElement("li");
-    
+
     YourSearchEl.textContent = " All About " + countryData.names.name
     currency.textContent = "Currency: " + countryData.currency.code
     rate.textContent = "Rate: " + countryData.currency.rate
@@ -302,7 +303,7 @@ function neighboringCountries() {
     neighbor4Btn.textContent = countryData.neighbors[3].name
 
     let neighbourBtnAll = document.querySelectorAll(".neighbourBtn");
-    neighbourBtnAll.forEach(function(neighborBtnEach) {
+    neighbourBtnAll.forEach(function (neighborBtnEach) {
         neighborBtnEach.addEventListener('click', btnFetchCountryData);
     })
 };
