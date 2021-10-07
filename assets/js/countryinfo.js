@@ -71,7 +71,7 @@ function btnFetchCountryData(event) {
                 console.log("Invalid search!")
             }
             else {
-                localStorage.setItem("countryData", JSON.stringify(data));
+                localStorage.setItem("countryData", JSON.stringify(countryData));
                 // this.reset();
                 console.log("Search is valid!")
                 console.log(data);

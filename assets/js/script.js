@@ -9,6 +9,8 @@
 var alertEl = document.getElementById("Alert");
 var serachFormEl = document.querySelector("#searchForm");
 var SearchBoxInputEl = document.querySelector("#searchBoxInput");
+var countryData = JSON.parse(localStorage.getItem("countryData")) || {};
+console.log("countryData", countryData)
 // var SearchBoxBtnEl = document.querySelector("#searchBoxButton");
 // var countryInfo = document.querySelector("#countryInformation");
 
@@ -46,27 +48,39 @@ function fetchCountryData(country) {
             }
             return response.json();
         })
-        .then(data => {
-            if ((country !== "netherlands") && (data.names.name === "Netherlands")) {
-                console.log("Invalid search!")
-                alertEl.textContent = "";
-                var alert = document.createElement("h1");
-                alert.textContent = "Please enter a valid country";
-                alertEl.append(alert);
-            }
-            else {
-                localStorage.setItem("countryData", JSON.stringify(data));
-                // this.reset();
-                console.log("Search is valid!")
-                console.log(data);
-                location.assign("./countryinfo.html");
-            }
-        })
+        .then(
+            data => {
+                countryData = data;
+                if ((country !== "netherlands") && (data.names.name === "Netherlands")) {
+                    console.log("Invalid search!")
+                    alertEl.textContent = "";
+                    var alert = document.createElement("h1");
+                    alert.textContent = "Please enter a valid country";
+                    alertEl.append(alert);
+                }
+                else {
+                    countryData.names.name = country;
+                    localStorage.setItem("countryData", JSON.stringify(countryData));
+                    // countryData.push();
+                    // this.reset();
+                    console.log("Search is valid!")
+                    console.log(data);
+                    location.assign("./countryinfo.html");
+                }
+            })
         .catch(err => {
             console.error(err);
             console.log("error detected");
         });
 };
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    var elems = document.querySelectorAll('.autocomplete');
+    var instances = M.Autocomplete.init(elems, { limit: 10 });
+    // instances.destroy();
+    // instances.open();
+});
 
 //hides the go back button on this file
 // document.getElementById("goBack").style.display = "none";
