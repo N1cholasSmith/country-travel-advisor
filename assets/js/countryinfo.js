@@ -1,29 +1,36 @@
-// import { createApi } from "unsplash-js";
-
 // no longer needed
 // var SearchBoxEl = document.querySelector("#SearchBox-input")
 var bodyEl = document.querySelector("body");
-var countryInfo = document.querySelector("#countryInformation")
 var countryData = [];
+var countryInfo = document.querySelector("#countryInformation")
+var countryData = JSON.parse(localStorage.getItem("countryData")) || [];
+console.log(countryData);
+var country = countryData.names.name;
 var weatherData = [];
-var openWeatherMapAPiKey = '1f9d3014d1a028a24c084adbdcec9008';
+var openWeatherMapAPiKey = "1f9d3014d1a028a24c084adbdcec9008";
 var upsplashUrl = "";
-var alertEl = document.querySelector(".Alert");
-var InfoListEl = document.querySelector("#InfoList");
+var alertEl = document.getElementById("#Alert");
+var infoListEl = document.querySelector("#InfoList");
 var upsplashAccessKey = "sUG4r-3ndwxJ_35XLlzNo7x-v70k-44ugUAux9bNqLQ";
 var displayCountryel = document.querySelector(".CountryName");
-var progressBarEl = document.querySelector("#progressBar")
+var progressBarEl = document.querySelector("#progressBar");
 
+// var displayCountryel = document.querySelector(".CountryName");
+var progressBarEl = document.querySelector("#progressBar");
+var NextDoor = document.querySelector("#NextDoor");
+var YourSearchEl = document.querySelector(".YourSearch");
 
-function getParams() {
+function init() {
     // Display progress bar
     progressBarEl.style.display = "block";
 
     // Get the country name out of the URL
-    let searchParamsArr = document.location.search.split("?");
-    console.log(searchParamsArr);
-    var country = searchParamsArr[1].split("=").pop();
-    console.log("country: " + country);
+    // Commenting the below codes out - due to fetch country data relocated back to script.js
+    // let searchParamsArr = document.location.search.split("?");
+    // console.log(searchParamsArr);
+    // var country = searchParamsArr[1].split("=").pop();
+    // country = country.toLowerCase();
+    // console.log("country: " + country);
 
     upsplashGetDataUrl = "https://api.unsplash.com/search/photos/?client_id="
         + upsplashAccessKey
@@ -42,37 +49,47 @@ function getParams() {
 
     fetchCountryPhoto(upsplashGetDataUrl);
 
-    fetchCountryData(country);
+    // fetchCountryData(country);
 
     fetchWeatherData(country);
-}
 
+};
 
-// Moved the fetch data function from script.js to here
-// // Avoided using localStorage to reduce chance of error
-function fetchCountryData(country) {
-//     // Change the first and last character on fetch URL from ` to '
-//     // Was causing the country variable not recognised issue
-    fetch('https://travelbriefing.org/' + country + '?format=json')
+// Need this similar fetch API data function here, for neighbour country button and history button to work properly
+function btnFetchCountryData(event) {
+    // Change the first and last character on fetch URL from ` to '
+    // Was causing the country variable not recognised issue
+    let btnCountry = event.target.textContent;
+    console.log(btnCountry);
+    fetch('https://travelbriefing.org/' + btnCountry + '?format=json')
         .then(response => {
+            console.log(response);
+            console.log(response.status); // 200
+            console.log(response.statusText); // OK
+            if (response.status != 200) {
+                console.log("Response status is not 200!!")
+            }
             return response.json();
         })
         .then(data => {
-            countryData = data;
-            console.log(countryData);
-            console.log(emergency)
-            countryInfoCard();
-            emergency();
-            neighboringCountries();
-            covid();
+            if ((btnCountry !== "netherlands") && (data.names.name === "Netherlands")) {
+                console.log("Invalid search!")
+            }
+            else {
+                localStorage.setItem("countryData", JSON.stringify(data));
+                // this.reset();
+                console.log("Search is valid!")
+                console.log(data);
+                location.assign("./countryinfo.html");
+            }
         })
         .catch(err => {
             console.error(err);
         });
-}
+};
 
 // Fetch photo data from upsplash
-function fetchCountryPhoto(dataUrl, photoUrl) {
+function fetchCountryPhoto(dataUrl) {
     console.log("UpsplashUrl: " + dataUrl);
     fetch(dataUrl)
         .then(response => {
@@ -82,7 +99,6 @@ function fetchCountryPhoto(dataUrl, photoUrl) {
         .then(data => {
             console.log(data);
             console.log(data.results[0].id);
-            let firstRelevantPhotoID = data.results[0].id;
             let firstRelevantPhotoUrl = data.results[0].urls.full;
             console.log(firstRelevantPhotoUrl);
             // upsplashGetPhotoUrl += firstRelevantPhotoID;
@@ -93,13 +109,39 @@ function fetchCountryPhoto(dataUrl, photoUrl) {
         .catch(err => {
             console.error(err);
         });
-}
+};
 
+// Fetch weather data
+function fetchWeatherData(country) {
+    let openWeatherMapUrl = "https://api.openweathermap.org/data/2.5/weather?q="
+        + country
+        + "&units=metric&appid="
+        + openWeatherMapAPiKey;
+
+    fetch(openWeatherMapUrl)
+        .then(function (response) {
+            if (!response.ok) {
+                throw response.json();
+            }
+            return response.json();
+        })
+        .then(function (data) {
+            console.log(data);
+            weatherData = data;
+            countryInfoCard();
+            emergency();
+            neighboringCountries();
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+};
 
 function countryInfoCard() {
 
+    // Country info good to know variables
     countryInfo.innerHTML = "";
-
+    var heading = document.createElement("h1");
     var infoList = document.createElement("div");
     var unorderedList = document.createElement("ul");
     var countryName = document.createElement("li");
@@ -111,19 +153,17 @@ function countryInfoCard() {
     var frequency = document.createElement("li");
     var waterQuality = document.createElement("li");
 
+
     //shows go back button
     document.getElementById("goBack").style.display = "block";
-    displayCountryel.textContent = countryData.names.name
+
 
     var tempEl = document.createElement("li");
     var feelsLikeEl = document.createElement("li");
     var humidityEl = document.createElement("li");
     var weatherIconLiEL = document.createElement("li");
-    var weatherIconEl = document.createElement("img");
-    weatherIconLiEL.appendChild(weatherIconEl);
 
-
-    countryName.textContent = countryData.names.name
+    YourSearchEl.textContent = " All About " + countryData.names.name
     currency.textContent = "Currency: " + countryData.currency.code
     rate.textContent = "Rate: " + countryData.currency.rate
     languageSpoken.textContent = "Language: " + countryData.language[0].language
@@ -131,15 +171,12 @@ function countryInfoCard() {
     volt.textContent = "Voltage: " + countryData.electricity.voltage
     frequency.textContent = "Frequency: " + countryData.electricity.frequency
     waterQuality.textContent = "Water Quality: " + countryData.water.short
-
-    tempEl.textContent = "Temperature: " + weatherData.main.temp;
+    tempEl.textContent = "Today's temperature: " + weatherData.main.temp;
     feelsLikeEl.textContent = "Feels like: " + weatherData.main.feels_like;
     humidityEl.textContent = "Humidity: " + weatherData.main.humidity;
-    let weatherIcon = weatherData.weather[0].icon;
-    weatherIconEl.setAttribute('src', 'http://openweathermap.org/img/wn/'
-        + weatherIcon
-        + '@2x.png');
 
+
+    heading.textContent = "Good to knows "
     currency.textContent = " Currency: " + countryData.currency.code
     rate.textContent = " Currency rate: " + countryData.currency.rate
     languageSpoken.textContent = " Language spoken: " + countryData.language[0].language
@@ -149,21 +186,8 @@ function countryInfoCard() {
     waterQuality.textContent = " Water Status: " + countryData.water.short
 
 
-    countryInfo.append(infoList);
+    countryInfo.append(heading, infoList);
     infoList.append(unorderedList);
-
-    // unorderedList.appendChild(countryName);
-    // unorderedList.appendChild(currency);
-    // unorderedList.appendChild(rate);
-    // unorderedList.appendChild(languageSpoken);
-    // unorderedList.appendChild(electricity);
-    // unorderedList.appendChild(volt);
-    // unorderedList.appendChild(frequency);
-    // unorderedList.appendChild(waterQuality);
-    // unorderedList.appendChild(tempEl);
-    // unorderedList.appendChild(feelsLikeEl);
-    // unorderedList.appendChild(humidityEl);
-    // unorderedList.appendChild(weatherIconLiEL);
 
     // Option 2 to keep it more neat
     unorderedList.append(countryName,
@@ -178,18 +202,79 @@ function countryInfoCard() {
         feelsLikeEl,
         humidityEl,
         weatherIconLiEL)
-};
+
+    emergency();
+
+    neighboringCountries();
 
     // shows go back button
 document.getElementById("goBack").style.display = "block";
 
     // Hides progress bar
+    progressBarEl.style.display = "none";
+};
+
+function neighboringCountries() {
+    NextDoor.innerHTML = "";
+    // console.log(neighboringCountries)
+    var heading = document.createElement("h1");
+    var infoList = document.createElement("div");
+    var unorderedList = document.createElement("ul");
+    var neighborsTitle = document.createElement("li");
+    var neighbor1 = document.createElement("li");
+    var neighbor2 = document.createElement("li");
+    var neighbor3 = document.createElement("li");
+    var neighbor4 = document.createElement("li");
+    heading.textContent = "Neighboring Countries"
+    // Commenting these out, content displayed on button instead
+    // neighbor1.textContent = countryData.neighbors[0].name
+    // neighbor2.textContent = countryData.neighbors[1].name
+    // neighbor3.textContent = countryData.neighbors[2].name
+    // neighbor4.textContent = countryData.neighbors[3].name
+
+    NextDoor.append(heading, infoList);
+    infoList.append(unorderedList);
+    unorderedList.append(
+        neighborsTitle,
+        neighbor1,
+        neighbor2,
+        neighbor3,
+        neighbor4
+    )
+
+    // convert neighbor countries to button with hyper link to display that country's info
+    var neighbor1Btn = document.createElement("a");
+    var neighbor2Btn = document.createElement("a");
+    var neighbor3Btn = document.createElement("a");
+    var neighbor4Btn = document.createElement("a");
+    neighbor1.append(neighbor1Btn);
+    neighbor2.append(neighbor2Btn);
+    neighbor3.append(neighbor3Btn);
+    neighbor4.append(neighbor4Btn);
+    neighbor1Btn.classList.add("waves-effect", "waves-light", "btn", "neighbourBtn");
+    neighbor2Btn.classList.add("waves-effect", "waves-light", "btn", "neighbourBtn");
+    neighbor3Btn.classList.add("waves-effect", "waves-light", "btn", "neighbourBtn");
+    neighbor4Btn.classList.add("waves-effect", "waves-light", "btn", "neighbourBtn");
+    neighbor1Btn.textContent = countryData.neighbors[0].name
+    neighbor2Btn.textContent = countryData.neighbors[1].name
+    neighbor3Btn.textContent = countryData.neighbors[2].name
+    neighbor4Btn.textContent = countryData.neighbors[3].name
+
+    let neighbourBtnAll = document.querySelectorAll(".neighbourBtn");
+    neighbourBtnAll.forEach(function (neighborBtnEach) {
+        neighborBtnEach.addEventListener('click', btnFetchCountryData);
+    })
+};
+
+// shows go back button
+document.getElementById("goBack").style.display = "block";
+
+// Hides progress bar
 progressBarEl.style.display = "none";
-  
 
 function emergency() {
-    InfoListEl.innerHTML = "";
-    var heading = document.createElement("h1")
+    infoListEl.innerHTML = "";
+    var heading = document.createElement("h1");
     var infoList = document.createElement("div");
     var unorderedList = document.createElement("ul");
     var emergencyNumbers = document.createElement("li");
@@ -204,68 +289,48 @@ function emergency() {
     ambulance.textContent = " Ambulance: " + countryData.telephone.ambulance
     fire.textContent = " Fire: " + countryData.telephone.fire
 
-    InfoListEl.append(heading, infoList);
+    infoListEl.append(heading, infoList);
     infoList.append(unorderedList);
-    unorderedList.appendChild(emergencyNumbers);
-    unorderedList.appendChild(callingCode);
-    unorderedList.appendChild(police);
-    unorderedList.appendChild(ambulance);
-    unorderedList.appendChild(fire);
-}
+    unorderedList.append(
+        emergencyNumbers,
+        callingCode,
+        police,
+        ambulance,
+        fire
+    )
+};
 
-function neighboringCountries(){
-    console.log(neighboringCountries)
 
-    var infoList = document.createElement("div");
-    var unorderedList = document.createElement("ul");
-    var neighborsTitle = document.createElement("li");
-    var neighbor1 = document.createElement("li");
-    var neighbor2 = document.createElement("li");
-    var neighbor3 = document.createElement("li");
-    var neighbor4 = document.createElement("li");
+init();
 
-    neighborsTitle.textContent = "Neighboring Countries"
-    neighbor1.textContent = countryData.neighbors[0].name
-    neighbor2.textContent = countryData.neighbors[1].name
-    neighbor3.textContent = countryData.neighbors[2].name
-    neighbor4.textContent = countryData.neighbors[3].name
-    
-    countryInfo.append(infoList);
-    infoList.append(unorderedList);
-    unorderedList.appendChild(neighborsTitle);
-    unorderedList.appendChild(neighbor1);
-    unorderedList.appendChild(neighbor2);
-    unorderedList.appendChild(neighbor3);
-    unorderedList.appendChild(neighbor4);
-}
 
-function covid(data){
-    var SearchBoxInputEl = document.querySelector("#serachBoxInput");
-    var covidCountryData = rawData[i].array.reduce
-    var covidCountryfilter = rawData[i].Array.filter
-    // var covid = data
-    console.log(data)
-    data = fetch(`https://coronavirus.m.pipedream.net/`)
-    .then(response => {
-        return response.json()
-    })
-    .then((data)=>{
-      console.log(data)
-    })
+// function covid(data){
+//     var SearchBoxInputEl = document.querySelector("#serachBoxInput");
+//     var covidCountryData = rawData[i].array.reduce
+//     var covidCountryfilter = rawData[i].Array.filter
+//     // var covid = data
+//     console.log(data)
+//     data = fetch(`https://coronavirus.m.pipedream.net/`)
+//     .then(response => {
+//         return response.json()
+//     })
+//     .then((data)=>{
+//       console.log(data)
+//     })
 
-    var infoList = document.createElement("div");
-    var unorderedList = document.createElement("ul");
-    var covidStatistics = document.createElement("li");
-    var covidConfirmed = document.createElement("li");
-    var covidDeaths = document.createElement("li");
+//     var infoList = document.createElement("div");
+//     var unorderedList = document.createElement("ul");
+//     var covidStatistics = document.createElement("li");
+//     var covidConfirmed = document.createElement("li");
+//     var covidDeaths = document.createElement("li");
   
 
 
-    covidStatistics.textContent = " Covid-19 Statistics "
-    covidConfirmed.textContent = " Covid-19 Statistics " + countryData.rawData[i].Country_Region
-    covidConfirmed.textContent = " Covid-19 Statistics " + countryData.telephone.calling_code
+//     covidStatistics.textContent = " Covid-19 Statistics "
+//     covidConfirmed.textContent = " Covid-19 Statistics " + countryData.rawData[i].Country_Region
+//     covidConfirmed.textContent = " Covid-19 Statistics " + countryData.telephone.calling_code
 
-}
+// }
 
 
 getParams();

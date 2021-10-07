@@ -12,8 +12,7 @@
   <title>Search result country information</title>
 
   <!-- Page icon -->
-  <!-- <link rel="icon" href="assets/images/favicon.ico" />
-    <link rel="icon" href="assets/images/favicon-32.png" sizes="32x32" type="image/png" /> -->
+  <link rel="icon" href="./assets/images/favicon-island.png" sizes="32x32" type="image/png" />
 
   <!-- CSS files -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -25,27 +24,32 @@
   <script src="./assets/js/countryinfo.js" defer></script>
 </head>
 
-<body style="background-image: none;">
+<body style="background-image: none; opacity:0.5;">
 
   <!-- Main container for page content -->
   <div class="container">
-     <!-- Progress bar -->
+    <!-- Progress bar -->
     <div class="progress" id="progressBar" style="display:none">
       <div class="indeterminate"></div>
     </div>
+    <header class="YourSearch">
+
+    </header>
 
     <!-- Country info main section -->
-    <h1 class="CountryName"> </h1>
-    <div class="row">
-      <div class="col s4" id="countryInformation"> </div>
-      <div class="col s4"></div>
-      <div class="col s4"></div>
-      <div class="col s4"></div>
+    <div class="row cards">
+      <div class="col s4 offset-s1 card" id="countryInformation"> </div>
+      <div class="col s4 offset-s1 card" id="InfoList"></div>
+      <div class="col s4 offset-s1 card" id="NextDoor"></div>
+    </div>
+    <div class="row card">
+      <div class="col s4"> </div>
       <div class="col s4"></div>
       <div class="col s4"></div>
     </div>
   </div>
- 
+
+
   <!-- country name, currency, rate, language spoken, electricity,
       volt: Frequency:, Water Quality -->
   <!-- <div class="col-8">
