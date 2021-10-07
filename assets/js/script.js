@@ -1,4 +1,3 @@
-
 // TO DO LIST (feel free to tackle any of these)
 // 1. make evenlistener("click") function  === Done ===
 // 2. on enter or click the second page should load (atm its a manual load) === Done ===
@@ -6,20 +5,64 @@
 //          https://tarekraafat.github.io/autoComplete.js/#/usage
 // 4. Country Info background needs to be changed === API call to upsplash API dynamic return image based on searched country === in progress ===
 // 5. countryInfo card needs a transparent background and font-size to be increased
+
+
+var searchHistory = JSON.parse(localStorage.getItem("searchHistoryKey"));
+if (searchHistory === null) {
+  console.log("setting searchHistory to empty array");
+  searchHistory = [];
+}
+// console.log(searchHistory);
+var serachFormEl = document.querySelector("#searchForm");
+var SearchBoxInputEl = document.querySelector("#searchBoxInput");
+
 var alertEl = document.getElementById("Alert");
 var serachFormEl = document.querySelector("#searchForm");
 var SearchBoxInputEl = document.querySelector("#searchBoxInput");
 var countryData = JSON.parse(localStorage.getItem("countryData")) || {};
 console.log("countryData", countryData)
+
 // var SearchBoxBtnEl = document.querySelector("#searchBoxButton");
 // var countryInfo = document.querySelector("#countryInformation");
 
-var SearchBoxEl = document.querySelector("#SearchBox-input")
-var countryInfo = document.querySelector("#countryInformation")
+var SearchBoxEl = document.querySelector("#SearchBox-input");
+var countryInfo = document.querySelector("#countryInformation");
 
-document.getElementById("searchForm").addEventListener("submit", handleSearchFormSubmit);
+document
+  .getElementById("searchForm")
+  .addEventListener("submit", handleSearchFormSubmit);
+
+document.getElementById("searchForm").addEventListener("click", () => {
+  document.getElementById("searchBoxInput").classList.add("focused");
+});
 
 function handleSearchFormSubmit(event) {
+
+  event.preventDefault();
+
+  let searchInput = SearchBoxInputEl.value;
+  var queryString = "./countryinfo.html?q=" + searchInput;
+
+  // Reset the search input value
+  saveToHistory();
+  this.reset();
+  if (searchInput) {
+    location.assign(queryString);
+  }
+}
+
+// Store variables in local storage
+
+function saveToHistory() {
+  const searchInput = SearchBoxInputEl.value;
+  console.log(searchHistory);
+
+  if (searchHistory.includes(searchInput) === false) {
+    searchHistory.push(searchInput);
+  }
+  citiesStr = JSON.stringify(searchHistory);
+  localStorage.setItem("searchHistoryKey", citiesStr);
+}
     event.preventDefault();
 
     let searchInput = SearchBoxInputEl.value;
@@ -82,12 +125,11 @@ document.addEventListener('DOMContentLoaded', function () {
     // instances.open();
 });
 
+
 //hides the go back button on this file
 // document.getElementById("goBack").style.display = "none";
 
-
 // ================ NICE TO HAVES================================================
-
 
 // var mymap = L.map('mapid').setView([51.505, -0.09], 13);
 
@@ -113,7 +155,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // console.log('pk.eyJ1IjoiZGV2cmF5aGUiLCJhIjoiY2t1NWNsNHRoM2ExMDJucW1zMDlrMDB2ZyJ9.Yo-UqtdijyJ8P_7VfmMmng');
 
-
 // function covid(data){
 //   var data = fetch(`https://coronavirus.m.pipedream.net/`)
 //   .then(response => response.json())
@@ -123,7 +164,6 @@ document.addEventListener('DOMContentLoaded', function () {
 // }
 
 // countryData();
-
 
 // Comment this out for now.
 // function initMap() {
