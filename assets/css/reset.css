@@ -9,7 +9,7 @@
   }
   
   body {
-    min-height: 100%;
+    /* min-height: 100%; */
     line-height: 1;
     font-family: sans-serif;
   }
@@ -38,4 +38,9 @@
   ol,
   ul {
     list-style: none;
+<<<<<<< HEAD
   }
+=======
+  }
+
+>>>>>>> c1ee8976bf6f537a8998aea9bd72985d44bd3c43

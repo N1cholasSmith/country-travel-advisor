@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <meta name="author" content="You" />
+  <meta name="description" content="Country information page" />
+
+  <!-- Page title -->
+  <title>Search result country information</title>
+
+  <!-- Page icon -->
+  <link rel="icon" href="./assets/images/favicon-island.png" sizes="32x32" type="image/png" />
+
+  <!-- CSS files -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link rel="stylesheet" href="./assets/css/reset.css" />
+  <link rel="stylesheet" href="./assets/css/style.css" />
+
+  <!-- JS files -->
+  <script src="./assets/js/countryinfo.js" defer></script>
+</head>
+
+<body style="background-image: none; opacity:0.5;">
+
+  <!-- Main container for page content -->
+  <div class="container">
+    <!-- Progress bar -->
+    <div class="progress" id="progressBar" style="display:none">
+      <div class="indeterminate"></div>
+    </div>
+    <header class="YourSearch">
+
+    </header>
+
+    <!-- Country info main section -->
+    <div class="row cards">
+      <div class="col s4 offset-s1 card" id="countryInformation"> </div>
+      <div class="col s4 offset-s1 card" id="InfoList"></div>
+      <div class="col s4 offset-s1 card" id="NextDoor"></div>
+    </div>
+    <div class="row card">
+      <div class="col s4"> </div>
+      <div class="col s4"></div>
+      <div class="col s4"></div>
+    </div>
+  </div>
+
+
+  <!-- country name, currency, rate, language spoken, electricity,
+      volt: Frequency:, Water Quality -->
+  <!-- <div class="col-8">
+    <p id="cityName"></p>
+    <p id="cityTemp"></p>
+    <p id="nextDestination"></p>
+    <p id="cityPhoneNumbers"></p>
+    <p id="cityLanguage"></p>
+    <p id="cityCurrency"></p>
+  </div>
+  </div> -->
+
+
+
+  <button id="goBack">
+    <a class="waves-effect waves-light btn z-depth-4" href="index.html">
+      <i class="material-icons left">arrow_back</i>
+      Click here to go back
+    </a>
+  </button>
+
+</body>
+
+</html>
