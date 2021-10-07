@@ -18,7 +18,7 @@ var YourSearchEl = document.querySelector(".YourSearch");
 function init() {
     // Display progress bar
     progressBarEl.style.display = "block";
-
+ 
     // Get the country name out of the URL
     // Commenting the below codes out - due to fetch country data relocated back to script.js
     // let searchParamsArr = document.location.search.split("?");
