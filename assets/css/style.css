@@ -154,13 +154,14 @@ button {
   justify-content: space-between;
 }
 
+.neighbourBtn,
 .card{
   background-color:rgb(166, 166, 166,0.3);
-/* flex-grow: 1; */
-border-radius: 15px;
-backdrop-filter: blur(10px);
-line-height: 20px;
-text-align: center;
+  /* flex-grow: 1; */
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  line-height: 20px;
+  text-align: center;
 }
 
 #Alert{
