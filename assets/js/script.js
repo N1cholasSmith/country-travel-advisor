@@ -6,6 +6,7 @@
 // 4. Country Info background needs to be changed === API call to upsplash API dynamic return image based on searched country === in progress ===
 // 5. countryInfo card needs a transparent background and font-size to be increased
 
+
 var searchHistory = JSON.parse(localStorage.getItem("searchHistoryKey"));
 if (searchHistory === null) {
   console.log("setting searchHistory to empty array");
@@ -14,6 +15,13 @@ if (searchHistory === null) {
 // console.log(searchHistory);
 var serachFormEl = document.querySelector("#searchForm");
 var SearchBoxInputEl = document.querySelector("#searchBoxInput");
+
+var alertEl = document.getElementById("Alert");
+var serachFormEl = document.querySelector("#searchForm");
+var SearchBoxInputEl = document.querySelector("#searchBoxInput");
+var countryData = JSON.parse(localStorage.getItem("countryData")) || {};
+console.log("countryData", countryData)
+
 // var SearchBoxBtnEl = document.querySelector("#searchBoxButton");
 // var countryInfo = document.querySelector("#countryInformation");
 
@@ -29,6 +37,7 @@ document.getElementById("searchForm").addEventListener("click", () => {
 });
 
 function handleSearchFormSubmit(event) {
+
   event.preventDefault();
 
   let searchInput = SearchBoxInputEl.value;
@@ -54,6 +63,68 @@ function saveToHistory() {
   citiesStr = JSON.stringify(searchHistory);
   localStorage.setItem("searchHistoryKey", citiesStr);
 }
+    event.preventDefault();
+
+    let searchInput = SearchBoxInputEl.value;
+    searchInput = searchInput.toLowerCase();
+    // var queryString = "./countryinfo.html?q=" + searchInput;
+
+    fetchCountryData(searchInput);
+    // Reset the search input value
+    this.reset();
+    // if (searchInput) {
+    //   location.assign(queryString);
+    // }
+}
+
+// Moved the fetch data function from back to script.js...
+function fetchCountryData(country) {
+    // Change the first and last character on fetch URL from ` to '
+    // Was causing the country variable not recognised issue
+    fetch('https://travelbriefing.org/' + country + '?format=json')
+        .then(response => {
+            console.log(response);
+            console.log(response.status); // 200
+            console.log(response.statusText); // OK
+            if (response.status != 200) {
+                console.log("Response status is not 200!!")
+            }
+            return response.json();
+        })
+        .then(
+            data => {
+                countryData = data;
+                if ((country !== "netherlands") && (data.names.name === "Netherlands")) {
+                    console.log("Invalid search!")
+                    alertEl.textContent = "";
+                    var alert = document.createElement("h1");
+                    alert.textContent = "Please enter a valid country";
+                    alertEl.append(alert);
+                }
+                else {
+                    countryData.names.name = country;
+                    localStorage.setItem("countryData", JSON.stringify(countryData));
+                    // countryData.push();
+                    // this.reset();
+                    console.log("Search is valid!")
+                    console.log(data);
+                    location.assign("./countryinfo.html");
+                }
+            })
+        .catch(err => {
+            console.error(err);
+            console.log("error detected");
+        });
+};
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    var elems = document.querySelectorAll('.autocomplete');
+    var instances = M.Autocomplete.init(elems, { limit: 10 });
+    // instances.destroy();
+    // instances.open();
+});
+
 
 //hides the go back button on this file
 // document.getElementById("goBack").style.display = "none";
@@ -110,3 +181,6 @@ function saveToHistory() {
 //   });
 // }
 // initMap();
+
+
+
