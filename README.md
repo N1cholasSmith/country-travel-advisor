@@ -5,7 +5,7 @@
 
 ---
 ## Description
-The Country Travel Advisor is your digital travel guide and an essential tool for planning a successful holiday, honeymoon or weekend getaway! The Country Travel Advisor utilizes cutting edge features to organize relevant information . Whilst The Travel Planner was designed with a minimalistic approach to avoid decision paralysis and streamline your holiday experience before you have even left the house.
+The Country Travel Advisor is your digital travel guide and an essential tool for planning a successful holiday, honeymoon or weekend getaway! The Country Travel Advisor utilizes cutting edge features to organize relevant information required to successfully navigate through any country you desire. The Country Travel Advisor was designed with a minimalistic approach, to display only relevant information to avoid decision paralysis and streamline your holiday experience before you have even left the house.
 
 
 
@@ -21,29 +21,33 @@ The Country Travel Advisor is your digital travel guide and an essential tool fo
 ---
 ## Usage
 
-The Travel Planner is easily naviagted through the Nav Bar to access all the required information for a holiday
+The Country Travel Advisor is easily naviagted through the homepage search bar and neighboring country buttons to access all the essential information for a successful holiday 
 
-![TravelPlannerHomepage](/assets/images/homepage.png)
+![Country Travel Advisor Video.](/assets/images/country-travel-advisor-navigation.mp4 "video")
 
-![TravelPlannerCheckout](/assets/images/checkout-screen.png)   
+   
 ---
 ## Technologies-Used
-HTML, CSS And JavaScript were all pivital in the success of this quiz however it heavily relys on the JavaScript Logic for the successful operation.
+HTML, CSS, Javascript, Local Storage and Public API's were all pivotal in the success of this Country Travel Advisor's successful operation.
 
 ---
 ## Credits/Contributors
-- Nicholas Smith: LSATA Aircraft Technician & Junior Full Stack Web Development
+- Nicholas Smith: Full Stack Web Developer & LSATA Aircraft Technician Royal Australian Navy
+- Lilly Stephenson: Junior Full Stack Developer & Healthcare / Retail Worker
+- Ray He:
+- Thomas Southwick: Full Stack Web Developer & Data Analyst within the engagement team at Cochlear
+
 
 ---
 ## How to Contribute
 
-Please refer to link for guidelines & Contributor Covenant Code Of Conduct [TravelPlanner](https://www.contributor-covenant.org/)
+Please refer to link for guidelines & Contributor Covenant Code Of Conduct [CountryTravelAdvisor](https://www.contributor-covenant.org/)
 
 ---
 ## License
 MIT License
 
-Copyright (c) [2021] [TravelPlanner]
+Copyright (c) [2021] [CountryTravelAdvisor]
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
