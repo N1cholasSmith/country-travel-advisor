@@ -24,54 +24,79 @@
   <script src="./assets/js/countryinfo.js" defer></script>
 </head>
 
-<body style="background-image: none; opacity:0.5;">
+<body style="background-color: darkgray;">
 
   <!-- Main container for page content -->
   <div class="container">
     <!-- Progress bar -->
     <div class="progress" id="progressBar" style="display:none">
       <div class="indeterminate"></div>
+      <h1 id="progressTxt"></h1>
     </div>
+    
     <header class="YourSearch">
-
     </header>
+    
 
-    <!-- Country info main section -->
-    <div class="row cards">
-      <div class="col s4 offset-s1 card" id="countryInformation"> </div>
-      <div class="col s4 offset-s1 card" id="InfoList">
-        <!-- <div id="emoji"></div> -->
+    <div class="row col s12">
+      
+      <!-- Country info main section -->
+      <div class="row cards col s12">
+        <div class="col s4 offset-s1 card" id="countryInformation"> </div>
+        <div class="col s4 offset-s1 card" id="InfoList"></div>
+        <div class="col s4 offset-s1 card" id="NextDoor"></div>
+        <!-- <div class="col s12 m5 l3">
+  
+        </div>
+        <div class="col s12 m7 l9">
+          <div class="col s9 m3 l3 offset-s1 card" id="countryInformation"> </div>
+          <div class="col s9 m3 l3 offset-s1 card" id="InfoList"></div>
+          <div class="col s9 m3 l3 offset-s1 card" id="NextDoor"></div>
+        </div>
+      </div> -->
+      <!-- <div class="row card">
+        <div class="col s4"> </div>
+        <div class="col s4"></div>
+        <div class="col s4"></div>
+      </div> -->
       </div>
-      <div class="col s4 offset-s1 card" id="NextDoor"></div>
     </div>
-    <!-- <div class="row card">
-      <div class="col s4"> </div>
-      <div class="col s4"></div>
-      <div class="col s4"></div>
-    </div> -->
+
+    <div class="row col s12">
+      <!-- <div class="col s3" id="sideSearchForm"> 
+        <div class="SearchBox">
+          <div class="borderOpacity">
+    
+            <input type="text" class="SearchBox-input browser-default" id="searchBoxInput" placeholder="Feeling Adventerous?" />
+    
+          </div>
+    
+          <button type="submit" class="SearchBox-button" id="searchBoxButton">
+            <i class="material-icons">search</i>
+          </button>
+        </div>
+      </div> -->
+      <div class="col s3 offset-s1 card" id="searchCard">
+        <form id="searchForm">
+          <div class="m-3">
+            <h1>Search for another Country:</h1>
+            <label for="searchInput" class="form-label"></label>
+            <input type="text" class="form-control" id="searchInput" placeholder="Country name">
+          </div>
+          <div class="d-grid">
+            <button type="submit" class="waves-effect waves-light btn z-depth-4 searchBtn">Search</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <button id="goBack">
+      <a class="waves-effect waves-light btn z-depth-4 backBtn" href="index.html">
+        <i class="material-icons left">arrow_back</i>
+        Click here to go back
+      </a>
+    </button>
   </div>
-
-
-  <!-- country name, currency, rate, language spoken, electricity,
-      volt: Frequency:, Water Quality -->
-  <!-- <div class="col-8">
-    <p id="cityName"></p>
-    <p id="cityTemp"></p>
-    <p id="nextDestination"></p>
-    <p id="cityPhoneNumbers"></p>
-    <p id="cityLanguage"></p>
-    <p id="cityCurrency"></p>
-  </div>
-  </div> -->
-
-
-
-  <button id="goBack">
-    <a class="waves-effect waves-light btn z-depth-4" href="index.html">
-      <i class="material-icons left">arrow_back</i>
-      Click here to go back
-    </a>
-  </button>
 
 </body>
 
