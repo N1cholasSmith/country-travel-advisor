@@ -14,6 +14,7 @@ var infoListEl = document.querySelector("#InfoList");
 var upsplashAccessKey = "sUG4r-3ndwxJ_35XLlzNo7x-v70k-44ugUAux9bNqLQ";
 var displayCountryel = document.querySelector(".CountryName");
 var progressBarEl = document.querySelector("#progressBar");
+// document.querySelector("#emoji").innerHTML = "📞 ";
 
 // var displayCountryel = document.querySelector(".CountryName");
 var progressBarEl = document.querySelector("#progressBar");
@@ -171,12 +172,12 @@ function countryInfoCard() {
     volt.textContent = "Voltage: " + countryData.electricity.voltage
     frequency.textContent = "Frequency: " + countryData.electricity.frequency
     waterQuality.textContent = "Water Quality: " + countryData.water.short
-    tempEl.textContent = "Today's temperature: " + weatherData.main.temp;
-    feelsLikeEl.textContent = "Feels like: " + weatherData.main.feels_like;
-    humidityEl.textContent = "Humidity: " + weatherData.main.humidity;
+    tempEl.textContent = "Today's temperature: " + weatherData.main.temp + "°C";
+    feelsLikeEl.textContent = "Feels like: " + weatherData.main.feels_like + "°C";
+    humidityEl.textContent = "Humidity: " + weatherData.main.humidity + "%";
 
 
-    heading.textContent = "Good to knows "
+    heading.textContent = "Before you go: "
     currency.textContent = " Currency: " + countryData.currency.code
     rate.textContent = " Currency rate: " + countryData.currency.rate
     languageSpoken.textContent = " Language spoken: " + countryData.language[0].language
@@ -282,12 +283,22 @@ function emergency() {
     var police = document.createElement("li");
     var ambulance = document.createElement("li");
     var fire = document.createElement("li");
+    var policeAEl = document.createElement("a");
+    var ambulanceAEl = document.createElement("a");
+    var fireAEl = document.createElement("a");
 
-    heading.textContent = "Emergency Telephone Numbers "
-    callingCode.textContent = " Calling Code: " + countryData.telephone.calling_code
-    police.textContent = " Police: " + countryData.telephone.police
-    ambulance.textContent = " Ambulance: " + countryData.telephone.ambulance
-    fire.textContent = " Fire: " + countryData.telephone.fire
+    heading.textContent = "Emergency Telephone Numbers ";
+    callingCode.textContent = " Calling Code: " + countryData.telephone.calling_code;
+    policeAEl.textContent = " Police: " + countryData.telephone.police;
+    ambulanceAEl.textContent = " Ambulance: " + countryData.telephone.ambulance;
+    fireAEl.textContent = " Fire: " + countryData.telephone.fire;
+    policeAEl.setAttribute("href", "tel:" + countryData.telephone.police);
+    ambulanceAEl.setAttribute("href", "tel:" + countryData.telephone.ambulance);
+    fireAEl.setAttribute("href", "tel:" + countryData.telephone.fire);
+
+    police.appendChild(policeAEl);
+    ambulance.appendChild(ambulanceAEl);
+    fire.appendChild(fireAEl);
 
     infoListEl.append(heading, infoList);
     infoList.append(unorderedList);
@@ -299,7 +310,6 @@ function emergency() {
         fire
     )
 };
-
 
 init();
 
