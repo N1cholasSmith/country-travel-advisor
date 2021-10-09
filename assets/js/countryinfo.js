@@ -1,8 +1,10 @@
 // Define variables
 var bodyEl = document.querySelector("body");
 var countryData = [];
-var countryInfo = document.querySelector("#countryInformation")
+var countryInfo = document.querySelector("#countryInformation");
+var searchHistoryEl = document.querySelector("#searchHistory");
 var countryData = JSON.parse(localStorage.getItem("countryData")) || [];
+var searchHistory = JSON.parse(localStorage.getItem("searchHistoryKey")) || [];
 console.log(countryData);
 var country = countryData.names.name;
 console.log(country);
@@ -15,6 +17,7 @@ var unsplashAccessKey = "sUG4r-3ndwxJ_35XLlzNo7x-v70k-44ugUAux9bNqLQ";
 var displayCountryel = document.querySelector(".CountryName");
 var progressBarEl = document.querySelector("#progressBar");
 // document.querySelector("#emoji").innerHTML = "📞 ";
+
 
 // var displayCountryel = document.querySelector(".CountryName");
 var progressBarEl = document.querySelector("#progressBar");
@@ -56,6 +59,8 @@ function init() {
 
     fetchWeatherData(country);
 
+    displayHistory(searchHistory);
+
 };
 
 // Need this similar fetch API data function here, for neighbour country button and history button to work properly
@@ -88,9 +93,10 @@ function fetchCountryData(country, targetId) {
                     alertInvalidInput();
                 }
             }
+            // Within else block of code only runs when fetch is successfully performed
             else {
                 localStorage.setItem("countryData", JSON.stringify(data));
-                // this.reset();
+                saveToHistory(country);
                 console.log("Search is valid!")
                 console.log(data);
                 location.assign("./countryinfo.html");
@@ -184,7 +190,7 @@ function countryInfoCard() {
     humidityEl.textContent = "Humidity: " + weatherData.main.humidity + "%";
 
 
-    heading.textContent = "Before you go: "
+    heading.textContent = "Before You Go "
     currency.textContent = " Currency: " + countryData.currency.code
     rate.textContent = " Currency rate: " + countryData.currency.rate
     languageSpoken.textContent = " Language spoken: " + countryData.language[0].language
@@ -325,18 +331,50 @@ function handleSearchFormSubmit(event) {
     // Reset the search input value
     this.reset();
     fetchCountryData(searchInput, targetId)
-}
+};
 
+// Handle button click for both search history buttons and neighboring countries buttons
 function handleBtnClick(event) {
     let country = event.target.textContent;
 
     fetchCountryData(country);
-}
+};
+
+function displayHistory(data) {
+    for (i=0; i<data.length; i++) {
+        let ulEl = document.createElement("ul")
+        let liEl = document.createElement('li');
+        let btnEl = document.createElement('a');
+        searchHistoryEl.append(ulEl);
+        ulEl.append(liEl)
+        liEl.append(btnEl);
+        // liEL.classList.add();
+        btnEl.classList.add('btn', 'waves-effect', 'waves-light', 'historyBtn');
+        btnEl.textContent = data[i];
+        console.log(data[i]);
+    }
+
+    //Listen to click event on history item button
+    let historyBtnElAll = document.querySelectorAll('.historyBtn');
+    historyBtnElAll.forEach(function(historyBtnElEach) {
+    historyBtnElEach.addEventListener('click', handleBtnClick);
+    })
+};
+
+// Store variables in local storage
+function saveToHistory(countryName) {
+  
+    if (searchHistory.includes(countryName) === false) {
+      searchHistory.push(countryName);
+    }
+    citiesStr = JSON.stringify(searchHistory);
+    localStorage.setItem("searchHistoryKey", citiesStr);
+  }
 
 function alertInvalidInput() {
     let inputEl = document.getElementById("searchInput");
     inputEl.setAttribute("placeholder", "Invalid Input!");
-  }
+};
 
 document.getElementById("searchForm").addEventListener("submit", handleSearchFormSubmit);
 

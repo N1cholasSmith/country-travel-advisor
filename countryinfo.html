@@ -33,18 +33,17 @@
       <div class="indeterminate"></div>
       <h1 id="progressTxt"></h1>
     </div>
-    
+
     <header class="YourSearch">
     </header>
     
-
+     <!-- First row of cards -->
     <div class="row col s12">
-      
       <!-- Country info main section -->
       <div class="row cards col s12">
         <div class="col s4 offset-s1 card" id="countryInformation"> </div>
+        <div class="col s4 offset-s1 card" id="allYearTemp"></div>
         <div class="col s4 offset-s1 card" id="InfoList"></div>
-        <div class="col s4 offset-s1 card" id="NextDoor"></div>
         <!-- <div class="col s12 m5 l3">
   
         </div>
@@ -62,31 +61,26 @@
       </div>
     </div>
 
+    <!-- Second row of cards -->
     <div class="row col s12">
-      <!-- <div class="col s3" id="sideSearchForm"> 
-        <div class="SearchBox">
-          <div class="borderOpacity">
-    
-            <input type="text" class="SearchBox-input browser-default" id="searchBoxInput" placeholder="Feeling Adventerous?" />
-    
-          </div>
-    
-          <button type="submit" class="SearchBox-button" id="searchBoxButton">
-            <i class="material-icons">search</i>
-          </button>
+      <div class="row cards col s12">
+        <div class="col s4 offset-s1 card" id="searchHistory">
+          <h1>Search History </h1>
         </div>
-      </div> -->
-      <div class="col s3 offset-s1 card" id="searchCard">
-        <form id="searchForm">
-          <div class="m-3">
-            <h1>Search for another Country:</h1>
-            <label for="searchInput" class="form-label"></label>
-            <input type="text" class="form-control" id="searchInput" placeholder="Country name">
-          </div>
-          <div class="d-grid">
-            <button type="submit" class="waves-effect waves-light btn z-depth-4 searchBtn">Search</button>
-          </div>
-        </form>
+        <div class="col s4 offset-s1 card" id="searchCard">
+          <form id="searchForm">
+            <div>
+              <h1>Checkout Another Country</h1>
+              <label for="searchInput" class="form-label"></label>
+              <input type="text"  id="searchInput" placeholder="Country name">
+            </div>
+            <div>
+              <button type="submit" class="waves-effect waves-light btn z-depth-4 searchBtn">Search</button>
+            </div>
+          </form>
+        </div>
+        <div class="col s4 offset-s1 card" id="NextDoor">
+        </div>
       </div>
     </div>
 

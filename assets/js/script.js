@@ -6,11 +6,11 @@ if (searchHistory === null) {
 }
 console.log(searchHistory);
 
-var serachFormEl = document.querySelector("#searchForm");
+var searchFormEl = document.querySelector("#searchForm");
 var SearchBoxInputEl = document.querySelector("#searchBoxInput");
 
 var alertEl = document.getElementById("Alert");
-var serachFormEl = document.querySelector("#searchForm");
+var searchFormEl = document.querySelector("#searchForm");
 var SearchBoxInputEl = document.querySelector("#searchBoxInput");
 var countryData = JSON.parse(localStorage.getItem("countryData")) || {};
 console.log("countryData", countryData)
@@ -19,25 +19,29 @@ console.log("countryData", countryData)
 // var countryInfo = document.querySelector("#countryInformation");
 
 var SearchBoxEl = document.querySelector("#SearchBox-input");
-var countryInfo = document.querySelector("#countryInformation");
+
+// Don't think the following line is needed anymore
+// var countryInfo = document.querySelector("#countryInformation");
 
 document
   .getElementById("searchForm")
   .addEventListener("submit", handleSearchFormSubmit);
 
+// Adding focused state, so the input field will out collapse during input
 document
   .getElementById("searchForm")
   .addEventListener("click", () => {
     document.getElementById("searchBoxInput").classList.add("focused");
   });
 
-document
-  .addEventListener('DOMContentLoaded', function () {
-    var elems = document.querySelectorAll('.autocomplete');
-    var instances = M.Autocomplete.init(elems, { limit: 10 });
-    // instances.destroy();
-    // instances.open();
-  });
+// Not sure what this function does, comment for now
+// document
+//   .addEventListener('DOMContentLoaded', function () {
+//     var elems = document.querySelectorAll('.autocomplete');
+//     var instances = M.Autocomplete.init(elems, { limit: 10 });
+//     instances.destroy();
+//     instances.open();
+//   });
 
 function handleSearchFormSubmit(event) {
 
@@ -46,12 +50,10 @@ function handleSearchFormSubmit(event) {
   let searchInput = SearchBoxInputEl.value;
   searchInput = searchInput.toLowerCase();
 
-  saveToHistory();
   // Reset the search input value
   this.reset();
   fetchCountryData(searchInput)
 }
-
 
 // Store variables in local storage
 function saveToHistory() {
@@ -88,9 +90,12 @@ function fetchCountryData(country) {
           console.log("Invalid search!")
           alertInvalidInput();
         }
+        // Inside this else block of code will only run when fetch data is successfully performed
         else {
           countryData.names.name = country;
           localStorage.setItem("countryData", JSON.stringify(countryData));
+          // Relocated saveToHistory function here, so that only valid search result is pushed to local storage
+          saveToHistory();
           console.log("Search is valid!")
           console.log(data);
           location.assign("./countryinfo.html");
