@@ -1,17 +1,17 @@
-// no longer needed
-// var SearchBoxEl = document.querySelector("#SearchBox-input")
+// Define variables
 var bodyEl = document.querySelector("body");
 var countryData = [];
 var countryInfo = document.querySelector("#countryInformation")
 var countryData = JSON.parse(localStorage.getItem("countryData")) || [];
 console.log(countryData);
 var country = countryData.names.name;
+console.log(country);
 var weatherData = [];
 var openWeatherMapAPiKey = "1f9d3014d1a028a24c084adbdcec9008";
-var upsplashUrl = "";
+var unsplashUrl = "";
 var alertEl = document.getElementById("#Alert");
 var infoListEl = document.querySelector("#InfoList");
-var upsplashAccessKey = "sUG4r-3ndwxJ_35XLlzNo7x-v70k-44ugUAux9bNqLQ";
+var unsplashAccessKey = "sUG4r-3ndwxJ_35XLlzNo7x-v70k-44ugUAux9bNqLQ";
 var displayCountryel = document.querySelector(".CountryName");
 var progressBarEl = document.querySelector("#progressBar");
 // document.querySelector("#emoji").innerHTML = "📞 ";
@@ -22,7 +22,9 @@ var NextDoor = document.querySelector("#NextDoor");
 var YourSearchEl = document.querySelector(".YourSearch");
 
 function init() {
-    // Display progress bar
+    // Show progress bar
+    let progressTxtEl = document.querySelector(".YourSearch");
+    progressTxtEl.textContent = "Taking you to " + country + ".....";
     progressBarEl.style.display = "block";
 
     // Get the country name out of the URL
@@ -33,8 +35,8 @@ function init() {
     // country = country.toLowerCase();
     // console.log("country: " + country);
 
-    upsplashGetDataUrl = "https://api.unsplash.com/search/photos/?client_id="
-        + upsplashAccessKey
+    unsplashGetDataUrl = "https://api.unsplash.com/search/photos/?client_id="
+        + unsplashAccessKey
         + "&query="
         + country
         + "&order_by=relevant"
@@ -44,11 +46,11 @@ function init() {
         // + "&color=colorOfChoice" - this parameter can be added later if certain color theme best match the website and fonts display
         ;
 
-    upsplashGetPhotoUrl = "https://api.unsplash.com/photos/?client_id="
-        + upsplashAccessKey
+    unsplashGetPhotoUrl = "https://api.unsplash.com/photos/?client_id="
+        + unsplashAccessKey
         + "&id=";
 
-    fetchCountryPhoto(upsplashGetDataUrl);
+    fetchCountryPhoto(unsplashGetDataUrl);
 
     // fetchCountryData(country);
 
@@ -57,24 +59,34 @@ function init() {
 };
 
 // Need this similar fetch API data function here, for neighbour country button and history button to work properly
-function btnFetchCountryData(event) {
+function fetchCountryData(country, targetId) {
     // Change the first and last character on fetch URL from ` to '
     // Was causing the country variable not recognised issue
-    let btnCountry = event.target.textContent;
-    console.log(btnCountry);
-    fetch('https://travelbriefing.org/' + btnCountry + '?format=json')
+    // if (targetId) {
+
+    // }
+    // let country = event.target.textContent;
+    // console.log(country);
+
+    fetch('https://travelbriefing.org/' + country + '?format=json')
         .then(response => {
             console.log(response);
             console.log(response.status); // 200
             console.log(response.statusText); // OK
             if (response.status != 200) {
+                if (targetId === "searchForm") {
+                    alertInvalidInput();
+                }
                 console.log("Response status is not 200!!")
             }
             return response.json();
         })
         .then(data => {
-            if ((btnCountry !== "netherlands") && (data.names.name === "Netherlands")) {
+            if ((country !== "netherlands") && (data.names.name === "Netherlands")) {
                 console.log("Invalid search!")
+                if (targetId === "searchForm") {
+                    alertInvalidInput();
+                }
             }
             else {
                 localStorage.setItem("countryData", JSON.stringify(data));
@@ -89,9 +101,9 @@ function btnFetchCountryData(event) {
         });
 };
 
-// Fetch photo data from upsplash
+// Fetch photo data from unsplash
 function fetchCountryPhoto(dataUrl) {
-    console.log("UpsplashUrl: " + dataUrl);
+    console.log("UnsplashUrl: " + dataUrl);
     fetch(dataUrl)
         .then(response => {
             console.log(response)
@@ -102,8 +114,8 @@ function fetchCountryPhoto(dataUrl) {
             console.log(data.results[0].id);
             let firstRelevantPhotoUrl = data.results[0].urls.full;
             console.log(firstRelevantPhotoUrl);
-            // upsplashGetPhotoUrl += firstRelevantPhotoID;
-            // console.log(upsplashGetPhotoUrl);
+            // unsplashGetPhotoUrl += firstRelevantPhotoID;
+            // console.log(unsplashGetPhotoUrl);
 
             bodyEl.style = "background-image: url(" + firstRelevantPhotoUrl + ")";
         })
@@ -154,24 +166,19 @@ function countryInfoCard() {
     var frequency = document.createElement("li");
     var waterQuality = document.createElement("li");
 
-
-    //shows go back button
-    document.getElementById("goBack").style.display = "block";
-
-
     var tempEl = document.createElement("li");
     var feelsLikeEl = document.createElement("li");
     var humidityEl = document.createElement("li");
     var weatherIconLiEL = document.createElement("li");
 
-    YourSearchEl.textContent = " All About " + countryData.names.name
-    currency.textContent = "Currency: " + countryData.currency.code
-    rate.textContent = "Rate: " + countryData.currency.rate
-    languageSpoken.textContent = "Language: " + countryData.language[0].language
+    YourSearchEl.textContent = "All About " + countryData.names.name;
+    currency.textContent = "Currency: " + countryData.currency.code;
+    rate.textContent = "Rate: " + countryData.currency.rate;
+    languageSpoken.textContent = "Language: " + countryData.language[0].language;
     // electricity.textContent = searchHistory.electricity
-    volt.textContent = "Voltage: " + countryData.electricity.voltage
-    frequency.textContent = "Frequency: " + countryData.electricity.frequency
-    waterQuality.textContent = "Water Quality: " + countryData.water.short
+    volt.textContent = "Voltage: " + countryData.electricity.voltage;
+    frequency.textContent = "Frequency: " + countryData.electricity.frequency;
+    waterQuality.textContent = "Water Quality: " + countryData.water.short;
     tempEl.textContent = "Today's temperature: " + weatherData.main.temp + "°C";
     feelsLikeEl.textContent = "Feels like: " + weatherData.main.feels_like + "°C";
     humidityEl.textContent = "Humidity: " + weatherData.main.humidity + "%";
@@ -263,15 +270,9 @@ function neighboringCountries() {
 
     let neighbourBtnAll = document.querySelectorAll(".neighbourBtn");
     neighbourBtnAll.forEach(function (neighborBtnEach) {
-        neighborBtnEach.addEventListener('click', btnFetchCountryData);
+        neighborBtnEach.addEventListener('click', handleBtnClick);
     })
 };
-
-// shows go back button
-document.getElementById("goBack").style.display = "block";
-
-// Hides progress bar
-progressBarEl.style.display = "none";
 
 function emergency() {
     infoListEl.innerHTML = "";
@@ -310,6 +311,34 @@ function emergency() {
         fire
     )
 };
+
+function handleSearchFormSubmit(event) {
+
+    event.preventDefault();
+    console.log(event.target.id);
+    let targetId = event.target.id;
+    searchBoxInputEl = document.getElementById("searchInput")
+    let searchInput = searchBoxInputEl.value;
+    searchInput = searchInput.toLowerCase();
+
+    // saveToHistory();
+    // Reset the search input value
+    this.reset();
+    fetchCountryData(searchInput, targetId)
+}
+
+function handleBtnClick(event) {
+    let country = event.target.textContent;
+
+    fetchCountryData(country);
+}
+
+function alertInvalidInput() {
+    let inputEl = document.getElementById("searchInput");
+    inputEl.setAttribute("placeholder", "Invalid Input!");
+  }
+
+document.getElementById("searchForm").addEventListener("submit", handleSearchFormSubmit);
 
 init();
 
