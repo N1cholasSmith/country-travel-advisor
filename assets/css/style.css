@@ -71,11 +71,13 @@ button {
   padding-left: 2em;
   padding-right: 1em;
   width: 250px;
+  max-width: 75% !important;
 }
 .focused {
   padding-left: 2em;
   padding-right: 1em;
   width: 250px !important;
+  max-width: 75% !important;
 }
 .SearchBox-input {
   width: 0;
@@ -105,6 +107,10 @@ button {
   margin:0.5rem;
 }
 
+#searchNav {
+  width: 20rem;
+}
+
 /* Set the size of the div element that contains the map */
 #map {
   height: 400px;
@@ -116,12 +122,14 @@ button {
 @media screen and (min-width: 400px) {
   .SearchBox:hover .SearchBox-input {
     width: 500px;
+    max-width: 75% !important;
   }
 
   .focused {
     padding-left: 2em;
     padding-right: 1em;
     width: 500px !important;
+    max-width: 75% !important;
   }
 }
 .main-header {
@@ -159,6 +167,30 @@ button {
   padding-top:30px;
 }
 
+/* Set Max height for search history card and enable scroll when overflow
+#searchHistory {
+  max-height: 50vh;
+  overflow: visible;
+} */
+
+nav {
+  background-color:rgb(166, 166, 166,0.3);
+  backdrop-filter: blur(10px);
+  margin-bottom: 1rem;
+}
+
+/* Trying to resolve the search history display behind cards issue... */
+nav,
+.dropdown-content {
+  z-index: 99;
+  overflow: visible;
+}
+
+.cards,
+.card {
+  z-index: 1;
+}
+
 .neighbourBtn,
 .searchBtn,
 .backBtn,
@@ -177,6 +209,10 @@ button {
   display:inline-flex;
   align-items: center;
   margin-bottom: 0.5rem;
+}
+
+.divider {
+  margin-top: 0.5rem;
 }
 
 #Alert{
