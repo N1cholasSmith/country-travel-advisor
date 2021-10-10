@@ -5,38 +5,42 @@
 
 ---
 ## Description
-The Country Travel Advisor is your digital travel guide and an essential tool for planning a successful holiday, honeymoon or weekend getaway! The Country Travel Advisor utilizes cutting edge features to organize relevant information required to successfully navigate through any country you desire. The Country Travel Advisor was designed with a minimalistic approach, to display only relevant information to avoid decision paralysis and streamline your holiday experience before you have even left the house.
-
+The Country Travel Advisor is your digital travel guide and an essential tool for planning a successful holiday, honeymoon or weekend getaway! The Country Travel Advisor utilizes Public API's and cutting edge features to organize the relevant information required to successfully navigate through any country you desire. The Country Travel Advisor was designed with a minimalistic approach, to display only relevant information to avoid decision paralysis and streamline your holiday experience before you have even left the house.
 
 
 [countrytraveladvisor.com](https://n1cholassmith.github.io/country-travel-advisor/)
 
 ---
 ## Table of Contents
-- [Usage] (#usage)
+- [Usage] (#Usage)
 - [Technologies-Used] (#Technologies-Used)
-- [Credits/Contributors] (#credits/contributors)
-- [How-to-Contribute] (#how-to-contribute)
-- [License] (#license)
+- [Credits/Contributors] (#Credits/Contributors)
+- [Future-Development] (#Future-Development)
+- [How-to-Contribute] (#How-To-Contribute)
+- [License] (#License)
 ---
 ## Usage
 
-The Country Travel Advisor is easily naviagted through the homepage search bar and neighboring country buttons to access all the essential information for a successful holiday 
+The Country Travel Advisor is easily naviagted through the homepage search bar, neighboring country buttons and the nav bar with country search history to access all the essential information for a successful holiday.
 
 ![Country Travel Advisor Video.](/assets/images/country-travel-advisor-navigation.mp4 "video")
 
    
 ---
 ## Technologies-Used
-HTML, CSS, Javascript, Local Storage and Public API's were all pivotal in the success of this Country Travel Advisor's successful operation.
+HTML, Materialize, CSS, Javascript, Local Storage and Sever Side Public API's were all pivotal in the Country Travel Advisor's successful operation.
+
+Public API's Included
+- Country Information: https://travelbriefing.org/
+- Country Images: https://api.unsplash.com/photos
+- Weather Data: https://api.openweathermap.org/
 
 ---
 ## Credits/Contributors
 - Nicholas Smith: Full Stack Web Developer & LSATA Aircraft Technician Royal Australian Navy
 - Lilly Stephenson: Junior Full Stack Developer & Healthcare / Retail Worker
-- Ray He:
+- Ray He: Full Stack Web Developer
 - Thomas Southwick: Full Stack Web Developer & Data Analyst within the engagement team at Cochlear
-
 
 ---
 ## How to Contribute
