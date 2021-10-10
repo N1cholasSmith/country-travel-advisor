@@ -146,9 +146,10 @@ button {
   padding-bottom:30px;
   /* border-bottom-style:solid; */
   border-bottom:1px black solid;
-  background-color: rgb(243, 240, 240,0.5);
+  background-color: rgb(243, 240, 240,0.3);
   margin-top: 20px;
   border-radius:10px;
+  backdrop-filter: blur(10px);
 }
 
 .cards{
