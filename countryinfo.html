@@ -21,76 +21,93 @@
   <link rel="stylesheet" href="./assets/css/style.css" />
 
   <!-- JS files -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <script src="./assets/js/countryinfo.js" defer></script>
 </head>
 
 <body style="background-color: darkgray;">
 
-  <!-- Main container for page content -->
-  <div class="container">
+  <!-- This contains side nav and main page content -->
+  <div class="row col s12">
     <!-- Progress bar -->
     <div class="progress" id="progressBar" style="display:none">
       <div class="indeterminate"></div>
       <h1 id="progressTxt"></h1>
     </div>
-
-    <header class="YourSearch">
-    </header>
-    
-     <!-- First row of cards -->
-    <div class="row col s12">
-      <!-- Country info main section -->
-      <div class="row cards col s12">
-        <div class="col s4 offset-s1 card" id="countryInformation"> </div>
-        <div class="col s4 offset-s1 card" id="allYearTemp"></div>
-        <div class="col s4 offset-s1 card" id="InfoList"></div>
-        <!-- <div class="col s12 m5 l3">
-  
-        </div>
-        <div class="col s12 m7 l9">
-          <div class="col s9 m3 l3 offset-s1 card" id="countryInformation"> </div>
-          <div class="col s9 m3 l3 offset-s1 card" id="InfoList"></div>
-          <div class="col s9 m3 l3 offset-s1 card" id="NextDoor"></div>
-        </div>
-      </div> -->
-      <!-- <div class="row card">
-        <div class="col s4"> </div>
-        <div class="col s4"></div>
-        <div class="col s4"></div>
-      </div> -->
-      </div>
-    </div>
-
-    <!-- Second row of cards -->
-    <div class="row col s12">
-      <div class="row cards col s12">
-        <div class="col s4 offset-s1 card" id="searchHistory">
-          <h1>Search History </h1>
-        </div>
-        <div class="col s4 offset-s1 card" id="searchCard">
-          <form id="searchForm">
-            <div>
-              <h1>Checkout Another Country</h1>
-              <label for="searchInput" class="form-label"></label>
-              <input type="text"  id="searchInput" placeholder="Country name">
-            </div>
-            <div>
-              <button type="submit" class="waves-effect waves-light btn z-depth-4 searchBtn">Search</button>
-            </div>
-          </form>
-        </div>
-        <div class="col s4 offset-s1 card" id="NextDoor">
+    <!-- top nav bar -->
+    <div class="col s12">
+      <!-- <div class="col s4 offset-s1 card" id="searchHistory">
+        <div class="divider" id="searchHistoryDivider"></div>
+        <div class="section">
+          <button class="aves-effect waves-light btn z-depth-4 clearBtn" id="clearBtn">Clear history</button>
         </div>
       </div>
+      <div class="col s4 offset-s1 card" id="searchCard">
+        <form id="searchForm">
+          <div>
+            <h1>Checkout Another Country</h1>
+            <label for="searchInput" class="form-label"></label>
+            <input type="text"  id="searchInput" placeholder="Country name">
+          </div>
+          <div>
+            <button type="submit" class="waves-effect waves-light btn z-depth-4 searchBtn">Search</button>
+          </div>
+        </form>
+      </div>
+      <button id="goBack">
+        <a class="waves-effect waves-light btn z-depth-4 backBtn" href="index.html">
+          <i class="material-icons left">arrow_back</i>
+          Click here to go back
+        </a>
+      </button> -->
+      <ul id="searchHistory" class="dropdown-content">
+        <li class="divider"></li>
+        <li><a id="clearBtn">Clear History</a></li>
+      </ul>
+      <nav>
+        <div class="nav-wrapper">
+          <ul class="left hide-on-small-only">
+            <li><a href="./index.html" id="goBack"><i class="material-icons left">arrow_back</i>Back to main</a></li>
+          </ul>
+          
+          <ul class="right hide-on-small-only">
+            <li>
+              <!-- Nav section for search and search history -->
+              <nav id="searchNav">
+                <div class="nav-wrapper">
+                  <form id="searchForm">
+                    <div class="input-field">
+                      <input type="search" id="searchInput" placeholder="checkout another country" required>
+                      <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                      <i class="material-icons">close</i>
+                    </div>
+                  </form>
+                </div>
+              </nav>
+            </li>
+            <!-- Dropdown Trigger -->
+            <li><a class="dropdown-trigger" href="#!" data-target="searchHistory">Search History<i class="material-icons right">arrow_drop_down</i></a></li>
+          </ul>
+        </div>
+      </nav>
     </div>
-
-    <button id="goBack">
-      <a class="waves-effect waves-light btn z-depth-4 backBtn" href="index.html">
-        <i class="material-icons left">arrow_back</i>
-        Click here to go back
-      </a>
-    </button>
   </div>
+
+    <!-- Main info card section -->
+  <div class="row col s12">
+    <div class="container">
+      <header class="YourSearch">
+      </header>
+      <!-- Country info main section -->
+      <div class="row cards">
+        <div class="col s4 offset-s1 card" id="countryInformation"> </div>
+        <div class="col s4 offset-s1 card" id="InfoList"></div>
+        <div class="col s4 offset-s1 card" id="NextDoor"></div>
+      </div>
+    </div>
+  </div>
+    
 
 </body>
 

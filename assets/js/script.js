@@ -8,18 +8,14 @@ console.log(searchHistory);
 
 var searchFormEl = document.querySelector("#searchForm");
 var SearchBoxInputEl = document.querySelector("#searchBoxInput");
-
-var alertEl = document.getElementById("Alert");
+var alertEl =document.querySelector("#Alert");
 var searchFormEl = document.querySelector("#searchForm");
-var SearchBoxInputEl = document.querySelector("#searchBoxInput");
 var countryData = JSON.parse(localStorage.getItem("countryData")) || {};
 console.log("countryData", countryData)
 
 // var SearchBoxBtnEl = document.querySelector("#searchBoxButton");
 // var countryInfo = document.querySelector("#countryInformation");
-
-var SearchBoxEl = document.querySelector("#SearchBox-input");
-
+// var SearchBoxEl = document.querySelector("#SearchBox-input");
 // Don't think the following line is needed anymore
 // var countryInfo = document.querySelector("#countryInformation");
 
@@ -56,18 +52,17 @@ function handleSearchFormSubmit(event) {
 }
 
 // Store variables in local storage
-function saveToHistory() {
-  let searchInput = SearchBoxInputEl.value;
-  searchInput = searchInput.toLowerCase();
-  console.log(searchHistory);
+function saveToHistory(country) {
+  // let searchInput = SearchBoxInputEl.value;
+  // searchInput = searchInput.toLowerCase();
+  // console.log(searchHistory);
 
-  if (searchHistory.includes(searchInput) === false) {
-    searchHistory.push(searchInput);
+  if (searchHistory.includes(country) === false) {
+    searchHistory.push(country);
   }
   citiesStr = JSON.stringify(searchHistory);
   localStorage.setItem("searchHistoryKey", citiesStr);
 }
-
 
 // Moved the fetch data function from back to script.js...
 function fetchCountryData(country) {
@@ -92,10 +87,10 @@ function fetchCountryData(country) {
         }
         // Inside this else block of code will only run when fetch data is successfully performed
         else {
-          countryData.names.name = country;
+          // countryData.names.name = country;
           localStorage.setItem("countryData", JSON.stringify(countryData));
           // Relocated saveToHistory function here, so that only valid search result is pushed to local storage
-          saveToHistory();
+          saveToHistory(country);
           console.log("Search is valid!")
           console.log(data);
           location.assign("./countryinfo.html");
