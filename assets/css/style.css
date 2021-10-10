@@ -191,16 +191,8 @@ nav {
   margin-bottom: 1rem;
 }
 
-/* Trying to resolve the search history display behind cards issue... */
-nav,
-.dropdown-content {
-  z-index: 99;
-  overflow: visible;
-}
-
-.cards,
 .card {
-  z-index: 1;
+  padding-bottom: 1rem !important;
 }
 
 .neighbourBtn,

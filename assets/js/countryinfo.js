@@ -1,4 +1,5 @@
 // Define variables
+// Fetch country data from local storage, or set to empty if data not exist
 var countryData = JSON.parse(localStorage.getItem("countryData")) || [];
 var searchHistory = JSON.parse(localStorage.getItem("searchHistoryKey")) || [];
 searchHistory = searchHistory.sort();
@@ -6,15 +7,13 @@ var country = countryData.names.name;
 var weatherData = [];
 var unsplashUrl = "";
 
-console.log(countryData);
-console.log(country);
-
 var openWeatherMapAPiKey = "1f9d3014d1a028a24c084adbdcec9008";
 var unsplashAccessKey = "sUG4r-3ndwxJ_35XLlzNo7x-v70k-44ugUAux9bNqLQ";
 
 var bodyEl = document.querySelector("body");
 var countryInfo = document.querySelector("#countryInformation");
-var searchHistoryEl = document.querySelector("#searchHistory");
+var searchHistoryMLEl = document.querySelector("#searchHistoryMediumLarge");
+var searchHistoryMobileEl = document.querySelector("#searchHistoryMobile");
 var alertEl = document.querySelector("#Alert");
 var infoListEl = document.querySelector("#InfoList");
 var displayCountryel = document.querySelector(".CountryName");
@@ -25,7 +24,8 @@ var YourSearchEl = document.querySelector(".YourSearch");
 
 $(document).ready(
     // Activates the Search History dropdown
-    $(".dropdown-trigger").dropdown(),
+    $(".dropdown-trigger-ML").dropdown(),
+    $(".dropdown-trigger-Mobile").dropdown(),
     // Hide Nav to hamburger icon on med to mobile screen
     $('.sidenav').sidenav()
 );
@@ -59,19 +59,13 @@ function init() {
 
     fetchWeatherData(country);
 
-    displayHistory(searchHistory);
+    displayHistory(searchHistory, searchHistoryMLEl);
+    displayHistory(searchHistory, searchHistoryMobileEl);
 
 };
 
 // Fetch country data from API
 function fetchCountryData(country, targetId) {
-    // Change the first and last character on fetch URL from ` to '
-    // Was causing the country variable not recognised issue
-    // if (targetId) {
-
-    // }
-    // let country = event.target.textContent;
-    // console.log(country);
 
     fetch('https://travelbriefing.org/' + country + '?format=json')
         .then(response => {
@@ -322,7 +316,8 @@ function emergency() {
 };
 
 // Display items on search history card
-function displayHistory(data) {
+// Data is search History data, displayEl is the element to display within
+function displayHistory(data, displayEl) {
     // let headingEl = document.createElement("h1");
     // headingEl.textContent = "Search History";
     // console.log("displayHistory!");
@@ -331,7 +326,8 @@ function displayHistory(data) {
         // let ulEl = document.createElement("ul")
         let liEl = document.createElement('li');
         let btnEl = document.createElement('a');
-        searchHistoryEl.prepend(liEl);
+        displayEl.prepend(liEl);
+        // searchHistoryMobileEl.prepend(liEl);
         // ulEl.append(liEl)
         liEl.append(btnEl);
         // liEL.classList.add();
@@ -343,7 +339,7 @@ function displayHistory(data) {
     // This else statement is for when clearing history, still displays card title
     // data == false which means data is an empty array [];
     if (data == false) { 
-        searchHistoryEl.prepend(headingEl);
+        displayEl.prepend(headingEl);
     }
 
     //Listen to click event on history item button
