@@ -46,7 +46,7 @@
       <!-- Drop down content to be displayed on mobile screen side nav dropdown-trigger event only -->
       <ul id="searchHistoryMobile" class="dropdown-content">
         <li class="divider"></li>
-        <li><a id="clearBtn">Clear History</a></li>
+        <li><a id="clearBtnMobile">Clear History</a></li>
       </ul>
 
       <!-- Main Nav bar for mid to large screen -->
@@ -84,9 +84,9 @@
         <li>
           <nav id="searchNav">
             <div class="nav-wrapper">
-              <form id="searchForm">
+              <form id="searchFormMobile">
                 <div class="input-field">
-                  <input type="search" id="searchInput" placeholder="checkout another country" required>
+                  <input type="search" id="searchInputMobile" placeholder="checkout another country" required>
                   <label class="label-icon" for="search"><i class="material-icons">search</i></label>
                   <i class="material-icons">close</i>
                 </div>
@@ -101,29 +101,26 @@
   </div>
 
     <!-- Main info card section -->
-  <!-- <div class="row"> -->
-    <div class="container">
-      <header class="YourSearch">
-      </header>
-      <!-- Country info main section -->
-      <div class="row cards">
-        <!-- <div class="col s11 m3 card">
-          <div id="countryInformation"></div>
-        </div>
-        <div class="col s11 m3 card">
-          <div id="InfoList"></div>
-        </div>
-        <div class="col s11 m3 card">
-          <div id="NextDoor"></div>
-        </div> -->
-
-        <div class="col s4 offset-s6 offset-m1 card" id="countryInformation"> </div>
-        <div class="col s4 offset-s6 offset-m1 card" id="InfoList"></div>
-        <div class="col s4 offset-s6 offset-m1 card" id="NextDoor"></div>
+  <div class="container">
+    <header class="YourSearch">
+    </header>
+    <!-- Country info main section -->
+    <div class="row cards">
+      <!-- <div class="col s11 m3">
+        <div class="card" id="countryInformation"></div>
       </div>
+      <div class="col s11 m3 ">
+        <div class="card" id="InfoList"></div>
+      </div>
+      <div class="col s11 m3 ">
+        <div class="card" id="NextDoor"></div>
+      </div> -->
+
+      <div class="col s4 offset-s1 card" id="countryInformation"> </div>
+      <div class="col s4 offset-s1 card" id="InfoList"></div>
+      <div class="col s4 offset-s1 card" id="NextDoor"></div>
     </div>
-  <!-- </div> -->
-    
+  </div>
 
 </body>
 

@@ -1,24 +1,12 @@
-
-var searchHistory = JSON.parse(localStorage.getItem("searchHistoryKey"));
-if (searchHistory === null) {
-  console.log("setting searchHistory to empty array");
-  searchHistory = [];
-}
-console.log(searchHistory);
-
+// Retrieves search history and country data from local storage, set to empty array or object if local storage is empty
+var searchHistory = JSON.parse(localStorage.getItem("searchHistoryKey")) || [];
+var countryData = JSON.parse(localStorage.getItem("countryData")) || {};
 var searchFormEl = document.querySelector("#searchForm");
 var SearchBoxInputEl = document.querySelector("#searchBoxInput");
 var alertEl =document.querySelector("#Alert");
 var searchFormEl = document.querySelector("#searchForm");
-var countryData = JSON.parse(localStorage.getItem("countryData")) || {};
-console.log("countryData", countryData)
 
-// var SearchBoxBtnEl = document.querySelector("#searchBoxButton");
-// var countryInfo = document.querySelector("#countryInformation");
-// var SearchBoxEl = document.querySelector("#SearchBox-input");
-// Don't think the following line is needed anymore
-// var countryInfo = document.querySelector("#countryInformation");
-
+// Listen to submit event on search form
 document
   .getElementById("searchForm")
   .addEventListener("submit", handleSearchFormSubmit);
@@ -30,21 +18,14 @@ document
     document.getElementById("searchBoxInput").classList.add("focused");
   });
 
-// Not sure what this function does, comment for now
-// document
-//   .addEventListener('DOMContentLoaded', function () {
-//     var elems = document.querySelectorAll('.autocomplete');
-//     var instances = M.Autocomplete.init(elems, { limit: 10 });
-//     instances.destroy();
-//     instances.open();
-//   });
 
 function handleSearchFormSubmit(event) {
-
   event.preventDefault();
 
   let searchInput = SearchBoxInputEl.value;
+  // Convert the whole input to all lowercase then convert first letter to upper case
   searchInput = searchInput.toLowerCase();
+  searchInput = searchInput.charAt(0).toUpperCase() + searchInput.slice(1);
 
   // Reset the search input value
   this.reset();
@@ -53,10 +34,6 @@ function handleSearchFormSubmit(event) {
 
 // Store variables in local storage
 function saveToHistory(country) {
-  // let searchInput = SearchBoxInputEl.value;
-  // searchInput = searchInput.toLowerCase();
-  // console.log(searchHistory);
-
   if (searchHistory.includes(country) === false) {
     searchHistory.push(country);
   }
@@ -64,44 +41,39 @@ function saveToHistory(country) {
   localStorage.setItem("searchHistoryKey", citiesStr);
 }
 
-// Moved the fetch data function from back to script.js...
+// Fetch country data from API
 function fetchCountryData(country) {
   // Change the first and last character on fetch URL from ` to '
   // Was causing the country variable not recognised issue
   fetch('https://travelbriefing.org/' + country + '?format=json')
       .then(response => {
-          // console.log(response);
-          // console.log(response.status); // 200
-          // console.log(response.statusText); // OK
+          // Display error message if response in not valid
           if (response.status != 200) {
-            console.log("Response status is not 200!!")
             alertInvalidInput();
           }
           return response.json();
       })
       .then(data => {
         countryData = data;
+        // Check for valid country name, due to API will return Netherlands as result with incorrect country name
         if ((country !== "netherlands") && (data.names.name === "Netherlands")) {
-          console.log("Invalid search!")
           alertInvalidInput();
         }
         // Inside this else block of code will only run when fetch data is successfully performed
         else {
-          // countryData.names.name = country;
           localStorage.setItem("countryData", JSON.stringify(countryData));
-          // Relocated saveToHistory function here, so that only valid search result is pushed to local storage
+          // Only valid search result is pushed to local storage
           saveToHistory(country);
-          console.log("Search is valid!")
-          console.log(data);
+          // Navigate to countryinfo page
           location.assign("./countryinfo.html");
         }
       })
       .catch(err => {
           console.error(err);
-          console.log("error detected");
       });
 };
 
+// Display error message
 function alertInvalidInput() {
   alertEl.textContent = "";
   var alert = document.createElement("h1");

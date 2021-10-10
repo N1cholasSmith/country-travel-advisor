@@ -205,6 +205,7 @@ nav {
   backdrop-filter: blur(10px);
   line-height: 25px;
   text-align: center;
+  height:auto;
 }
 
 .neighbourBtn,
