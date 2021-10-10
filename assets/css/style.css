@@ -159,13 +159,24 @@ button {
   padding-top:30px;
 }
 
+.neighbourBtn,
+.searchBtn,
+.backBtn,
 .card{
   background-color:rgb(166, 166, 166,0.3);
-/* flex-grow: 1; */
-border-radius: 15px;
-backdrop-filter: blur(10px);
-line-height: 20px;
-text-align: center;
+  /* flex-grow: 1; */
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  line-height: 20px;
+  text-align: center;
+}
+
+.neighbourBtn,
+.searchBtn,
+.backBtn {
+  display:inline-flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
 }
 
 #Alert{
