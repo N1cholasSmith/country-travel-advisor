@@ -1,39 +1,44 @@
 // Define variables
-var bodyEl = document.querySelector("body");
-var countryData = [];
-var countryInfo = document.querySelector("#countryInformation")
 var countryData = JSON.parse(localStorage.getItem("countryData")) || [];
-console.log(countryData);
+var searchHistory = JSON.parse(localStorage.getItem("searchHistoryKey")) || [];
+searchHistory = searchHistory.sort();
 var country = countryData.names.name;
-console.log(country);
 var weatherData = [];
-var openWeatherMapAPiKey = "1f9d3014d1a028a24c084adbdcec9008";
 var unsplashUrl = "";
-var alertEl = document.getElementById("#Alert");
-var infoListEl = document.querySelector("#InfoList");
-var unsplashAccessKey = "sUG4r-3ndwxJ_35XLlzNo7x-v70k-44ugUAux9bNqLQ";
-var displayCountryel = document.querySelector(".CountryName");
-var progressBarEl = document.querySelector("#progressBar");
-// document.querySelector("#emoji").innerHTML = "📞 ";
 
-// var displayCountryel = document.querySelector(".CountryName");
+console.log(countryData);
+console.log(country);
+
+var openWeatherMapAPiKey = "1f9d3014d1a028a24c084adbdcec9008";
+var unsplashAccessKey = "sUG4r-3ndwxJ_35XLlzNo7x-v70k-44ugUAux9bNqLQ";
+
+var bodyEl = document.querySelector("body");
+var countryInfo = document.querySelector("#countryInformation");
+var searchHistoryEl = document.querySelector("#searchHistory");
+var alertEl = document.querySelector("#Alert");
+var infoListEl = document.querySelector("#InfoList");
+var displayCountryel = document.querySelector(".CountryName");
 var progressBarEl = document.querySelector("#progressBar");
 var NextDoor = document.querySelector("#NextDoor");
 var YourSearchEl = document.querySelector(".YourSearch");
+// document.querySelector("#emoji").innerHTML = "📞 ";
 
+$(document).ready(
+    // Activates the Search History dropdown
+    $(".dropdown-trigger").dropdown(),
+    // Hide Nav to hamburger icon on med to mobile screen
+    $('.sidenav').sidenav()
+);
+
+// Runs on page load
 function init() {
+    document.getElementById("searchForm").addEventListener("submit", handleSearchFormSubmit);
+    document.getElementById("clearBtn").addEventListener("click", clearHistory);
+
     // Show progress bar
     let progressTxtEl = document.querySelector(".YourSearch");
     progressTxtEl.textContent = "Taking you to " + country + ".....";
     progressBarEl.style.display = "block";
-
-    // Get the country name out of the URL
-    // Commenting the below codes out - due to fetch country data relocated back to script.js
-    // let searchParamsArr = document.location.search.split("?");
-    // console.log(searchParamsArr);
-    // var country = searchParamsArr[1].split("=").pop();
-    // country = country.toLowerCase();
-    // console.log("country: " + country);
 
     unsplashGetDataUrl = "https://api.unsplash.com/search/photos/?client_id="
         + unsplashAccessKey
@@ -52,13 +57,13 @@ function init() {
 
     fetchCountryPhoto(unsplashGetDataUrl);
 
-    // fetchCountryData(country);
-
     fetchWeatherData(country);
+
+    displayHistory(searchHistory);
 
 };
 
-// Need this similar fetch API data function here, for neighbour country button and history button to work properly
+// Fetch country data from API
 function fetchCountryData(country, targetId) {
     // Change the first and last character on fetch URL from ` to '
     // Was causing the country variable not recognised issue
@@ -88,9 +93,10 @@ function fetchCountryData(country, targetId) {
                     alertInvalidInput();
                 }
             }
+            // Within else block of code only runs when fetch is successfully performed
             else {
                 localStorage.setItem("countryData", JSON.stringify(data));
-                // this.reset();
+                saveToHistory(country);
                 console.log("Search is valid!")
                 console.log(data);
                 location.assign("./countryinfo.html");
@@ -150,6 +156,7 @@ function fetchWeatherData(country) {
         });
 };
 
+// Displays info on cards
 function countryInfoCard() {
 
     // Country info good to know variables
@@ -179,19 +186,19 @@ function countryInfoCard() {
     volt.textContent = "Voltage: " + countryData.electricity.voltage;
     frequency.textContent = "Frequency: " + countryData.electricity.frequency;
     waterQuality.textContent = "Water Quality: " + countryData.water.short;
-    tempEl.textContent = "Today's temperature: " + weatherData.main.temp + "°C";
-    feelsLikeEl.textContent = "Feels like: " + weatherData.main.feels_like + "°C";
+    tempEl.textContent = "Today's temperature: " + parseFloat(weatherData.main.temp).toFixed(1) + "°C";
+    feelsLikeEl.textContent = "Feels like: " + parseFloat(weatherData.main.feels_like).toFixed(1) + "°C";
     humidityEl.textContent = "Humidity: " + weatherData.main.humidity + "%";
 
 
-    heading.textContent = "Before you go: "
-    currency.textContent = " Currency: " + countryData.currency.code
-    rate.textContent = " Currency rate: " + countryData.currency.rate
-    languageSpoken.textContent = " Language spoken: " + countryData.language[0].language
+    heading.textContent = "Before You Go ";
+    currency.textContent = " Currency: " + countryData.currency.code;
+    rate.textContent = " Currency rate: " + parseFloat(countryData.currency.rate).toFixed(2);
+    languageSpoken.textContent = " Language spoken: " + countryData.language[0].language;
     // electricity.textContent = searchHistory.electricity
-    volt.textContent = " Voltage: " + countryData.electricity.voltage
-    frequency.textContent = " Electricity frequency: " + countryData.electricity.frequency
-    waterQuality.textContent = " Water Status: " + countryData.water.short
+    volt.textContent = " Voltage: " + countryData.electricity.voltage;
+    frequency.textContent = " Electricity frequency: " + countryData.electricity.frequency;
+    waterQuality.textContent = " Water Status: " + countryData.water.short;
 
 
     countryInfo.append(heading, infoList);
@@ -222,6 +229,7 @@ function countryInfoCard() {
     progressBarEl.style.display = "none";
 };
 
+// Display info on neighboring country card
 function neighboringCountries() {
     NextDoor.innerHTML = "";
     // console.log(neighboringCountries)
@@ -274,6 +282,7 @@ function neighboringCountries() {
     })
 };
 
+// Display info on emergency telephone card
 function emergency() {
     infoListEl.innerHTML = "";
     var heading = document.createElement("h1");
@@ -312,6 +321,56 @@ function emergency() {
     )
 };
 
+// Display items on search history card
+function displayHistory(data) {
+    // let headingEl = document.createElement("h1");
+    // headingEl.textContent = "Search History";
+    // console.log("displayHistory!");
+
+    for (i=0; i<data.length; i++) {
+        // let ulEl = document.createElement("ul")
+        let liEl = document.createElement('li');
+        let btnEl = document.createElement('a');
+        searchHistoryEl.prepend(liEl);
+        // ulEl.append(liEl)
+        liEl.append(btnEl);
+        // liEL.classList.add();
+        btnEl.classList.add('historyBtn');
+        btnEl.textContent = data[i];
+        console.log(data[i]);
+    }
+
+    // This else statement is for when clearing history, still displays card title
+    // data == false which means data is an empty array [];
+    if (data == false) { 
+        searchHistoryEl.prepend(headingEl);
+    }
+
+    //Listen to click event on history item button
+    let historyBtnElAll = document.querySelectorAll('.historyBtn');
+    historyBtnElAll.forEach(function(historyBtnElEach) {
+    historyBtnElEach.addEventListener('click', handleBtnClick);
+    })
+};
+
+// Store variables in local storage
+function saveToHistory(countryName) {
+  
+    if ((searchHistory.includes(countryName) === false) && (countryName !== [])) {
+      searchHistory.push(countryName);
+    }
+    searchHistory = searchHistory.sort();
+    citiesStr = JSON.stringify(searchHistory);
+    localStorage.setItem("searchHistoryKey", citiesStr);
+};
+
+//Clear search history
+function clearHistory() {
+    localStorage.removeItem("searchHistoryKey");
+    location.reload();
+}
+
+// Handle search form submit action
 function handleSearchFormSubmit(event) {
 
     event.preventDefault();
@@ -325,20 +384,20 @@ function handleSearchFormSubmit(event) {
     // Reset the search input value
     this.reset();
     fetchCountryData(searchInput, targetId)
-}
+};
 
+// Handle button click for both search history buttons and neighboring countries buttons
 function handleBtnClick(event) {
     let country = event.target.textContent;
 
     fetchCountryData(country);
-}
+};
 
+// Alert invalid input error message
 function alertInvalidInput() {
     let inputEl = document.getElementById("searchInput");
     inputEl.setAttribute("placeholder", "Invalid Input!");
-  }
-
-document.getElementById("searchForm").addEventListener("submit", handleSearchFormSubmit);
+};
 
 init();
 
