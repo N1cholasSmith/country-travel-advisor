@@ -2,38 +2,39 @@
 // Fetch country data from local storage, or set to empty if data not exist
 var countryData = JSON.parse(localStorage.getItem("countryData")) || [];
 var searchHistory = JSON.parse(localStorage.getItem("searchHistoryKey")) || [];
-searchHistory = searchHistory.sort();
 var country = countryData.names.name;
 var weatherData = [];
-var unsplashUrl = "";
 
 var openWeatherMapAPiKey = "1f9d3014d1a028a24c084adbdcec9008";
 var unsplashAccessKey = "sUG4r-3ndwxJ_35XLlzNo7x-v70k-44ugUAux9bNqLQ";
 
-var bodyEl = document.querySelector("body");
-var countryInfo = document.querySelector("#countryInformation");
 var searchHistoryMLEl = document.querySelector("#searchHistoryMediumLarge");
 var searchHistoryMobileEl = document.querySelector("#searchHistoryMobile");
-var alertEl = document.querySelector("#Alert");
-var infoListEl = document.querySelector("#InfoList");
-var displayCountryel = document.querySelector(".CountryName");
 var progressBarEl = document.querySelector("#progressBar");
-var NextDoor = document.querySelector("#NextDoor");
-var YourSearchEl = document.querySelector(".YourSearch");
-// document.querySelector("#emoji").innerHTML = "📞 ";
 
+// Jquery function for main nav dropdown and mobile side nav
 $(document).ready(
-    // Activates the Search History dropdown
+    // Activates the Search History dropdown for Medium to large screen nav bar
     $(".dropdown-trigger-ML").dropdown(),
+    // Activates the Search History dropdown for Mobile screen nav bar
     $(".dropdown-trigger-Mobile").dropdown(),
     // Hide Nav to hamburger icon on med to mobile screen
     $('.sidenav').sidenav()
 );
 
+$(document).ready(function() {
+    // Hides the progress bar when page finish loading
+    progressBarEl.style.display = "none";
+});
+
 // Runs on page load
 function init() {
+    // listen to search form submit action
     document.getElementById("searchForm").addEventListener("submit", handleSearchFormSubmit);
+    document.getElementById("searchFormMobile").addEventListener("submit", handleSearchFormSubmit);
+    // listen to clear history button click
     document.getElementById("clearBtn").addEventListener("click", clearHistory);
+    document.getElementById("clearBtnMobile").addEventListener("click", clearHistory);
 
     // Show progress bar
     let progressTxtEl = document.querySelector(".YourSearch");
@@ -59,9 +60,10 @@ function init() {
 
     fetchWeatherData(country);
 
+    // Appends search history for medium to large screen drop down
     displayHistory(searchHistory, searchHistoryMLEl);
+    // Appends search history for mobile screen drop down
     displayHistory(searchHistory, searchHistoryMobileEl);
-
 };
 
 // Fetch country data from API
@@ -69,30 +71,30 @@ function fetchCountryData(country, targetId) {
 
     fetch('https://travelbriefing.org/' + country + '?format=json')
         .then(response => {
-            console.log(response);
-            console.log(response.status); // 200
-            console.log(response.statusText); // OK
             if (response.status != 200) {
                 if (targetId === "searchForm") {
-                    alertInvalidInput();
+                    alertInvalidInput("searchForm");
                 }
-                console.log("Response status is not 200!!")
+                else if (targetId === "searchFormMobile") {
+                    alertInvalidInput("searchFormMobile");
+                }
             }
             return response.json();
         })
         .then(data => {
+            // Check for valid country name, due to API will return Netherlands as result with incorrect country name
             if ((country !== "netherlands") && (data.names.name === "Netherlands")) {
-                console.log("Invalid search!")
                 if (targetId === "searchForm") {
-                    alertInvalidInput();
+                    alertInvalidInput("searchForm");
+                }
+                else if (targetId === "searchFormMobile") {
+                    alertInvalidInput("searchFormMobile");
                 }
             }
             // Within else block of code only runs when fetch is successfully performed
             else {
                 localStorage.setItem("countryData", JSON.stringify(data));
                 saveToHistory(country);
-                console.log("Search is valid!")
-                console.log(data);
                 location.assign("./countryinfo.html");
             }
         })
@@ -103,20 +105,15 @@ function fetchCountryData(country, targetId) {
 
 // Fetch photo data from unsplash
 function fetchCountryPhoto(dataUrl) {
-    console.log("UnsplashUrl: " + dataUrl);
     fetch(dataUrl)
         .then(response => {
-            console.log(response)
             return response.json();
         })
         .then(data => {
-            console.log(data);
-            console.log(data.results[0].id);
+            // Get the most popular photo url of the country
             let firstRelevantPhotoUrl = data.results[0].urls.full;
-            console.log(firstRelevantPhotoUrl);
-            // unsplashGetPhotoUrl += firstRelevantPhotoID;
-            // console.log(unsplashGetPhotoUrl);
-
+            // Set background of the page with photo url
+            let bodyEl = document.querySelector("body");
             bodyEl.style = "background-image: url(" + firstRelevantPhotoUrl + ")";
         })
         .catch(err => {
@@ -139,11 +136,12 @@ function fetchWeatherData(country) {
             return response.json();
         })
         .then(function (data) {
-            console.log(data);
             weatherData = data;
+
+            // Display info cards content on successful fetch data call
             countryInfoCard();
             emergency();
-            neighboringCountries();
+            neighbouringCountries();
         })
         .catch(function (error) {
             console.log(error);
@@ -153,24 +151,27 @@ function fetchWeatherData(country) {
 // Displays info on cards
 function countryInfoCard() {
 
+    let countryInfo = document.querySelector("#countryInformation");
+    let YourSearchEl = document.querySelector(".YourSearch");
+
     // Country info good to know variables
     countryInfo.innerHTML = "";
-    var heading = document.createElement("h1");
-    var infoList = document.createElement("div");
-    var unorderedList = document.createElement("ul");
-    var countryName = document.createElement("li");
-    var currency = document.createElement("li");
-    var rate = document.createElement("li");
-    var languageSpoken = document.createElement("li");
-    var electricity = document.createElement("li");
-    var volt = document.createElement("li");
-    var frequency = document.createElement("li");
-    var waterQuality = document.createElement("li");
+    let heading = document.createElement("h1");
+    let infoList = document.createElement("div");
+    let unorderedList = document.createElement("ul");
+    let countryName = document.createElement("li");
+    let currency = document.createElement("li");
+    let rate = document.createElement("li");
+    let languageSpoken = document.createElement("li");
+    let electricity = document.createElement("li");
+    let volt = document.createElement("li");
+    let frequency = document.createElement("li");
+    let waterQuality = document.createElement("li");
 
-    var tempEl = document.createElement("li");
-    var feelsLikeEl = document.createElement("li");
-    var humidityEl = document.createElement("li");
-    var weatherIconLiEL = document.createElement("li");
+    let tempEl = document.createElement("li");
+    let feelsLikeEl = document.createElement("li");
+    let humidityEl = document.createElement("li");
+    let weatherIconLiEL = document.createElement("li");
 
     YourSearchEl.textContent = "All About " + countryData.names.name;
     currency.textContent = "Currency: " + countryData.currency.code;
@@ -198,7 +199,6 @@ function countryInfoCard() {
     countryInfo.append(heading, infoList);
     infoList.append(unorderedList);
 
-    // Option 2 to keep it more neat
     unorderedList.append(countryName,
         currency,
         rate,
@@ -211,36 +211,21 @@ function countryInfoCard() {
         feelsLikeEl,
         humidityEl,
         weatherIconLiEL)
-
-    emergency();
-
-    neighboringCountries();
-
-    // shows go back button
-    document.getElementById("goBack").style.display = "block";
-
-    // Hides progress bar
-    progressBarEl.style.display = "none";
 };
 
-// Display info on neighboring country card
-function neighboringCountries() {
+// Display info on neighbouring country card
+function neighbouringCountries() {
+    let NextDoor = document.querySelector("#NextDoor");
     NextDoor.innerHTML = "";
-    // console.log(neighboringCountries)
-    var heading = document.createElement("h1");
-    var infoList = document.createElement("div");
-    var unorderedList = document.createElement("ul");
-    var neighborsTitle = document.createElement("li");
-    var neighbor1 = document.createElement("li");
-    var neighbor2 = document.createElement("li");
-    var neighbor3 = document.createElement("li");
-    var neighbor4 = document.createElement("li");
+    let heading = document.createElement("h1");
+    let infoList = document.createElement("div");
+    let unorderedList = document.createElement("ul");
+    let neighborsTitle = document.createElement("li");
+    let neighbor1 = document.createElement("li");
+    let neighbor2 = document.createElement("li");
+    let neighbor3 = document.createElement("li");
+    let neighbor4 = document.createElement("li");
     heading.textContent = "Neighboring Countries"
-    // Commenting these out, content displayed on button instead
-    // neighbor1.textContent = countryData.neighbors[0].name
-    // neighbor2.textContent = countryData.neighbors[1].name
-    // neighbor3.textContent = countryData.neighbors[2].name
-    // neighbor4.textContent = countryData.neighbors[3].name
 
     NextDoor.append(heading, infoList);
     infoList.append(unorderedList);
@@ -253,10 +238,10 @@ function neighboringCountries() {
     )
 
     // convert neighbor countries to button with hyper link to display that country's info
-    var neighbor1Btn = document.createElement("a");
-    var neighbor2Btn = document.createElement("a");
-    var neighbor3Btn = document.createElement("a");
-    var neighbor4Btn = document.createElement("a");
+    let neighbor1Btn = document.createElement("a");
+    let neighbor2Btn = document.createElement("a");
+    let neighbor3Btn = document.createElement("a");
+    let neighbor4Btn = document.createElement("a");
     neighbor1.append(neighbor1Btn);
     neighbor2.append(neighbor2Btn);
     neighbor3.append(neighbor3Btn);
@@ -278,18 +263,19 @@ function neighboringCountries() {
 
 // Display info on emergency telephone card
 function emergency() {
+    let infoListEl = document.querySelector("#InfoList");
     infoListEl.innerHTML = "";
-    var heading = document.createElement("h1");
-    var infoList = document.createElement("div");
-    var unorderedList = document.createElement("ul");
-    var emergencyNumbers = document.createElement("li");
-    var callingCode = document.createElement("li");
-    var police = document.createElement("li");
-    var ambulance = document.createElement("li");
-    var fire = document.createElement("li");
-    var policeAEl = document.createElement("a");
-    var ambulanceAEl = document.createElement("a");
-    var fireAEl = document.createElement("a");
+    let heading = document.createElement("h1");
+    let infoList = document.createElement("div");
+    let unorderedList = document.createElement("ul");
+    let emergencyNumbers = document.createElement("li");
+    let callingCode = document.createElement("li");
+    let police = document.createElement("li");
+    let ambulance = document.createElement("li");
+    let fire = document.createElement("li");
+    let policeAEl = document.createElement("a");
+    let ambulanceAEl = document.createElement("a");
+    let fireAEl = document.createElement("a");
 
     heading.textContent = "Emergency Telephone Numbers ";
     callingCode.textContent = " Calling Code: " + countryData.telephone.calling_code;
@@ -318,22 +304,14 @@ function emergency() {
 // Display items on search history card
 // Data is search History data, displayEl is the element to display within
 function displayHistory(data, displayEl) {
-    // let headingEl = document.createElement("h1");
-    // headingEl.textContent = "Search History";
-    // console.log("displayHistory!");
 
     for (i=0; i<data.length; i++) {
-        // let ulEl = document.createElement("ul")
         let liEl = document.createElement('li');
         let btnEl = document.createElement('a');
         displayEl.prepend(liEl);
-        // searchHistoryMobileEl.prepend(liEl);
-        // ulEl.append(liEl)
         liEl.append(btnEl);
-        // liEL.classList.add();
         btnEl.classList.add('historyBtn');
         btnEl.textContent = data[i];
-        console.log(data[i]);
     }
 
     // This else statement is for when clearing history, still displays card title
@@ -351,9 +329,8 @@ function displayHistory(data, displayEl) {
 
 // Store variables in local storage
 function saveToHistory(countryName) {
-  
     if ((searchHistory.includes(countryName) === false) && (countryName !== [])) {
-      searchHistory.push(countryName);
+        searchHistory.push(countryName);
     }
     searchHistory = searchHistory.sort();
     citiesStr = JSON.stringify(searchHistory);
@@ -363,6 +340,7 @@ function saveToHistory(countryName) {
 //Clear search history
 function clearHistory() {
     localStorage.removeItem("searchHistoryKey");
+    // Reload page to reflect changes
     location.reload();
 }
 
@@ -370,11 +348,20 @@ function clearHistory() {
 function handleSearchFormSubmit(event) {
 
     event.preventDefault();
-    console.log(event.target.id);
+
     let targetId = event.target.id;
     searchBoxInputEl = document.getElementById("searchInput")
-    let searchInput = searchBoxInputEl.value;
+    searchBoxInputMobileEl = document.getElementById("searchInputMobile")
+
+    if (searchBoxInputEl.value) {
+        var searchInput = searchBoxInputEl.value;
+    } else if (searchBoxInputMobileEl.value) {
+        var searchInput = searchBoxInputMobileEl.value;
+    }
+
+    // Convert the whole input to all lowercase then convert first letter to upper case
     searchInput = searchInput.toLowerCase();
+    searchInput = searchInput.charAt(0).toUpperCase() + searchInput.slice(1);
 
     // saveToHistory();
     // Reset the search input value
@@ -385,15 +372,23 @@ function handleSearchFormSubmit(event) {
 // Handle button click for both search history buttons and neighboring countries buttons
 function handleBtnClick(event) {
     let country = event.target.textContent;
-
+    // Call fetch country data function with clicked country
     fetchCountryData(country);
 };
 
 // Alert invalid input error message
-function alertInvalidInput() {
-    let inputEl = document.getElementById("searchInput");
-    inputEl.setAttribute("placeholder", "Invalid Input!");
+function alertInvalidInput(target) {
+    if (target === "searchForm") {
+        let inputEl = document.getElementById("searchInput");
+        inputEl.setAttribute("placeholder", "Invalid Input!");
+    }
+    else if (target === "searchFormMobile") {
+        let inputEl = document.getElementById("searchInputMobile");
+        inputEl.setAttribute("placeholder", "Invalid Input!");
+    }
+    
 };
 
+// First function to call on page load
 init();
 
