@@ -107,6 +107,10 @@ button {
   margin:0.5rem;
 }
 
+.card {
+  padding-bottom: 1rem !important;
+}
+
 #searchNav {
   width: 20rem;
   color:black;
