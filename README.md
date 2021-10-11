@@ -17,7 +17,8 @@ The Country Travel Advisor is your digital travel guide and an essential tool fo
 ---
 ## Usage
 The Country Travel Advisor is easily naviagted through the homepage search bar, neighboring country buttons and the nav bar with country search history to access all the essential information for a successful holiday.
-![Country Travel Advisor Video.](/assets/images/country-travel-advisor-navigation.mp4 "video")
+
+![Site video](./assets/images/full-screen-gif.gif "video")
 
 ![GIF site functions demonstration.](./assets/images/country-travel-advisor.gif "video")
 ---
