@@ -82,7 +82,7 @@ button {
 .SearchBox-input {
   width: 0;
   font-size: 1.2em;
-  color: black;
+  color: white;
   transition: 0.45s;
   font-family: "Montserrat", sans-serif;
   line-height: 1.5;
