@@ -82,7 +82,7 @@ button {
 .SearchBox-input {
   width: 0;
   font-size: 1.2em;
-  color: black;
+  color: white;
   transition: 0.45s;
   font-family: "Montserrat", sans-serif;
   line-height: 1.5;
@@ -127,6 +127,12 @@ button {
   /* The width is the width of the web page */
 }
 
+.dropdown-trigger{
+  position:relative;
+  z-index:3;
+  padding-bottom:3rem;
+}
+
 
 @media screen and (min-width: 400px) {
   .SearchBox:hover .SearchBox-input {
@@ -135,6 +141,8 @@ button {
   }
   .YourSearch{
     padding-top:30px;
+    z-index:1;
+    position:relative;
   }
 
   .focused {
@@ -172,11 +180,16 @@ button {
   backdrop-filter: blur(10px);
 }
 
+/* .card{
+  padding-bottom:3rem;
+} */
+
 .cards{
   display:flex;
   flex-direction:row;
   justify-content: space-between;
-  padding-top:30px;
+  margin-top:3rem;
+  /* padding-top:30px; */
 }
 
 /* Set Max height for search history card and enable scroll when overflow
@@ -191,9 +204,22 @@ nav {
   margin-bottom: 1rem;
 }
 
-.card {
-  padding-bottom: 1rem !important;
+/* Trying to resolve the search history display behind cards issue... */
+
+.dropdown-content {
+  z-index: 4;
+  overflow: visible;
+  position:relative;
+  top:-70px;
 }
+
+
+.cards,
+.card {
+  z-index: 2;
+  position:relative;
+}
+
 
 .neighbourBtn,
 .searchBtn,
@@ -207,6 +233,7 @@ nav {
   text-align: center;
   height:auto;
 }
+
 
 .neighbourBtn,
 .searchBtn,
@@ -243,6 +270,17 @@ a:hover {
   cursor:pointer;  
 }
 
+/* @media screen and (max-width: 800px) {
+  .SearchBox {
+    width:7rem;
+  }
+}
+@media screen and (max-width: 700px) {
+  .SearchBox {
+   height:5rem;
+}
+} */
+
 
 
 /* .cards{
@@ -260,8 +298,3 @@ a:hover {
     flex-flow: row wrap;
     
   background-color:rgba(255,192,203,0.7) */
-
-
-
-
-
