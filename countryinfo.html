@@ -28,7 +28,7 @@
 
 <body style="background-color: darkgray;">
 
-  <!-- This contains side nav and main page content -->
+  <!-- This contains main nav bar-->
   <div class="row col s12">
     <!-- Progress bar -->
     <div class="progress" id="progressBar" style="display:none">
@@ -37,40 +37,27 @@
     </div>
     <!-- top nav bar -->
     <div class="col s12">
-      <!-- <div class="col s4 offset-s1 card" id="searchHistory">
-        <div class="divider" id="searchHistoryDivider"></div>
-        <div class="section">
-          <button class="aves-effect waves-light btn z-depth-4 clearBtn" id="clearBtn">Clear history</button>
-        </div>
-      </div>
-      <div class="col s4 offset-s1 card" id="searchCard">
-        <form id="searchForm">
-          <div>
-            <h1>Checkout Another Country</h1>
-            <label for="searchInput" class="form-label"></label>
-            <input type="text"  id="searchInput" placeholder="Country name">
-          </div>
-          <div>
-            <button type="submit" class="waves-effect waves-light btn z-depth-4 searchBtn">Search</button>
-          </div>
-        </form>
-      </div>
-      <button id="goBack">
-        <a class="waves-effect waves-light btn z-depth-4 backBtn" href="index.html">
-          <i class="material-icons left">arrow_back</i>
-          Click here to go back
-        </a>
-      </button> -->
-      <ul id="searchHistory" class="dropdown-content">
+      <!-- Drop down content to be displayed on mid to large screen dropdown-trigger event only -->
+      <ul id="searchHistoryMediumLarge" class="dropdown-content">
         <li class="divider"></li>
         <li><a id="clearBtn">Clear History</a></li>
       </ul>
+
+      <!-- Drop down content to be displayed on mobile screen side nav dropdown-trigger event only -->
+      <ul id="searchHistoryMobile" class="dropdown-content">
+        <li class="divider"></li>
+        <li><a id="clearBtnMobile">Clear History</a></li>
+      </ul>
+
+      <!-- Main Nav bar for mid to large screen -->
       <nav>
+        <a href="#" data-target="mobile-sidenav" class="sidenav-trigger hide-on-med-and-up"><i class="material-icons">menu</i></a>
         <div class="nav-wrapper">
           <ul class="left hide-on-small-only">
             <li><a href="./index.html" id="goBack"><i class="material-icons left">arrow_back</i>Back to main</a></li>
           </ul>
-
+          
+          <!-- Right hand side section of main nav bar -->
           <ul class="right hide-on-small-only">
             <li>
               <!-- Nav section for search and search history -->
@@ -86,30 +73,54 @@
                 </div>
               </nav>
             </li>
-            <!-- Dropdown Trigger -->
-            <li><a class="dropdown-trigger" href="#!" data-target="searchHistory">Search History<i
-                  class="material-icons right">arrow_drop_down</i></a>
-            </li>
+            <!-- Dropdown Trigger on mid to large screen -->
+            <li><a class="dropdown-trigger-ML" href="#!" data-target="searchHistoryMediumLarge">Search History<i class="material-icons right">arrow_drop_down</i></a></li>
           </ul>
         </div>
       </nav>
+
+      <!-- This side nav bar only shows on mobile screen size -->
+      <ul class="sidenav hide-on-med-and-up" id="mobile-sidenav">
+        <li>
+          <nav id="searchNav">
+            <div class="nav-wrapper">
+              <form id="searchFormMobile">
+                <div class="input-field">
+                  <input type="search" id="searchInputMobile" placeholder="checkout another country" required>
+                  <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                  <i class="material-icons">close</i>
+                </div>
+              </form>
+            </div>
+          </nav>
+        </li>
+        <li><a class="dropdown-trigger-Mobile" data-target="searchHistoryMobile">Search History<i class="material-icons right">arrow_drop_down</i></a></li>
+        <li><a href="./index.html" id="goBack"><i class="material-icons left">arrow_back</i>Back to main</a></li>
+      </ul>
     </div>
   </div>
 
-  <!-- Main info card section -->
-  <div class="row col s12">
-    <div class="container">
-      <header class="YourSearch">
-      </header>
-      <!-- Country info main section -->
-      <div class="row cards">
-        <div class="col s4 offset-s1 card" id="countryInformation"> </div>
-        <div class="col s4 offset-s1 card" id="InfoList"></div>
-        <div class="col s4 offset-s1 card" id="NextDoor"></div>
+    <!-- Main info card section -->
+  <div class="container">
+    <header class="YourSearch">
+    </header>
+    <!-- Country info main section -->
+    <div class="row cards">
+      <!-- <div class="col s11 m3">
+        <div class="card" id="countryInformation"></div>
       </div>
+      <div class="col s11 m3 ">
+        <div class="card" id="InfoList"></div>
+      </div>
+      <div class="col s11 m3 ">
+        <div class="card" id="NextDoor"></div>
+      </div> -->
+
+      <div class="col s4 offset-s1 card" id="countryInformation"> </div>
+      <div class="col s4 offset-s1 card" id="InfoList"></div>
+      <div class="col s4 offset-s1 card" id="NextDoor"></div>
     </div>
   </div>
-
 
 </body>
 

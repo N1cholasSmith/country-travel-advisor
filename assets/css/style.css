@@ -231,7 +231,7 @@ nav {
   backdrop-filter: blur(10px);
   line-height: 25px;
   text-align: center;
-  /* padding-bottom:30px; */
+  height:auto;
 }
 
 
